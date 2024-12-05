@@ -3,18 +3,24 @@
 #include <iostream> 
 #include <SFML/Graphics.hpp>
 
-namespace plr {
 
-	//sf::RectangleShape* createPlayer(sf::Vector2f);
+class Player
+{
+private:
+	int health;
+	sf::Vector2f position;
 
-	class Player
-	{
-	private:
-		int health;
+	//Physics
+	sf::Vector2f velocity;
+	float acceleration;
+	float drag;
 
-	public:
-		Player(int health_) : health(health_) {}
+	//Core
 
-	};
+	void initPhysics();
 
-}
+public:
+
+	Player(int health_, sf::Vector2f position_) : health(health_), position(position_) {}
+
+};
