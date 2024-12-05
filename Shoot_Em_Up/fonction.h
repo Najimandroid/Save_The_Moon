@@ -1,4 +1,17 @@
 #pragma once
+#include <iostream> 
+
+using namespace std;
 
 
-void print();
+class joueur
+{
+private:
+	string nom_joueur;
+	int sante;
+
+public:
+	joueur(string n, int s): nom_joueur(n), sante(s){}
+	
+
+};

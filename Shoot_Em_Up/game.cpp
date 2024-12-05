@@ -1,8 +1,5 @@
 #include "fonction.h"
+#include  <SFML/Graphics.hpp>
 #include <iostream>
 using namespace std;
 
-void print()
-{
-	cout << "Bonjour";
-}
