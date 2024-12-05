@@ -6,19 +6,20 @@ int main()
 {
 
 	sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon", sf::Style::Fullscreen);
+    window.setFramerateLimit(60);
 
-    sf::RectangleShape rectangle(sf::Vector2f(200, 200));
+    sf::RectangleShape player(sf::Vector2f(200, 200));
 
-    rectangle.setFillColor(sf::Color::Red);
+    player.setFillColor(sf::Color::Red);
 
-    rectangle.setOrigin(sf::Vector2f{ rectangle.getSize().x, rectangle.getSize().y } / 2.f);
-    rectangle.setPosition(window.getSize().x / 2, window.getSize().y / 2);
+    player.setOrigin(sf::Vector2f{ player.getSize().x, player.getSize().y } / 2.f);
+    player.setPosition(1900 / 2, 1080 / 2);
 
-    window.draw(rectangle);
-    window.display();
 
     while (window.isOpen())
     {
+        window.clear();
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -30,7 +31,28 @@ int main()
                 if (event.key.code == sf::Keyboard::Escape)
                     window.close(); // Fermer avec Échap
             }
+
+
+            if (event.type == sf::Event::KeyPressed) {
+                switch (event.key.code) {
+                case(sf::Keyboard::Up):
+                    player.setPosition(player.getPosition() + sf::Vector2f{ 0, -20 });
+                    break;
+                case(sf::Keyboard::Down):
+                    player.setPosition(player.getPosition() + sf::Vector2f{ 0, 20 });
+                    break;
+                case(sf::Keyboard::Left):
+                    player.setPosition(player.getPosition() + sf::Vector2f{ -20, 0 });
+                    break;
+                case(sf::Keyboard::Right):
+                    player.setPosition(player.getPosition() + sf::Vector2f{ 20, 0 });
+                    break;
+                }
+            }
         }  
+
+        window.draw(player);
+        window.display();
     }
 
 

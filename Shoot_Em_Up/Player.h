@@ -1,10 +1,11 @@
 #pragma once
 
 #include <iostream> 
+#include <SFML/Graphics.hpp>
 
 namespace plr {
 
-	
+	//sf::RectangleShape* createPlayer(sf::Vector2f);
 
 	class Player
 	{
