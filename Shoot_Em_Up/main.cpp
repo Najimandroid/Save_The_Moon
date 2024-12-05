@@ -36,16 +36,30 @@ int main()
             if (event.type == sf::Event::KeyPressed) {
                 switch (event.key.code) {
                 case(sf::Keyboard::Up):
-                    player.setPosition(player.getPosition() + sf::Vector2f{ 0, -20 });
+                    if (player.getPosition().y > 100)
+                    {
+                        player.setPosition(player.getPosition() + sf::Vector2f{ 0, -20 });
+                    }
                     break;
+                
                 case(sf::Keyboard::Down):
-                    player.setPosition(player.getPosition() + sf::Vector2f{ 0, 20 });
+                    if (player.getPosition().y < 980)
+                    {
+                        player.setPosition(player.getPosition() + sf::Vector2f{ 0, 20 });
+                    }
                     break;
+
                 case(sf::Keyboard::Left):
-                    player.setPosition(player.getPosition() + sf::Vector2f{ -20, 0 });
+                    if (player.getPosition().x > 100)
+                    {
+                        player.setPosition(player.getPosition() + sf::Vector2f{ -20, 0 });
+                    }
                     break;
                 case(sf::Keyboard::Right):
-                    player.setPosition(player.getPosition() + sf::Vector2f{ 20, 0 });
+                    if (player.getPosition().x < 1800)
+                    {
+                        player.setPosition(player.getPosition() + sf::Vector2f{ 20, 0 });
+                    }
                     break;
                 }
             }
