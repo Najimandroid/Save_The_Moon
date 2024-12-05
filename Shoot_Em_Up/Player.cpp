@@ -1,5 +1,6 @@
-#include "fonction.h"
+#include "Player.h"
 #include  <SFML/Graphics.hpp>
 #include <iostream>
-using namespace std;
+
+
 
