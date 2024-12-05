@@ -7,9 +7,9 @@ using namespace sf;
 
 int main()
 {
-	RenderWindow Game(VideoMode(1900, 1080, "Save The Moon"), );
+	sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon");
 
-    while (window.isOpen()) 
+    while (window.isOpen())
     {
         Event event;
         while (window.pollEvent(event))
