@@ -1,26 +1,39 @@
 #pragma once
 
-#include <iostream> 
+#include <iostream>
+#include <vector> 
 #include <SFML/Graphics.hpp>
 
 
 class Player
 {
 private:
-	int health;
+	//Main Properties
+	float health;
+
 	sf::Vector2f position;
-
-	//Physics
 	sf::Vector2f velocity;
-	float acceleration;
-	float drag;
+    float speed;
 
-	//Core
+	//Movement keys
+	typedef std::vector<sf::Keyboard::Key> KeyVector;
 
-	void initPhysics();
+	KeyVector upKeys = { sf::Keyboard::Key::Z, sf::Keyboard::Key::Up };
+	KeyVector downKeys = { sf::Keyboard::Key::S, sf::Keyboard::Key::Down };
+	KeyVector leftKeys = { sf::Keyboard::Key::Q, sf::Keyboard::Key::Left };
+	KeyVector rightKeys = { sf::Keyboard::Key::D, sf::Keyboard::Key::Right };
 
 public:
 
-	Player(int health_, sf::Vector2f position_) : health(health_), position(position_) {}
+	Player(float health_, sf::Vector2f position_);
+
+	sf::Vector2f getPosition() const
+	{
+		return position;
+	}
+
+	void init(float health_, sf::Vector2f position_);
+
+	void updatePosition(float deltaTime);
 
 };
