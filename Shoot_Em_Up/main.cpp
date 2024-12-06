@@ -1,13 +1,23 @@
 #include "Player.h"
 
 #include <iostream>
+#include <vector>   
 #include <SFML/Graphics.hpp>
 
 int main()
 {
+    std::vector<sf::Keyboard::Key> UP_KEYS = { sf::Keyboard::Key::Z, sf::Keyboard::Key::Up };
+    std::vector<sf::Keyboard::Key> DOWN_KEYS = { sf::Keyboard::Key::S, sf::Keyboard::Key::Down };
+    std::vector<sf::Keyboard::Key> LEFT_KEYS = { sf::Keyboard::Key::Q, sf::Keyboard::Key::Left };
+    std::vector<sf::Keyboard::Key> RIGHT_KEYS = { sf::Keyboard::Key::D, sf::Keyboard::Key::Right };
+
 
 	sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon", sf::Style::Fullscreen);
-    window.setFramerateLimit(120);
+    window.setFramerateLimit(60);
+
+    sf::Clock clock;
+    float deltaTime;
+    float playerSpeed = 35.0f;
 
     sf::RectangleShape player(sf::Vector2f(100, 100));
 
@@ -32,39 +42,41 @@ int main()
                 if (event.key.code == sf::Keyboard::Escape)
                     window.close(); // Fermer avec Échap
             }
-
-
-            if (event.type == sf::Event::KeyPressed) {
-                switch (event.key.code) {
-                case(sf::Keyboard::Up):
-                    if (player.getPosition().y > player.getSize().y / 2)
-                    {
-                        player.setPosition(player.getPosition() + sf::Vector2f{ 0, -20 });
-                    }
-                    break;
-                
-                case(sf::Keyboard::Down):
-                    if (player.getPosition().y < window.getSize().y - player.getSize().y/2)
-                    {
-                        player.setPosition(player.getPosition() + sf::Vector2f{ 0, 20 });
-                    }
-                    break;
-
-                case(sf::Keyboard::Left):
-                    if (player.getPosition().x > player.getSize().x / 2)
-                    {
-                        player.setPosition(player.getPosition() + sf::Vector2f{ -20, 0 });
-                    }
-                    break;
-                case(sf::Keyboard::Right):
-                    if (player.getPosition().x < window.getSize().x - player.getSize().x / 2)
-                    {
-                        player.setPosition(player.getPosition() + sf::Vector2f{ 20, 0 });
-                    }
-                    break;
-                }
-            }
         }  
+
+        deltaTime = clock.restart().asSeconds();
+
+        for (sf::Keyboard::Key key : UP_KEYS) 
+        {
+            if (sf::Keyboard::isKeyPressed(key))
+            {
+                player.move(sf::Vector2f{ 0, -20 * deltaTime * playerSpeed });
+            }
+        }
+
+        for (sf::Keyboard::Key key : DOWN_KEYS)
+        {
+            if (sf::Keyboard::isKeyPressed(key))
+            {
+                player.move(sf::Vector2f{ 0, 20 * deltaTime * playerSpeed });
+            }
+        }
+
+        for (sf::Keyboard::Key key : LEFT_KEYS)
+        {
+            if (sf::Keyboard::isKeyPressed(key))
+            {
+                player.move(sf::Vector2f{ -20 * deltaTime * playerSpeed, 0 });
+            }
+        }
+
+        for (sf::Keyboard::Key key : RIGHT_KEYS)
+        {
+            if (sf::Keyboard::isKeyPressed(key))
+            {
+                player.move(sf::Vector2f{ 20 * deltaTime * playerSpeed, 0 });
+            }
+        }
 
         window.draw(player);
         window.display();
