@@ -10,6 +10,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon", sf::Style::Fullscreen);
     window.setFramerateLimit(60);
 
+    //test
     //creation d'un objet joueur
     Player player(100, { 1900 / 2, 1080 / 2 });
 
