@@ -23,6 +23,8 @@ private:
 	KeyVector leftKeys = { sf::Keyboard::Key::Q, sf::Keyboard::Key::Left };
 	KeyVector rightKeys = { sf::Keyboard::Key::D, sf::Keyboard::Key::Right };
 
+	KeyVector shootKeys = { sf::Keyboard::Key::Space };
+
 public:
 
 	Player(float health_, sf::Vector2f position_);
@@ -34,6 +36,7 @@ public:
 
 	void init(float health_, sf::Vector2f position_);
 
+	void shootCheck();
 	void updatePosition(float deltaTime);
 
 };

@@ -1,14 +1,18 @@
 #include "Player.h"
-
+#include "Bullet.h"
 #include <iostream>
 #include <vector>   
 #include <SFML/Graphics.hpp>
 
+BulletManager* BulletManager::instance = nullptr;
+
 int main()
 {
     //creation d'une fenetre
-    sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon", sf::Style::Fullscreen);
+    sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon");
     window.setFramerateLimit(60);
+
+    BulletManager* bulletManager = BulletManager::getInstance();
 
     //test
     //creation d'un objet joueur
@@ -43,7 +47,23 @@ int main()
             }
         }  
 
+        for (Bullet* adress : bulletManager->balles)
+        {
+            sf::RectangleShape boule(sf::Vector2f(5,5));
+            boule.setFillColor(sf::Color:: White);
+            boule.setPosition(adress->getPosition());
+            window.draw(boule);
+        }
+
         deltaTime = clock.restart().asSeconds();
+        player.shootCheck();
+
+        for (Bullet* adress : bulletManager->balles)
+        {
+            bulletManager->movebullet(deltaTime, adress);
+            
+        }
+        bulletManager->despawnbullet();
         player.updatePosition(deltaTime);
 
         ship.setPosition(player.getPosition());
