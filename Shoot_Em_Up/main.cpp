@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Enemy.h"
 
 #include <iostream>
 #include <vector>   
@@ -10,9 +11,11 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon", sf::Style::Fullscreen);
     window.setFramerateLimit(60);
 
-    //test
     //creation d'un objet joueur
-    Player player(100, { 1900 / 2, 1080 / 2 });
+    Player player(100, { 1900 / 3, 1080 / 2 });
+    
+    //creation d'un enemie
+    Enemy alien(100, 50, { 1900, 1080 / 2 }, 10);
 
     //creation d'une horloge
     sf::Clock clock;
@@ -25,6 +28,11 @@ int main()
     ship.setOrigin(sf::Vector2f{ ship.getSize().x, ship.getSize().y } / 2.f);
     ship.setPosition(player.getPosition());
 
+    sf::RectangleShape alienShip(sf::Vector2f(75, 75));
+    alienShip.setFillColor(sf::Color::Red);
+
+    alienShip.setOrigin(sf::Vector2f{ alienShip.getSize().x, alienShip.getSize().y } / 2.f);
+    alienShip.setPosition(alien.getPosition());
 
     while (window.isOpen()) 
     {
@@ -45,10 +53,13 @@ int main()
 
         deltaTime = clock.restart().asSeconds();
         player.updatePosition(deltaTime);
+        alien.updatePosition(deltaTime);
 
         ship.setPosition(player.getPosition());
+        alienShip.setPosition(alien.getPosition());
 
         window.draw(ship);
+        window.draw(alienShip);
         window.display();
     }
 
