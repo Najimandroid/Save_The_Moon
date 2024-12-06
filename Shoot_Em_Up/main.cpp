@@ -9,7 +9,7 @@ BulletManager* BulletManager::instance = nullptr;
 int main()
 {
     //creation d'une fenetre
-    sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon");
+    sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon", sf::Style:: Fullscreen);
     window.setFramerateLimit(60);
 
     BulletManager* bulletManager = BulletManager::getInstance();
@@ -61,8 +61,8 @@ int main()
         for (Bullet* adress : bulletManager->balles)
         {
             bulletManager->movebullet(deltaTime, adress);
-            
-        }
+            std::cout << "[ " << adress << ", ";
+        } std::cout << " ]" << std::endl;
         bulletManager->despawnbullet();
         player.updatePosition(deltaTime);
 

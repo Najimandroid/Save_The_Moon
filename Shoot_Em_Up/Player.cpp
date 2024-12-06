@@ -23,7 +23,7 @@ void Player::updatePosition(float deltaTime)
 {
     for (sf::Keyboard::Key key : upKeys)
     {
-        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y > 0 )
+        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y > 50 )
         {
             this->velocity = sf::Vector2f{ 0, -20 * deltaTime * this->speed };
             this->position += this->velocity; 
@@ -41,7 +41,7 @@ void Player::updatePosition(float deltaTime)
 
     for (sf::Keyboard::Key key : leftKeys)
     {
-        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x > 0)
+        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x > 50)
         {
             this->velocity = sf::Vector2f{ -20 * deltaTime * this->speed , 0  };
             this->position += this->velocity;
@@ -50,7 +50,7 @@ void Player::updatePosition(float deltaTime)
 
     for (sf::Keyboard::Key key : rightKeys)
     {
-        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x < 1850)
+        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x < 1875)
         {
             this->velocity = sf::Vector2f{ 20 * deltaTime * this->speed , 0 };
             this->position += this->velocity;
