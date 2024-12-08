@@ -64,11 +64,9 @@ public:
 
 	Bullet* spawnbullet(sf::Vector2f position, float speed);
 
-	void movebullet(float deltatime, Bullet* bullet);
+	void moveBullet(float deltatime, Bullet* bullet);
 
-	void colisionbullet();
-
-	void despawnbullet();
+	void despawnBullet();
 
 	void drawBullets(sf::RenderWindow& window);
 	void updatePositions(float deltaTime);

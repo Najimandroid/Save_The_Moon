@@ -14,18 +14,13 @@ Bullet* BulletManager::spawnbullet(sf::Vector2f position, float speed)
 
 }
 
-void BulletManager::movebullet(float deltaTime, Bullet* bullet)
+void BulletManager::moveBullet(float deltaTime, Bullet* bullet)
 {
 	bullet->setVelocity(sf::Vector2f{ 20 * deltaTime * bullet->getSpeed() , 0 });
 	bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
 }
 
-void BulletManager::colisionbullet()
-{
-
-}
-
-void BulletManager::despawnbullet()
+void BulletManager::despawnBullet()
 {
 	unsigned index = 0;
 	for (Bullet* bullet : this->bullets)
@@ -56,6 +51,6 @@ void BulletManager::updatePositions(float deltaTime)
 {
 	for (Bullet* adress : this->bullets)
 	{
-		this->movebullet(deltaTime, adress);
+		this->moveBullet(deltaTime, adress);
 	}
 }
