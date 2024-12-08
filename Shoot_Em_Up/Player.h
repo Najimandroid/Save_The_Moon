@@ -15,6 +15,9 @@ private:
 	sf::Vector2f velocity;
 	float speed;
 
+	float shootCooldown;
+	float shootCooldownMax;
+
 	//Movement keys
 	typedef std::vector<sf::Keyboard::Key> KeyVector;
 
@@ -27,16 +30,18 @@ private:
 
 public:
 
-	Player(float health_, sf::Vector2f position_);
+	Player(float health_, float cooldownSeconds_, sf::Vector2f position_);
 
 	sf::Vector2f getPosition() const
 	{
 		return position;
 	}
 
-	void init(float health_, sf::Vector2f position_);
+	void init(float health_, float cooldownSeconds_, sf::Vector2f position_);
+	void update(float deltaTime);
 
-	void shootCheck();
+	bool canShoot() const;
+
+	void updateShoot(float deltaTime);
 	void updatePosition(float deltaTime);
-
 };

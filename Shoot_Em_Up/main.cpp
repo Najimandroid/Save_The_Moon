@@ -20,7 +20,7 @@ int main()
 
     //test
     //creation d'un objet joueur
-    Player player(100, { 1900 / 2, 1080 / 2 });
+    Player player(100, .1f, { 1900 / 2, 1080 / 2 });
 
     //creation d'un enemie
     enemyManager->spawnEnemy(100, 50, { 1900, 1080 / 2 }, 10);
@@ -60,11 +60,10 @@ int main()
         enemyManager->drawEnemies(window);
 
         deltaTime = clock.restart().asSeconds();
-        player.shootCheck();
 
         bulletManager->updatePositions(deltaTime);
         enemyManager->updatePositions(deltaTime);
-        player.updatePosition(deltaTime);
+        player.update(deltaTime);
 
 
         ship.setPosition(player.getPosition());

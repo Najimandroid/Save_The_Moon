@@ -2,6 +2,7 @@
 #include "Player.h"
 #include  <SFML/Graphics.hpp>
 #include <iostream>
+#include <thread>
 
 
 Bullet* BulletManager::spawnbullet(sf::Vector2f position, float speed)
@@ -26,25 +27,25 @@ void BulletManager::colisionbullet()
 
 void BulletManager::despawnbullet()
 {
-	for (Bullet* bullett : bullets)
+	unsigned index = 0;
+	for (Bullet* bullet : this->bullets)
 	{
-		if (bullett->getPosition().x > 1900)
+		if (bullet->getPosition().x > 1900)
 		{
-			auto it = std::find(bullets.begin(), bullets.end(), bullett);
-			if (it != bullets.end())
-			{
-				bullets.erase(it);
-				delete bullett;
-			}
+			//delete
+			delete this->bullets.at(index);
+			this->bullets.erase(this->bullets.begin() + index);
+			index--;
 		}
+		index++;
 	}
 }
 
 void BulletManager::drawBullets(sf::RenderWindow& window)
 {
-	for (Bullet* adress : bullets)
+	for (Bullet* adress : this->bullets)
 	{
-		sf::RectangleShape boule(sf::Vector2f(5, 5));
+		sf::RectangleShape boule(sf::Vector2f(10, 10));
 		boule.setFillColor(sf::Color::White);
 		boule.setPosition(adress->getPosition());
 		window.draw(boule);
@@ -53,7 +54,7 @@ void BulletManager::drawBullets(sf::RenderWindow& window)
 
 void BulletManager::updatePositions(float deltaTime)
 {
-	for (Bullet* adress : bullets)
+	for (Bullet* adress : this->bullets)
 	{
 		this->movebullet(deltaTime, adress);
 	}

@@ -2,26 +2,13 @@
 #include "Bullet.h"
 #include  <SFML/Graphics.hpp>
 #include <iostream>
+#include <thread>
 
 float DEFAULT_SPEED = 35.0f;
 
-void Player::shootCheck()
-{
-    {
-        for (sf::Keyboard::Key key : shootKeys)
-        {
-            if (sf::Keyboard::isKeyPressed(key))
-            {
-                BulletManager* bulletManager = BulletManager::getInstance();
-                bulletManager->spawnbullet({ this->position }, this->speed);
-            }
-        }
-    }
-}
-
 void Player::updatePosition(float deltaTime)
 {
-    for (sf::Keyboard::Key key : upKeys)
+    for (sf::Keyboard::Key key : this->upKeys)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y > 50)
         {
@@ -30,7 +17,7 @@ void Player::updatePosition(float deltaTime)
         }
     }
 
-    for (sf::Keyboard::Key key : downKeys)
+    for (sf::Keyboard::Key key : this->downKeys)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y < 1030)
         {
@@ -39,7 +26,7 @@ void Player::updatePosition(float deltaTime)
         }
     }
 
-    for (sf::Keyboard::Key key : leftKeys)
+    for (sf::Keyboard::Key key : this->leftKeys)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x > 50)
         {
@@ -48,7 +35,7 @@ void Player::updatePosition(float deltaTime)
         }
     }
 
-    for (sf::Keyboard::Key key : rightKeys)
+    for (sf::Keyboard::Key key : this->rightKeys)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x < 1875)
         {
@@ -58,17 +45,53 @@ void Player::updatePosition(float deltaTime)
     }
 }
 
-void Player::init(float health_, sf::Vector2f position_)
+bool Player::canShoot() const
 {
-    this->health = health_;
-    this->position = position_;
-
-    this->velocity = { 0, 0 };
-    this->speed = DEFAULT_SPEED;
-
+    return (this->shootCooldown >= this->shootCooldownMax);
 }
 
-Player::Player(float health_, sf::Vector2f position_)
+void Player::updateShoot(float deltaTime)
 {
-    Player::init(health_, position_);
+    if (this->canShoot())
+    {
+        //reset cooldown
+        this->shootCooldown = 0.f;
+     
+        //then shoot
+        for (sf::Keyboard::Key key : this->shootKeys)
+        {
+            if (sf::Keyboard::isKeyPressed(key))
+            {
+                BulletManager* bulletManager = BulletManager::getInstance();
+                bulletManager->spawnbullet({ this->position }, this->speed);
+            }
+        }
+    }
+    else
+    {
+        this->shootCooldown += deltaTime;
+    }
+}
+
+void Player::update(float deltaTime) 
+{
+    this->updatePosition(deltaTime);
+    this->updateShoot(deltaTime);
+}
+
+void Player::init(float health_, float cooldownSeconds_, sf::Vector2f position_)
+{
+    this->health = health_;
+
+    this->position = position_;
+    this->velocity = { 0, 0 };
+
+    this->speed = DEFAULT_SPEED;
+
+    this->shootCooldownMax = cooldownSeconds_;
+}
+
+Player::Player(float health_, float cooldownSeconds_, sf::Vector2f position_)
+{
+    Player::init(health_, cooldownSeconds_, position_);
 }
