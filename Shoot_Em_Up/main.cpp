@@ -54,7 +54,7 @@ int main()
             }
         }
 
-        bulletManager->despawnbullet();
+        bulletManager->despawnBullet();
 
         bulletManager->drawBullets(window);
         enemyManager->drawEnemies(window);
