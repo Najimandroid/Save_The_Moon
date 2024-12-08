@@ -1,19 +1,40 @@
 #include "Player.h"
+#include "Enemy.h"
+#include "Bullet.h"
+
 #include <iostream>
+#include <vector>   
 #include <SFML/Graphics.hpp>
+
+BulletManager* BulletManager::instance = nullptr;
+EnemyManager* EnemyManager::instance = nullptr;
 
 int main()
 {
+    //creation d'une fenetre
+    sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon", sf::Style::Fullscreen);
+    window.setFramerateLimit(120);
 
-	sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon", sf::Style::Fullscreen);
-    window.setFramerateLimit(60);
+    BulletManager* bulletManager = BulletManager::getInstance();
+    EnemyManager* enemyManager = EnemyManager::getInstance();
 
-    sf::RectangleShape player(sf::Vector2f(200, 200));
+    //test
+    //creation d'un objet joueur
+    Player player(100, { 1900 / 2, 1080 / 2 });
 
-    player.setFillColor(sf::Color::Red);
+    //creation d'un enemie
+    enemyManager->spawnEnemy(100, 50, { 1900, 1080 / 2 }, 10);
 
-    player.setOrigin(sf::Vector2f{ player.getSize().x, player.getSize().y } / 2.f);
-    player.setPosition(1900 / 2, 1080 / 2);
+    //creation d'une horloge
+    sf::Clock clock;
+    float deltaTime;
+
+
+    sf::RectangleShape ship(sf::Vector2f(100, 100));
+    ship.setFillColor(sf::Color::Green);
+
+    ship.setOrigin(sf::Vector2f{ ship.getSize().x, ship.getSize().y } / 2.f);
+    ship.setPosition(player.getPosition());
 
 
     while (window.isOpen())
@@ -26,49 +47,32 @@ int main()
             if (event.type == sf::Event::Closed)
                 window.close();
 
-            if (event.type == sf::Event::KeyPressed) 
+            if (event.type == sf::Event::KeyPressed)
             {
                 if (event.key.code == sf::Keyboard::Escape)
-                    window.close(); // Fermer avec Échap
+                    window.close(); // Fermer avec echap
             }
+        }
+
+        bulletManager->despawnbullet();
+
+        bulletManager->drawBullets(window);
+        enemyManager->drawEnemies(window);
+
+        deltaTime = clock.restart().asSeconds();
+        player.shootCheck();
+
+        bulletManager->updatePositions(deltaTime);
+        enemyManager->updatePositions(deltaTime);
+        player.updatePosition(deltaTime);
 
 
-            if (event.type == sf::Event::KeyPressed) {
-                switch (event.key.code) {
-                case(sf::Keyboard::Up):
-                    if (player.getPosition().y > 100)
-                    {
-                        player.setPosition(player.getPosition() + sf::Vector2f{ 0, -20 });
-                    }
-                    break;
-                
-                case(sf::Keyboard::Down):
-                    if (player.getPosition().y < 980)
-                    {
-                        player.setPosition(player.getPosition() + sf::Vector2f{ 0, 20 });
-                    }
-                    break;
+        ship.setPosition(player.getPosition());
 
-                case(sf::Keyboard::Left):
-                    if (player.getPosition().x > 100)
-                    {
-                        player.setPosition(player.getPosition() + sf::Vector2f{ -20, 0 });
-                    }
-                    break;
-                case(sf::Keyboard::Right):
-                    if (player.getPosition().x < 1800)
-                    {
-                        player.setPosition(player.getPosition() + sf::Vector2f{ 20, 0 });
-                    }
-                    break;
-                }
-            }
-        }  
-
-        window.draw(player);
+        window.draw(ship);
         window.display();
     }
 
 
-return 0;
+    return 0;
 }
