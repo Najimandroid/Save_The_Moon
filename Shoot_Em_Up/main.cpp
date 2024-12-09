@@ -113,7 +113,7 @@ int main()
                                     LvlSelect.close();
                                 }
 
-                                //Bouton Lancer Niveaux
+                                //Bouton Lancer Jeu
                                 if (event.type == sf::Event::MouseButtonPressed)
                                 {
                                     if (mouse1.x >= 300 && mouse1.x <= 350)
