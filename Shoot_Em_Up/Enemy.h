@@ -17,6 +17,8 @@ private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 
+	sf::RectangleShape hitbox;
+
 public:
 	Enemy(float health_, float damage_, sf::Vector2f position_, float speed_);
 
@@ -40,8 +42,21 @@ public:
 		return speed;
 	}
 
+	sf::RectangleShape& getHitbox()
+	{
+		return hitbox;
+	}
+
+	float getDamage()
+	{
+		return damage;
+	}
+
 	void init(float health_, float damage_, sf::Vector2f position_, float speed_);
 	void updatePosition(float deltaTime);
+
+	void updateHealth(float value);
+	bool isDead();
 };
 
 
@@ -72,4 +87,7 @@ public:
 
 	void drawEnemies(sf::RenderWindow& window);
 	void updatePositions(float deltaTime);
+	void updateState();
+
+	void update(float deltaTime);
 };

@@ -1,4 +1,5 @@
 #pragma once
+#include "Enemy.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
@@ -13,9 +14,16 @@ private:
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 
+	sf::RectangleShape hitbox;
+
 public:
-	Bullet(float damage_, float speed_, sf::Vector2f position_ , sf::Vector2f velocity_) : 
-		damage(damage_), speed(speed_), position(position_), velocity(velocity_) {}
+	Bullet(float damage_, float speed_, sf::Vector2f position_, sf::Vector2f velocity_) :
+		damage(damage_), speed(speed_), position(position_), velocity(velocity_)
+	{
+		sf::RectangleShape hitbox_(sf::Vector2f(10, 10));
+		hitbox = hitbox_;
+		hitbox.setPosition(position);
+	}
 
 	sf::Vector2f getPosition() const
 	{
@@ -41,6 +49,18 @@ public:
 	{
 		return speed;
 	}
+
+	sf::RectangleShape& getHitbox()
+	{
+		return hitbox;
+	}
+
+	float getDamage()
+	{
+		return damage;
+	}
+
+	bool collided(Enemy* obstacle);
 };
 
 
@@ -66,7 +86,7 @@ public:
 
 	void moveBullet(float deltatime, Bullet* bullet);
 
-	void despawnBullet();
+	void despawnBullets();
 
 	void drawBullets(sf::RenderWindow& window);
 	void updatePositions(float deltaTime);
@@ -75,4 +95,6 @@ public:
 	{
 		return bullets;
 	}
+
+	void checkCollisions(Enemy* obstacle);
 };

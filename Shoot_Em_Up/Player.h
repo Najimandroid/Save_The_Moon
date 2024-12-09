@@ -18,6 +18,8 @@ private:
 	float shootCooldown;
 	float shootCooldownMax;
 
+	sf::RectangleShape hitbox;
+
 	//Movement keys
 	typedef std::vector<sf::Keyboard::Key> KeyVector;
 
@@ -35,6 +37,11 @@ public:
 	sf::Vector2f getPosition() const
 	{
 		return position;
+	}
+
+	sf::RectangleShape& getHitbox()
+	{
+		return hitbox;
 	}
 
 	void init(float health_, float cooldownSeconds_, sf::Vector2f position_);

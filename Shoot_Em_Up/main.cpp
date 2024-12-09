@@ -23,7 +23,10 @@ int main()
     Player player(100, .1f, { 1900 / 2, 1080 / 2 });
 
     //creation d'un enemie
-    enemyManager->spawnEnemy(100, 50, { 1900, 1080 / 2 }, 10);
+    enemyManager->spawnEnemy(100, 25, { 1900, 1080 / 2 }, 3);
+    enemyManager->spawnEnemy(100, 25, { 1900, 1080 / 4 }, 3);
+    enemyManager->spawnEnemy(100, 25, { 1900, 1080 / 3 }, 3);
+    enemyManager->spawnEnemy(100, 25, { 1900, 900 }, 3);
 
     //creation d'une horloge
     sf::Clock clock;
@@ -54,17 +57,21 @@ int main()
             }
         }
 
-        bulletManager->despawnBullet();
+        bulletManager->despawnBullets();
 
         bulletManager->drawBullets(window);
         enemyManager->drawEnemies(window);
 
+        for (Enemy* enemy : enemyManager->getEnemies())
+        {
+            bulletManager->checkCollisions(enemy);
+        }
+
         deltaTime = clock.restart().asSeconds();
 
         bulletManager->updatePositions(deltaTime);
-        enemyManager->updatePositions(deltaTime);
+        enemyManager->update(deltaTime);
         player.update(deltaTime);
-
 
         ship.setPosition(player.getPosition());
 

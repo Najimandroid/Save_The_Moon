@@ -89,6 +89,10 @@ void Player::init(float health_, float cooldownSeconds_, sf::Vector2f position_)
     this->speed = DEFAULT_SPEED;
 
     this->shootCooldownMax = cooldownSeconds_;
+
+    sf::RectangleShape hitbox_(sf::Vector2f(100, 100));
+    this->hitbox = hitbox_;
+    this->hitbox.setPosition(this->position);
 }
 
 Player::Player(float health_, float cooldownSeconds_, sf::Vector2f position_)

@@ -17,11 +17,15 @@ void Enemy::updatePosition(float deltaTime)
 {
 	velocity = { -20 * deltaTime * this->speed, 0 };
 	this->position += velocity;
+	this->hitbox.setPosition(this->position);
 }
 
 Enemy::Enemy(float health_, float damage_, sf::Vector2f position_, float speed_)
 {
 	Enemy::init(health_,damage_,position_, speed_);
+	sf::RectangleShape hitbox_(sf::Vector2f(50, 50));
+	this->hitbox = hitbox_;
+	this->hitbox.setPosition(this->position);
 }
 
 Enemy* EnemyManager::spawnEnemy(float health_, float damage_, sf::Vector2f position_, float speed_)
@@ -31,21 +35,59 @@ Enemy* EnemyManager::spawnEnemy(float health_, float damage_, sf::Vector2f posit
 	return newEnemy;
 }
 
+void Enemy::updateHealth(float value)
+{
+	this->health += value;
+}
+
+bool Enemy::isDead()
+{
+	return (this->health <= 0);
+}
+
 void EnemyManager::drawEnemies(sf::RenderWindow& window)
 {
 	for (Enemy* adress : this->enemies)
 	{
-		sf::RectangleShape boule(sf::Vector2f(50, 50));
-		boule.setFillColor(sf::Color::Red);
-		boule.setPosition(adress->getPosition());
-		window.draw(boule);
+		sf::RectangleShape body_(sf::Vector2f(50, 50));
+		body_.setFillColor(sf::Color::Red);
+		body_.setPosition(adress->getPosition());
+		window.draw(body_);
 	}
 }
 
 void EnemyManager::updatePositions(float deltaTime)
 {
-	for (Enemy* adress : enemies)
+	for (Enemy* enemy : enemies)
 	{
-		adress->updatePosition(deltaTime);
+		enemy->updatePosition(deltaTime);
 	}
+}
+
+void EnemyManager::updateState()
+{
+	std::cout << "[ ";
+
+	for (auto it = this->enemies.begin(); it != this->enemies.end(); ) 
+		{
+			Enemy* enemy = *it;
+			std::cout << enemy->getHealth() << ", ";
+
+			if (enemy->isDead()) {
+				// delete enemy if dead
+				delete enemy;
+				it = this->enemies.erase(it);
+			}
+			else {
+				++it;  // updates only if the enemy is deleted
+			}
+		}
+
+	std::cout << " ]\n";
+}
+
+void EnemyManager::update(float deltaTime)
+{
+	this->updatePositions(deltaTime);
+	this->updateState();
 }
