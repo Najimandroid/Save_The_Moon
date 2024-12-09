@@ -49,23 +49,53 @@ int main()
                         menu.close();
 
                         //Selection des niveaux
-                        sf::RenderWindow LvlSelect(sf::VideoMode(1900, 1080), "Selection");
+                        sf::RenderWindow LvlSelect(sf::VideoMode(1900, 1080), "Selection Niveaux");
                         LvlSelect.setFramerateLimit(60);
 
                         sf::RectangleShape Niveaux1(sf::Vector2f(50, 50));
-                        Niveaux1.setFillColor(sf::Color::Red);
+                        Niveaux1.setFillColor(sf::Color::Cyan);
+                        Niveaux1.setPosition(500,400);
+
+
+                        sf::RectangleShape Niveaux2(sf::Vector2f(50, 50));
+                        Niveaux2.setFillColor(sf::Color::Green);
+                        Niveaux2.setPosition(550, 350);
+
+                        sf::RectangleShape Niveaux3(sf::Vector2f(50, 50));
+                        Niveaux3.setFillColor(sf::Color::Blue);
+                        Niveaux3.setPosition(600, 400);
+
+                        sf::RectangleShape Niveaux4(sf::Vector2f(50, 50));
+                        Niveaux4.setFillColor(sf::Color::Yellow);
+                        Niveaux4.setPosition(650, 350);
+
+                        sf::RectangleShape Niveaux5(sf::Vector2f(50, 50));
+                        Niveaux5.setFillColor(sf::Color::White);
+                        Niveaux5.setPosition(700, 400);
+
+                        sf::RectangleShape Niveaux6(sf::Vector2f(50, 50));
+                        Niveaux6.setFillColor(sf::Color::Red);
+                        Niveaux6.setPosition(750, 350);
 
                         sf::Event event;
 
                         LvlSelect.clear();
                         LvlSelect.draw(Niveaux1);
+                        LvlSelect.draw(Niveaux2);
+                        LvlSelect.draw(Niveaux3);
+                        LvlSelect.draw(Niveaux4);
+                        LvlSelect.draw(Niveaux5);
+                        LvlSelect.draw(Niveaux6);
                         LvlSelect.display();
 
-                        sf::Vector2i mouse = sf::Mouse::getPosition(menu);
+
 
 
                         while (LvlSelect.isOpen())
                         {
+                            sf::Vector2i mouse1 = sf::Mouse::getPosition(LvlSelect);
+
+
                             while (LvlSelect.pollEvent(event))
                             {
                                 if (event.type == sf::Event::Closed)
@@ -76,9 +106,9 @@ int main()
                                 //Bouton Lancer Jeu
                                 if (event.type == sf::Event::MouseButtonPressed)
                                 {
-                                    if (mouse.x >= 0 && mouse.x <= 50)
+                                    if (mouse1.x >= 500 && mouse1.x <= 550)
                                     {
-                                        if (mouse.y >= 0 && mouse.y <= 50)
+                                        if (mouse1.y >= 400 && mouse1.y <= 450)
                                         {
                                             LvlSelect.close();
 
@@ -152,10 +182,7 @@ int main()
                         }
                     }
                 }
-            }
-                           
-
-
+            }                        
             //Bouton Close Menu
             if (event.type == sf::Event::MouseButtonPressed)
             {
