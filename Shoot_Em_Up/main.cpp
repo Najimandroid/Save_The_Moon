@@ -52,30 +52,30 @@ int main()
                         sf::RenderWindow LvlSelect(sf::VideoMode(1900, 1080), "Selection Niveaux");
                         LvlSelect.setFramerateLimit(60);
 
-                        sf::RectangleShape Niveaux1(sf::Vector2f(50, 50));
+                        sf::CircleShape Niveaux1(40);
                         Niveaux1.setFillColor(sf::Color::Cyan);
-                        Niveaux1.setPosition(500,400);
+                        Niveaux1.setPosition(300,400);
 
 
-                        sf::RectangleShape Niveaux2(sf::Vector2f(50, 50));
+                        sf::CircleShape Niveaux2(40);
                         Niveaux2.setFillColor(sf::Color::Green);
-                        Niveaux2.setPosition(550, 350);
+                        Niveaux2.setPosition(600, 100);
 
-                        sf::RectangleShape Niveaux3(sf::Vector2f(50, 50));
+                        sf::CircleShape Niveaux3(40);
                         Niveaux3.setFillColor(sf::Color::Blue);
-                        Niveaux3.setPosition(600, 400);
+                        Niveaux3.setPosition(750, 600);
 
-                        sf::RectangleShape Niveaux4(sf::Vector2f(50, 50));
+                        sf::CircleShape Niveaux4(40);
                         Niveaux4.setFillColor(sf::Color::Yellow);
-                        Niveaux4.setPosition(650, 350);
+                        Niveaux4.setPosition(1050, 350);
 
-                        sf::RectangleShape Niveaux5(sf::Vector2f(50, 50));
+                        sf::CircleShape Niveaux5(40);
                         Niveaux5.setFillColor(sf::Color::White);
-                        Niveaux5.setPosition(700, 400);
+                        Niveaux5.setPosition(1300, 800);
 
-                        sf::RectangleShape Niveaux6(sf::Vector2f(50, 50));
+                        sf::CircleShape Niveaux6(40);
                         Niveaux6.setFillColor(sf::Color::Red);
-                        Niveaux6.setPosition(750, 350);
+                        Niveaux6.setPosition(1700, 500);
 
                         sf::Event event;
 
@@ -87,8 +87,6 @@ int main()
                         LvlSelect.draw(Niveaux5);
                         LvlSelect.draw(Niveaux6);
                         LvlSelect.display();
-
-
 
 
                         while (LvlSelect.isOpen())
@@ -106,7 +104,7 @@ int main()
                                 //Bouton Lancer Jeu
                                 if (event.type == sf::Event::MouseButtonPressed)
                                 {
-                                    if (mouse1.x >= 500 && mouse1.x <= 550)
+                                    if (mouse1.x >= 300 && mouse1.x <= 350)
                                     {
                                         if (mouse1.y >= 400 && mouse1.y <= 450)
                                         {
