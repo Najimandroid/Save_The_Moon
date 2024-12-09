@@ -6,25 +6,63 @@
 
 BulletManager* BulletManager::instance = nullptr;
 
+struct Niveau 
+{
+    sf::Color couleur;
+    sf::Vector2f position;
+};
+
+struct BoutonMenu
+{
+    sf::Color couleurtest;
+    sf::Vector2f positiontest;
+};
+
+
+
 int main()
 {
 
-    sf::RenderWindow menu(sf::VideoMode(1900, 1080), "Save The Moon");
+    std::vector <BoutonMenu> Press =
+    {
+        { sf::Color::Blue, {800,375} },
+        { sf::Color::Magenta, {800,475} },
+        { sf::Color::Yellow, {800,575} },
+    };
+
+    std::vector <sf::RectangleShape> test;
+    for (const auto& BoutonMenu : Press)
+    {
+            sf::RectangleShape test2(sf::Vector2f(250, 75));
+            test2.setFillColor(BoutonMenu.couleurtest);
+            test2.setPosition(BoutonMenu.positiontest);
+            test.push_back(test2);
+    }
+
+
+
+    std::vector <Niveau> niveaux =
+    {
+        { sf::Color::Cyan, {300, 400} },
+        { sf::Color::Green, {600, 100} },
+        { sf::Color::Blue, {750, 600} },
+        { sf::Color::Yellow, {1050, 350} },
+        { sf::Color::White, {1300, 800} },
+        { sf::Color::Red, {1700, 500} },
+
+    };
+
+    std::vector<sf::CircleShape> lvls;
+    for (const auto& Niveau : niveaux)
+    {
+        sf::CircleShape lvl(40);
+        lvl.setFillColor(Niveau.couleur);
+        lvl.setPosition(Niveau.position);
+        lvls.push_back(lvl);
+    }
+
+    sf::RenderWindow menu(sf::VideoMode(1900, 1080), "Menu : Save The Moon");
     menu.setFramerateLimit(60);
-
-
-    sf::RectangleShape BoutonPlay(sf::Vector2f(250, 75));
-    BoutonPlay.setPosition(800, 375);
-    BoutonPlay.setFillColor(sf::Color::Blue);
-
-    sf::RectangleShape BoutonOption(sf::Vector2f(250, 75));
-    BoutonOption.setPosition(800, 475);
-    BoutonOption.setFillColor(sf::Color::Magenta);
-
-    sf::RectangleShape BoutonClose(sf::Vector2f(250, 75));
-    BoutonClose.setPosition(800, 575);
-    BoutonClose.setFillColor(sf::Color::Yellow);
-
 
     sf::Event event;
 
@@ -51,41 +89,15 @@ int main()
                         //Selection des niveaux
                         sf::RenderWindow LvlSelect(sf::VideoMode(1900, 1080), "Selection Niveaux");
                         LvlSelect.setFramerateLimit(60);
-
-                        sf::CircleShape Niveaux1(40);
-                        Niveaux1.setFillColor(sf::Color::Cyan);
-                        Niveaux1.setPosition(300,400);
-
-
-                        sf::CircleShape Niveaux2(40);
-                        Niveaux2.setFillColor(sf::Color::Green);
-                        Niveaux2.setPosition(600, 100);
-
-                        sf::CircleShape Niveaux3(40);
-                        Niveaux3.setFillColor(sf::Color::Blue);
-                        Niveaux3.setPosition(750, 600);
-
-                        sf::CircleShape Niveaux4(40);
-                        Niveaux4.setFillColor(sf::Color::Yellow);
-                        Niveaux4.setPosition(1050, 350);
-
-                        sf::CircleShape Niveaux5(40);
-                        Niveaux5.setFillColor(sf::Color::White);
-                        Niveaux5.setPosition(1300, 800);
-
-                        sf::CircleShape Niveaux6(40);
-                        Niveaux6.setFillColor(sf::Color::Red);
-                        Niveaux6.setPosition(1700, 500);
-
+                        
                         sf::Event event;
 
                         LvlSelect.clear();
-                        LvlSelect.draw(Niveaux1);
-                        LvlSelect.draw(Niveaux2);
-                        LvlSelect.draw(Niveaux3);
-                        LvlSelect.draw(Niveaux4);
-                        LvlSelect.draw(Niveaux5);
-                        LvlSelect.draw(Niveaux6);
+                        for (const auto& lvl : lvls)
+                        {
+                            LvlSelect.draw(lvl);
+                        }
+
                         LvlSelect.display();
 
 
@@ -101,7 +113,7 @@ int main()
                                     LvlSelect.close();
                                 }
 
-                                //Bouton Lancer Jeu
+                                //Bouton Lancer Niveaux
                                 if (event.type == sf::Event::MouseButtonPressed)
                                 {
                                     if (mouse1.x >= 300 && mouse1.x <= 350)
@@ -194,9 +206,10 @@ int main()
             }
         }
         menu.clear();
-        menu.draw(BoutonPlay);
-        menu.draw(BoutonOption);
-        menu.draw(BoutonClose);
+        for (const auto& test2 : test)
+        {
+            menu.draw(test2);
+        }
         menu.display();
     }
 return 0;
