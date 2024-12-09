@@ -20,22 +20,17 @@ int main()
 
     //test
     //creation d'un objet joueur
-    Player player(100, .1f, { 1900 / 2, 1080 / 2 });
+    Player* player = new Player({ 1900 / 2, 1080 / 2 }, { 100, 100 }, 100, 20, 20, true, .1f);
 
     //creation d'un enemie
-    enemyManager->spawnEnemy(100, 50, { 1900, 1080 / 2 }, 10);
+    enemyManager->spawnEnemy(500, 25, { 1900, 1080 / 2 }, 3);
+    enemyManager->spawnEnemy(100, 25, { 1900, 1080 / 4 }, 3);
+    enemyManager->spawnEnemy(100, 25, { 1900, 1080 / 3 }, 3);
+    enemyManager->spawnEnemy(100, 25, { 1900, 900 }, 3);
 
     //creation d'une horloge
     sf::Clock clock;
     float deltaTime;
-
-
-    sf::RectangleShape ship(sf::Vector2f(100, 100));
-    ship.setFillColor(sf::Color::Green);
-
-    ship.setOrigin(sf::Vector2f{ ship.getSize().x, ship.getSize().y } / 2.f);
-    ship.setPosition(player.getPosition());
-
 
     while (window.isOpen())
     {
@@ -54,21 +49,25 @@ int main()
             }
         }
 
-        bulletManager->despawnBullet();
+        bulletManager->despawnBullets();
 
+        
         bulletManager->drawBullets(window);
+        player->draw(window, { 100, 100 }, sf::Color::Green);
         enemyManager->drawEnemies(window);
+
+        for (Enemy* enemy : enemyManager->getEnemies())
+        {
+            bulletManager->checkCollisions(enemy);
+            bulletManager->checkCollisions(player);
+        }
 
         deltaTime = clock.restart().asSeconds();
 
         bulletManager->updatePositions(deltaTime);
-        enemyManager->updatePositions(deltaTime);
-        player.update(deltaTime);
+        enemyManager->update(deltaTime);
+        player->update(deltaTime);
 
-
-        ship.setPosition(player.getPosition());
-
-        window.draw(ship);
         window.display();
     }
 

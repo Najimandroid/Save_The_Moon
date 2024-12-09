@@ -1,47 +1,17 @@
 #pragma once
+#include "Entity.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
 
 
-class Enemy
+class Enemy : public Entity
 {
-private:
-
-	float health;
-	float damage;
-
-	float speed;
-
-	sf::Vector2f position;
-	sf::Vector2f velocity;
-
 public:
-	Enemy(float health_, float damage_, sf::Vector2f position_, float speed_);
+	Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_);
 
-	sf::Vector2f getPosition() const
-	{
-		return position;
-	}
-
-	float getHealth() const
-	{
-		return health;
-	}
-
-	void setPosition(sf::Vector2f newPosition)
-	{
-		position = newPosition;
-	}
-
-	float getSpeed() const
-	{
-		return speed;
-	}
-
-	void init(float health_, float damage_, sf::Vector2f position_, float speed_);
-	void updatePosition(float deltaTime);
+	void updatePosition(float deltaTime) override;
 };
 
 
@@ -72,4 +42,7 @@ public:
 
 	void drawEnemies(sf::RenderWindow& window);
 	void updatePositions(float deltaTime);
+	void updateStates();
+
+	void update(float deltaTime);
 };
