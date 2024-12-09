@@ -1,25 +1,27 @@
 #include "Bullet.h"
-#include "Player.h"
+#include "Entity.h"
+
 #include  <SFML/Graphics.hpp>
 #include <iostream>
 #include <thread>
+#include <variant>
 
-bool Bullet::collided(Enemy* obstacle)
+bool Bullet::collided(Entity* entity)
 {
 	sf::FloatRect  floatRect  = this->hitbox.getGlobalBounds();
-	sf::FloatRect  otherFloatRect = obstacle->getHitbox().getGlobalBounds();
+	sf::FloatRect  otherFloatRect = entity->getHitbox().getGlobalBounds();
 	return(floatRect.intersects(otherFloatRect));
 }
 
-void BulletManager::checkCollisions(Enemy* obstacle)
+void BulletManager::checkCollisions(Entity* entity)
 {
 	unsigned index = 0;
 	for (Bullet* bullet : this->bullets)
 	{
-		if (bullet->collided(obstacle))
+		if (bullet->collided(entity))
 		{
 			std::cout << "Touche: -" << bullet->getDamage() << "HP\n";
-			obstacle->updateHealth(-bullet->getDamage()); // -x hp
+			entity->updateHealth(-bullet->getDamage()); // -x hp
 
 			//delete
 			delete this->bullets.at(index);

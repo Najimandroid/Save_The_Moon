@@ -1,17 +1,9 @@
 #include "Enemy.h"
+#include "Bullet.h"
 #include  <SFML/Graphics.hpp>
 
 #include <vector> 
 #include <iostream>
-
-void Enemy::init(float health_, float damage_, sf::Vector2f position_, float speed_)
-{
-	this->health = health_;
-	this->damage = damage_;
-	this->position = position_;
-	this->speed = speed_;
-	this->velocity = { 0, 0 };
-}
 
 void Enemy::updatePosition(float deltaTime)
 {
@@ -20,29 +12,11 @@ void Enemy::updatePosition(float deltaTime)
 	this->hitbox.setPosition(this->position);
 }
 
-Enemy::Enemy(float health_, float damage_, sf::Vector2f position_, float speed_)
-{
-	Enemy::init(health_,damage_,position_, speed_);
-	sf::RectangleShape hitbox_(sf::Vector2f(50, 50));
-	this->hitbox = hitbox_;
-	this->hitbox.setPosition(this->position);
-}
-
 Enemy* EnemyManager::spawnEnemy(float health_, float damage_, sf::Vector2f position_, float speed_)
 {
-	Enemy* newEnemy = new Enemy(health_, damage_, position_, speed_);
+	Enemy* newEnemy = new Enemy(position_, {50, 50}, health_, damage_, speed_, true, 2.f);
 	this->enemies.push_back(newEnemy);
 	return newEnemy;
-}
-
-void Enemy::updateHealth(float value)
-{
-	this->health += value;
-}
-
-bool Enemy::isDead()
-{
-	return (this->health <= 0);
 }
 
 void EnemyManager::drawEnemies(sf::RenderWindow& window)
@@ -90,4 +64,16 @@ void EnemyManager::update(float deltaTime)
 {
 	this->updatePositions(deltaTime);
 	this->updateState();
+
+	for (Enemy* enemy : this->enemies)
+	{
+		enemy->update(deltaTime);
+	}
+}
+
+Enemy::Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
+{
+	this->initPosition(position_);
+	this->initHitbox(hitboxSize_);
+	this->initProperties(health_, damage_, speed_, canShoot_, cooldownSeconds_);
 }

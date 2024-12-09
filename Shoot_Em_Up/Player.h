@@ -1,26 +1,17 @@
 #pragma once
+#include "Entity.h"
 
 #include <iostream>
 #include <vector> 
 #include <SFML/Graphics.hpp>
 
 
-class Player
+class Player : public Entity
 {
 private:
-	//Main Properties
-	float health;
 
-	sf::Vector2f position;
-	sf::Vector2f velocity;
-	float speed;
+	//* CONTROL KEYS *\\
 
-	float shootCooldown;
-	float shootCooldownMax;
-
-	sf::RectangleShape hitbox;
-
-	//Movement keys
 	typedef std::vector<sf::Keyboard::Key> KeyVector;
 
 	KeyVector upKeys = { sf::Keyboard::Key::Z, sf::Keyboard::Key::Up };
@@ -31,24 +22,8 @@ private:
 	KeyVector shootKeys = { sf::Keyboard::Key::Space };
 
 public:
-
-	Player(float health_, float cooldownSeconds_, sf::Vector2f position_);
-
-	sf::Vector2f getPosition() const
-	{
-		return position;
-	}
-
-	sf::RectangleShape& getHitbox()
-	{
-		return hitbox;
-	}
-
-	void init(float health_, float cooldownSeconds_, sf::Vector2f position_);
-	void update(float deltaTime);
-
-	bool canShoot() const;
-
-	void updateShoot(float deltaTime);
-	void updatePosition(float deltaTime);
+	Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_);
+	
+	void updateShoot(float deltaTime) override;
+	void updatePosition (float deltaTime) override;
 };

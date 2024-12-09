@@ -45,14 +45,9 @@ void Player::updatePosition(float deltaTime)
     }
 }
 
-bool Player::canShoot() const
-{
-    return (this->shootCooldown >= this->shootCooldownMax);
-}
-
 void Player::updateShoot(float deltaTime)
 {
-    if (this->canShoot())
+    if (!this->isOnCooldown())
     {
         //reset cooldown
         this->shootCooldown = 0.f;
@@ -73,29 +68,9 @@ void Player::updateShoot(float deltaTime)
     }
 }
 
-void Player::update(float deltaTime) 
+Player::Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
 {
-    this->updatePosition(deltaTime);
-    this->updateShoot(deltaTime);
-}
-
-void Player::init(float health_, float cooldownSeconds_, sf::Vector2f position_)
-{
-    this->health = health_;
-
-    this->position = position_;
-    this->velocity = { 0, 0 };
-
-    this->speed = DEFAULT_SPEED;
-
-    this->shootCooldownMax = cooldownSeconds_;
-
-    sf::RectangleShape hitbox_(sf::Vector2f(100, 100));
-    this->hitbox = hitbox_;
-    this->hitbox.setPosition(this->position);
-}
-
-Player::Player(float health_, float cooldownSeconds_, sf::Vector2f position_)
-{
-    Player::init(health_, cooldownSeconds_, position_);
+    this->initPosition(position_);
+    this->initHitbox(hitboxSize_);
+    this->initProperties(health_, damage_, speed_, canShoot_, cooldownSeconds_);
 }

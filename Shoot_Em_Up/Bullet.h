@@ -1,10 +1,9 @@
 #pragma once
-#include "Enemy.h"
+#include "Entity.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
-
 
 class Bullet
 {
@@ -60,7 +59,7 @@ public:
 		return damage;
 	}
 
-	bool collided(Enemy* obstacle);
+	bool collided(Entity* obstacle);
 };
 
 
@@ -96,5 +95,6 @@ public:
 		return bullets;
 	}
 
-	void checkCollisions(Enemy* obstacle);
+
+	void checkCollisions(Entity* obstacle);
 };

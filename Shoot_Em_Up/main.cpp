@@ -20,10 +20,10 @@ int main()
 
     //test
     //creation d'un objet joueur
-    Player player(100, .1f, { 1900 / 2, 1080 / 2 });
+    Player player({ 1900 / 2, 1080 / 2 }, {100, 100}, 100, 20, 20, true, .1f);
 
     //creation d'un enemie
-    enemyManager->spawnEnemy(100, 25, { 1900, 1080 / 2 }, 3);
+    enemyManager->spawnEnemy(500, 25, { 1900, 1080 / 2 }, 3);
     enemyManager->spawnEnemy(100, 25, { 1900, 1080 / 4 }, 3);
     enemyManager->spawnEnemy(100, 25, { 1900, 1080 / 3 }, 3);
     enemyManager->spawnEnemy(100, 25, { 1900, 900 }, 3);
