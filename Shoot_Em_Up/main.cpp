@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>   
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
 BulletManager* BulletManager::instance = nullptr;
 
@@ -18,9 +19,42 @@ struct BoutonMenu
     sf::Vector2f positionmenu;
 };
 
+struct BoutonSon
+{
+    sf::Color CouleurSon;
+    sf::Vector2f PositionSon;
+};
+
+bool music = true;
+
 
 int main()
 {
+
+
+
+    sf::SoundBuffer MusicMenu;
+
+    if (!MusicMenu.loadFromFile("TitleScreen.wav")) {
+        std::cout << "Erreur : Impossible de charger le fichier audio." << std::endl;
+        return -1;
+    }
+
+
+    sf::Sound MusicProc;
+    MusicProc.setBuffer(MusicMenu);
+    if (music == true)
+    {
+        MusicProc.play();
+    }
+
+    if (music == false)
+    {
+        MusicProc.stop();
+       MusicProc.setVolume(0);
+    }
+
+
 
     std::vector <BoutonMenu> Press =
     {
@@ -72,6 +106,8 @@ int main()
 
     while (menu.isOpen())
     {
+
+
         sf::Vector2i mouse = sf::Mouse::getPosition(menu);
 
         while (menu.pollEvent(event))
@@ -89,6 +125,24 @@ int main()
                     if (mouse.y >= 375 && mouse.y <= 450)
                     {
                         menu.setVisible(false);
+                        MusicProc.stop();
+
+
+                        sf::SoundBuffer MusicSelect;
+
+                        if (!MusicSelect.loadFromFile("SelectLvl.wav")) {
+                            std::cout << "Erreur : Impossible de charger le fichier audio." << std::endl;
+                            return -1;
+                        }
+
+
+                        sf::Sound MusicNiv;
+                        MusicNiv.setBuffer(MusicSelect);
+                        MusicNiv.play();
+                        if (music == false)
+                        {
+                            MusicNiv.setVolume(0);
+                        }
 
                         //Selection des niveaux
                         sf::RenderWindow LvlSelect(sf::VideoMode(1900, 1080), "Selection Niveaux");
@@ -204,6 +258,10 @@ int main()
                                         {
                                             LvlSelect.close();
                                             menu.setVisible(true);
+                                            if (music == true)
+                                            {
+                                                MusicProc.play();
+                                            }
 
                                         }
                                     }
@@ -223,13 +281,44 @@ int main()
                     if (mouse.y >= 475 && mouse.y <= 550)
                     {
                         menu.setVisible(false);
+                        MusicProc.stop();
 
                         //Selection des niveaux
                         sf::RenderWindow Option(sf::VideoMode(1900, 1080), "Option");
                         Option.setFramerateLimit(60);
 
-                        sf::RectangleShape Back(sf::Vector2f(20, 20));
+                        std::vector <BoutonSon> Sound =
+                        {
+                            { sf::Color::White,{0,0} },
+                            { sf::Color::Red, {150,150} },
+                            { sf::Color::Blue, {300,150} },
+                        };
 
+                        std::vector <sf::RectangleShape> StructSon;
+                        for (const auto& BoutonSon : Sound)
+                        {
+                            sf::RectangleShape SoundB(sf::Vector2f(30, 30));
+                            SoundB.setFillColor(BoutonSon.CouleurSon);
+                            SoundB.setPosition(BoutonSon.PositionSon);
+                            StructSon.push_back(SoundB);
+                        }
+
+                        sf::SoundBuffer MusicOption;
+
+                        
+
+                        if (!MusicOption.loadFromFile("OptionMenu.wav")) {
+                            std::cout << "Erreur : Impossible de charger le fichier audio." << std::endl;
+                            return -1;
+                        }
+
+                        sf::Sound MusicOp;
+                        MusicOp.setBuffer(MusicOption);
+                        MusicOp.play();
+                        if (music == false)
+                        {
+                            MusicOp.setVolume(0);
+                        }
                         sf::Event event;
 
                         while (Option.isOpen())
@@ -251,14 +340,43 @@ int main()
                                         {
                                             Option.close();
                                             menu.setVisible(true);
+                                            if (music == true)
+                                            {
+                                                MusicProc.play();
+                                            }
+                                        }
+                                    }
+
+                                    if (mouse3.x >= 150 && mouse3.x <= 180)
+                                    {
+                                        if (mouse3.y >= 150 && mouse3.y <= 180)
+                                        {
+                                            MusicOp.stop();
+                                            music = false;
+                                        }
+                                    }
+
+                                    if (mouse3.x >= 300 && mouse3.x <= 330)
+                                    {
+                                        if (mouse3.y >= 150 && mouse3.y <= 180)
+                                        {
+                                            MusicOp.play();
+                                            music = true;
                                         }
                                     }
                                 }
 
+
                             }
-                            Option.draw(Back);
+
+                            for (auto& SoundB : StructSon)
+                            {
+                                Option.draw(SoundB);
+                            }
                             Option.display();
                         }
+
+
                     }
                 }
             }
