@@ -46,7 +46,7 @@ void Entity::update(float deltaTime)
 
 void Entity::updateShoot(float deltaTime)
 {
-	if (!this->isOnCooldown())
+	if (!this->isOnCooldown() && this->canShoot)
 	{
 		//reset cooldown
 		this->shootCooldown = 0.f;
@@ -70,10 +70,10 @@ void Entity::updateState()
 
 //* GRAPHICS *\\
 
-void Entity::draw(sf::RenderWindow& window, sf::Vector2f size, sf::Color color)
+void Entity::draw(sf::RenderWindow& window, sf::Color color)
 {
-	sf::RectangleShape body_(size);
-	body_.setOrigin(sf::Vector2f{ size.x, size.y } / 2.f);
+	sf::RectangleShape body_( this->getHitbox().getSize() );
+	body_.setOrigin( this->getHitbox().getSize() / 2.f );
 	body_.setFillColor(color);
 	body_.setPosition(this->getPosition());
 	window.draw(body_);

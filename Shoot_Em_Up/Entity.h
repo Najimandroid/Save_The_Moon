@@ -69,5 +69,5 @@ public:
 
 	//* GRAPHICS *\\
 
-	void draw(sf::RenderWindow& window, sf::Vector2f size, sf::Color color);
+	void draw(sf::RenderWindow& window, sf::Color color);
 };

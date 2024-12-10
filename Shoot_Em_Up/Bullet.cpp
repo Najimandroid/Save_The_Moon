@@ -1,6 +1,7 @@
 #include "Bullet.h"
 #include "Entity.h"
 #include "Player.h"
+#include "Enemy.h"
 
 #include  <SFML/Graphics.hpp>
 
@@ -13,6 +14,10 @@
 
 bool Bullet::collided(Entity* entity)
 {
+
+	if (dynamic_cast<Enemy*>(this->getOwner()) && dynamic_cast<Enemy*>(entity)) { return false; } //ignore if from same type
+	if (dynamic_cast<Player*>(this->getOwner()) && dynamic_cast<Player*>(entity)) { return false; } //ignore if from same type
+
 	sf::FloatRect  floatRect = this->hitbox.getGlobalBounds();
 	sf::FloatRect  otherFloatRect = entity->getHitbox().getGlobalBounds();
 	return(floatRect.intersects(otherFloatRect));

@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>   
 #include <SFML/Graphics.hpp>
-#include <ctime>
+#include <chrono>
 
 BulletManager* BulletManager::instance = nullptr;
 EnemyManager* EnemyManager::instance = nullptr;
@@ -15,15 +15,17 @@ EnemyManager* enemyManager = EnemyManager::getInstance();
 
 void spawnEnemiesTest()
 {
-    enemyManager->spawnEnemy(500, 25, { 1900, 950 / float(rand() % 5 + 1) }, 3);
-    enemyManager->spawnEnemy(100, 25, { 1900, 950 / float(rand() % 5 + 1) }, 3);
-    enemyManager->spawnEnemy(100, 25, { 1900, 950 / float(rand() % 5 + 1) }, 3);
-    enemyManager->spawnEnemy(100, 25, { 1900, 950 / float(rand() % 5 + 1) }, 3);
+    float max = 950.f;
+    float min = 150.f;
+    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::TANK);
+    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
+    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
+    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);
 }
 
 int main()
 {
-    srand(time(NULL));
+    srand(std::chrono::system_clock::now().time_since_epoch().count());
     //creation d'une fenetre
     sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon", sf::Style::Fullscreen);
     window.setFramerateLimit(120);
@@ -67,8 +69,8 @@ int main()
         for (Enemy* enemy : enemyManager->getEnemies())
         {
             bulletManager->checkCollisions(enemy);
-            bulletManager->checkCollisions(player);
         }
+        bulletManager->checkCollisions(player);
 
         bulletManager->updatePositions(deltaTime);
         enemyManager->update(deltaTime);
@@ -76,7 +78,7 @@ int main()
 
 
         bulletManager->drawBullets(window);
-        player->draw(window, { 100, 100 }, sf::Color::Green);
+        player->draw(window, sf::Color::Green);
         enemyManager->drawEnemies(window);
 
         window.display();

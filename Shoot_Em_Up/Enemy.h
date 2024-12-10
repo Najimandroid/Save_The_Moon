@@ -5,13 +5,48 @@
 #include <iostream>
 #include <vector>
 
+enum EnemyType
+{
+	DEFAULT, TANK, SWARM
+};
 
 class Enemy : public Entity
 {
+protected:
+	sf::Color color;
 public:
 	Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_);
+	Enemy() {};
+
+	sf::Color getColor() { return color; }
 
 	void updatePosition(float deltaTime) override;
+};
+
+class Tank : public Enemy
+{
+public:
+	Tank(sf::Vector2f position_)
+	{
+		position = position_;
+		color = sf::Color::Yellow;
+
+		initHitbox({ 75, 75 });
+		initProperties(300, 50, 1.5f, true, 5.f);
+	}
+};
+
+class Swarm : public Enemy
+{
+public:
+	Swarm(sf::Vector2f position_)
+	{
+		position = position_;
+		color = sf::Color::Cyan;
+
+		initHitbox({ 25, 25 });
+		initProperties(10, 0, 6.f, false, 0.f);
+	}
 };
 
 
@@ -38,7 +73,8 @@ public:
 		return enemies;
 	}
 
-	Enemy* spawnEnemy(float health_, float damage_, sf::Vector2f position_, float speed_);
+	Enemy* spawnEnemy(sf::Vector2f position_, float health_, float damage_, float speed_);
+	Enemy* spawnEnemy(sf::Vector2f position, EnemyType enemyType);
 
 	void drawEnemies(sf::RenderWindow& window);
 	void updatePositions(float deltaTime);
