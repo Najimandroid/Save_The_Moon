@@ -19,7 +19,6 @@ struct BoutonMenu
 };
 
 
-
 int main()
 {
 
