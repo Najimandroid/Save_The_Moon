@@ -61,6 +61,8 @@ int main()
         lvls.push_back(lvl);
     }
 
+
+
     sf::RenderWindow menu(sf::VideoMode(1900, 1080), "Menu : Save The Moon");
     menu.setFramerateLimit(60);
 
@@ -87,19 +89,25 @@ int main()
                 {
                     if (mouse.y >= 375 && mouse.y <= 450)
                     {
-                        menu.close();
+                        menu.setVisible(false);
 
                         //Selection des niveaux
                         sf::RenderWindow LvlSelect(sf::VideoMode(1900, 1080), "Selection Niveaux");
                         LvlSelect.setFramerateLimit(60);
+
+                        LvlSelect.setVisible(true);
+
+                        sf::RectangleShape BackLvl(sf::Vector2f(20, 20));
+                        BackLvl.setFillColor(sf::Color::White);
                         
                         sf::Event event;
 
-                        LvlSelect.clear();
                         for (const auto& lvl : lvls)
                         {
                             LvlSelect.draw(lvl);
                         }
+
+                        LvlSelect.draw(BackLvl);
 
                         LvlSelect.display();
 
@@ -123,7 +131,7 @@ int main()
                                     {
                                         if (mouse1.y >= 400 && mouse1.y <= 450)
                                         {
-                                            LvlSelect.close();
+                                            LvlSelect.setVisible(false);
 
 
                                             //creation d'une fenetre
@@ -188,6 +196,16 @@ int main()
                                                 game.draw(ship);
                                                 game.display();
                                             }
+                                        }
+                                    }
+
+                                    if (mouse1.x >= 0 && mouse1.x <= 20)
+                                    {
+                                        if (mouse1.y >= 0 && mouse1.y <= 20)
+                                        {
+                                            LvlSelect.close();
+                                            menu.setVisible(true);
+
                                         }
                                     }
                                 }
@@ -258,7 +276,6 @@ int main()
                 }
             }
         }
-        menu.clear();
         for (const auto& test2 : StructMenu)
         {
             menu.draw(test2);
