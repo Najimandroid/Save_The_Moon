@@ -20,14 +20,16 @@ void spawnEnemiesTest()
 {
     float max = 950.f;
     float min = 150.f;
-   /* enemyManager->spawnEnemy({1900, float(rand() % int(max - min + 1) + min)}, EnemyType::TANK);
+
+    enemyManager->spawnEnemy({1900, float(rand() % int(max - min + 1) + min)}, EnemyType::TANK);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);
-    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);*/
+    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);
 
-    wallManager->spawnWall({ 1900, 1080 / 2 }, { 300, 300 });
+    wallManager->spawnWall({ 1900, 180 }, { 100, 100 });
+    wallManager->spawnWall({ 1900, 900 }, { 100, 100 });
 }
 
 int main()

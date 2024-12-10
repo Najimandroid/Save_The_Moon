@@ -5,6 +5,7 @@
 #include  <SFML/Graphics.hpp>
 #include <iostream>
 #include <thread>
+#include <math.h>
 
 float DEFAULT_SPEED = 35.0f;
 float WALL_OFFSET = 10.f;
@@ -60,7 +61,7 @@ void Player::updatePosition(float deltaTime)
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
             {
                 this->position +=
-                {wallManager->getWallsVelocity().x* (((wallManager->getWallsVelocity().x / deltaTime) - WALL_OFFSET) / (wallManager->getWallsVelocity().x / deltaTime)), 0 };
+                {(wallManager->getWallsVelocity().x* (abs(this->velocity.x)) / this->velocity.x)* (((wallManager->getWallsVelocity().x / deltaTime) - WALL_OFFSET) / (wallManager->getWallsVelocity().x / deltaTime)), 0 };
                 this->hitbox.setPosition(this->position);
             }
             else {
@@ -92,7 +93,7 @@ void Player::updatePosition(float deltaTime)
     if (wallManager->detectCollision(this->position, this->hitbox.getSize()))
     {
         this->position +=
-        {wallManager->getWallsVelocity().x * (((wallManager->getWallsVelocity().x / deltaTime) - WALL_OFFSET) / (wallManager->getWallsVelocity().x / deltaTime)), 0 };
+        {wallManager->getWallsVelocity().x* (((wallManager->getWallsVelocity().x / deltaTime) - WALL_OFFSET) / (wallManager->getWallsVelocity().x / deltaTime)), 0 };
         this->hitbox.setPosition(this->position);
     }
 }
