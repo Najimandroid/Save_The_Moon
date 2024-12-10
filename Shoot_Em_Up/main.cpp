@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Wall.h"
 
 #include <iostream>
 #include <vector>   
@@ -9,20 +10,24 @@
 
 BulletManager* BulletManager::instance = nullptr;
 EnemyManager* EnemyManager::instance = nullptr;
+WallManager* WallManager::instance = nullptr;
 
 BulletManager* bulletManager = BulletManager::getInstance();
 EnemyManager* enemyManager = EnemyManager::getInstance();
+WallManager* wallManager = WallManager::getInstance();
 
 void spawnEnemiesTest()
 {
     float max = 950.f;
     float min = 150.f;
-    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::TANK);
+   /* enemyManager->spawnEnemy({1900, float(rand() % int(max - min + 1) + min)}, EnemyType::TANK);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);
-    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);
+    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);*/
+
+    wallManager->spawnWall({ 1900, 1080 / 2 }, { 300, 300 });
 }
 
 int main()
@@ -76,12 +81,14 @@ int main()
 
         bulletManager->updatePositions(deltaTime);
         enemyManager->update(deltaTime);
+        wallManager->updatePositions(deltaTime);
         player->update(deltaTime);
 
 
         bulletManager->drawBullets(window);
         player->draw(window, sf::Color::Green);
         enemyManager->drawEnemies(window);
+        wallManager->drawWalls(window);
 
         window.display();
 

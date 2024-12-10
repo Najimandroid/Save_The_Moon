@@ -89,7 +89,7 @@ public:
 	void updatePositions(float deltaTime);
 	void updateOwners(Entity* entity);
 
-	std::vector <Bullet*> getBullets()
+	std::vector<Bullet*> getBullets()
 	{
 		return bullets;
 	}

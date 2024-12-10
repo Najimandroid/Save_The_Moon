@@ -107,6 +107,7 @@ void BulletManager::drawBullets(sf::RenderWindow& window)
 	{
 		sf::RectangleShape body_(sf::Vector2f(10, 10));
 		body_.setFillColor(adress->getColor());
+		body_.setOrigin(adress->getHitbox().getSize() / 2.f);
 		body_.setPosition(adress->getPosition());
 		window.draw(body_);
 	}

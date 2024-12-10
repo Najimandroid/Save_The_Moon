@@ -1,22 +1,36 @@
 #include "Player.h"
 #include "Bullet.h"
+#include "Wall.h"
+
 #include  <SFML/Graphics.hpp>
 #include <iostream>
 #include <thread>
 
 float DEFAULT_SPEED = 35.0f;
+float WALL_OFFSET = 10.f;
 
 //* UPDATING *\\
 
 void Player::updatePosition(float deltaTime)
 {
+    WallManager* wallManager = WallManager::getInstance();
     for (sf::Keyboard::Key key : this->upKeys)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y > 50)
         {
             this->velocity = sf::Vector2f{ 0, -20 * deltaTime * this->speed };
-            this->position += this->velocity;
-            this->hitbox.setPosition(this->position);
+
+            if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
+            {
+                this->position +=
+                {wallManager->getWallsVelocity().x* (((wallManager->getWallsVelocity().x / deltaTime) - WALL_OFFSET) / (wallManager->getWallsVelocity().x / deltaTime)), 0 };
+
+                this->hitbox.setPosition(this->position);
+            }
+            else {
+                this->position += this->velocity;
+                this->hitbox.setPosition(this->position);
+            }
         }
     }
 
@@ -25,8 +39,16 @@ void Player::updatePosition(float deltaTime)
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y < 1030)
         {
             this->velocity = sf::Vector2f{ 0, 20 * deltaTime * this->speed };
-            this->position += this->velocity;
-            this->hitbox.setPosition(this->position);
+            if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
+            {
+                this->position +=
+                {wallManager->getWallsVelocity().x* (((wallManager->getWallsVelocity().x / deltaTime) - WALL_OFFSET) / (wallManager->getWallsVelocity().x / deltaTime)), 0 };
+                this->hitbox.setPosition(this->position);
+            }
+            else {
+                this->position += this->velocity;
+                this->hitbox.setPosition(this->position);
+            }
         }
     }
 
@@ -35,8 +57,16 @@ void Player::updatePosition(float deltaTime)
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x > 50)
         {
             this->velocity = sf::Vector2f{ -20 * deltaTime * this->speed , 0 };
-            this->position += this->velocity;
-            this->hitbox.setPosition(this->position);
+            if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
+            {
+                this->position +=
+                {wallManager->getWallsVelocity().x* (((wallManager->getWallsVelocity().x / deltaTime) - WALL_OFFSET) / (wallManager->getWallsVelocity().x / deltaTime)), 0 };
+                this->hitbox.setPosition(this->position);
+            }
+            else {
+                this->position += this->velocity;
+                this->hitbox.setPosition(this->position);
+            }
         }
     }
 
@@ -45,9 +75,25 @@ void Player::updatePosition(float deltaTime)
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x < 1875)
         {
             this->velocity = sf::Vector2f{ 20 * deltaTime * this->speed , 0 };
-            this->position += this->velocity;
-            this->hitbox.setPosition(this->position);
+            if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
+            {
+                this->position +=
+                {wallManager->getWallsVelocity().x* (((wallManager->getWallsVelocity().x / deltaTime) - WALL_OFFSET) / (wallManager->getWallsVelocity().x / deltaTime)), 0 };
+                this->hitbox.setPosition(this->position);
+            }
+            else {
+                this->position += this->velocity;
+                this->hitbox.setPosition(this->position);
+            }
         }
+    }
+
+    //update even if not moving
+    if (wallManager->detectCollision(this->position, this->hitbox.getSize()))
+    {
+        this->position +=
+        {wallManager->getWallsVelocity().x * (((wallManager->getWallsVelocity().x / deltaTime) - WALL_OFFSET) / (wallManager->getWallsVelocity().x / deltaTime)), 0 };
+        this->hitbox.setPosition(this->position);
     }
 }
 
