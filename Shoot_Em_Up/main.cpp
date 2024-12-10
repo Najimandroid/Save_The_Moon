@@ -51,7 +51,7 @@ int main()
 
         bulletManager->despawnBullets();
 
-        
+
         bulletManager->drawBullets(window);
         player->draw(window, { 100, 100 }, sf::Color::Green);
         enemyManager->drawEnemies(window);

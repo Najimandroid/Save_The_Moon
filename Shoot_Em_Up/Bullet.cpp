@@ -25,8 +25,8 @@ void BulletManager::checkCollisions(Entity* entity)
 			if (dynamic_cast<Player*>(entity)) {
 				std::cout << "-" << bullet->getDamage() << "HP\n";
 			}
-			
-			entity->updateHealth( -(bullet->getDamage()) ); // -x hp
+
+			entity->updateHealth(-(bullet->getDamage())); // -x hp
 
 			//delete
 			delete this->bullets.at(index);
