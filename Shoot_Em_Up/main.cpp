@@ -360,8 +360,9 @@ int main()
                                     {
                                         if (mouse3.y >= 150 && mouse3.y <= 180)
                                         {
-                                            MusicOp.play();
                                             music = true;
+                                            MusicOp.play();
+
                                         }
                                     }
                                 }
