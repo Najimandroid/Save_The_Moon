@@ -20,6 +20,8 @@ void spawnEnemiesTest()
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::TANK);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
+    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
+    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);
 }
 

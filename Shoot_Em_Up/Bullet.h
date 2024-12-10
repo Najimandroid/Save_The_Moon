@@ -17,9 +17,11 @@ private:
 
 	Entity* owner;
 
+	sf::Color color;
+
 public:
 	Bullet(float damage_, float speed_, sf::Vector2f position_, sf::Vector2f velocity_) :
-		damage(damage_), speed(speed_), position(position_), velocity(velocity_), owner(nullptr)
+		damage(damage_), speed(speed_), position(position_), velocity(velocity_), owner(nullptr), color(sf::Color::White)
 	{
 		sf::RectangleShape hitbox_(sf::Vector2f(10, 10));
 		hitbox = hitbox_;
@@ -35,6 +37,7 @@ public:
 	sf::Vector2f getVelocity() const { return velocity; }
 
 	sf::RectangleShape& getHitbox() { return hitbox; }
+	sf::Color getColor() { return color; }
 
 	Entity* getOwner() { return owner; }
 
@@ -43,6 +46,8 @@ public:
 	void setPosition(sf::Vector2f newPosition) { position = newPosition; }
 	void setVelocity(sf::Vector2f newVelocity) { velocity = newVelocity; }
 
+	void setColor(sf::Color newColor) { color = newColor; }
+		
 	void setOwner(Entity* owner_) { 
 		if (owner_ == nullptr) { std::cout << "Can't set a bullet's owner with nullptr\n" ; return; }
 		owner = owner_; 

@@ -26,6 +26,8 @@ protected:
 
 	sf::RectangleShape hitbox;
 
+	sf::Color color;
+
 public:
 
 	//* CONSTRUCTOR | DESTRUCTOR *\\
@@ -39,6 +41,7 @@ public:
 
 	sf::Vector2f getPosition() const { return position; }
 	sf::RectangleShape& getHitbox() { return hitbox; }
+	sf::Color getColor() { return color; }
 	float getHealth() const { return health; }
 	float getSpeed() const { return speed; }
 	float getDamage() const { return damage; }

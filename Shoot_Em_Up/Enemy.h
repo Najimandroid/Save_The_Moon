@@ -12,13 +12,9 @@ enum EnemyType
 
 class Enemy : public Entity
 {
-protected:
-	sf::Color color;
 public:
 	Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_);
 	Enemy() {};
-
-	sf::Color getColor() { return color; }
 
 	void updatePosition(float deltaTime) override;
 };

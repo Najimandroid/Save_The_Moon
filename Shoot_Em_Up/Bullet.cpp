@@ -58,6 +58,7 @@ Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, float s
 	Bullet* newBullet = new Bullet(20, speed * 2, position, { 0,0 });
 	this->bullets.push_back(newBullet);
 	newBullet->setOwner(owner);
+	newBullet->setColor(owner->getColor());
 	return newBullet;
 
 }
@@ -104,10 +105,8 @@ void BulletManager::drawBullets(sf::RenderWindow& window)
 {
 	for (Bullet* adress : this->bullets)
 	{
-		if (adress == nullptr) { continue; }
-
 		sf::RectangleShape body_(sf::Vector2f(10, 10));
-		body_.setFillColor(sf::Color::White);
+		body_.setFillColor(adress->getColor());
 		body_.setPosition(adress->getPosition());
 		window.draw(body_);
 	}

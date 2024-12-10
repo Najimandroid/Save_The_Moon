@@ -110,6 +110,7 @@ Entity::Entity()
 	this->initPosition({ 0, 0 });
 	this->initHitbox({ 0, 0 });
 	this->initProperties(0, 0, 0, false, 0);
+	this->color = sf::Color::White;
 }
 
 Entity::~Entity() {}
