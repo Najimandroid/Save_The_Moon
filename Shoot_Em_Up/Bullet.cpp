@@ -8,12 +8,20 @@
 #include <thread>
 #include <type_traits>
 
+//--------------------//* BULLET *\\--------------------\\
+
+//* BOOLEANS *\\
+
 bool Bullet::collided(Entity* entity)
 {
 	sf::FloatRect  floatRect = this->hitbox.getGlobalBounds();
 	sf::FloatRect  otherFloatRect = entity->getHitbox().getGlobalBounds();
 	return(floatRect.intersects(otherFloatRect));
 }
+
+//--------------------//* BULLET MANAGER *\\--------------------\\
+
+//* FUNCTIONS *\\
 
 void BulletManager::checkCollisions(Entity* entity)
 {
@@ -47,10 +55,12 @@ Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, float s
 
 }
 
-
 void BulletManager::moveBullet(float deltaTime, Bullet* bullet)
 {
-	if (dynamic_cast<Player*>(bullet->getOwner())) {
+	if (bullet->getOwner() == nullptr) { std::cout << "erreur lors du mouvement d'un projectile\n"; return; }
+
+	Player* player = dynamic_cast<Player*>(bullet->getOwner());
+	if (player) {
 		bullet->setVelocity(sf::Vector2f{ 20 * deltaTime * bullet->getSpeed() , 0 });
 		bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
 		bullet->getHitbox().setPosition(bullet->getPosition());
@@ -79,6 +89,8 @@ void BulletManager::despawnBullets()
 	}
 }
 
+//* GRAPHICS *\\
+
 void BulletManager::drawBullets(sf::RenderWindow& window)
 {
 	for (Bullet* adress : this->bullets)
@@ -89,6 +101,8 @@ void BulletManager::drawBullets(sf::RenderWindow& window)
 		window.draw(body_);
 	}
 }
+
+//* UPDATING *\\
 
 void BulletManager::updatePositions(float deltaTime)
 {

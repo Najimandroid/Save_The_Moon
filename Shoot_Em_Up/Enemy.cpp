@@ -5,12 +5,29 @@
 #include <vector> 
 #include <iostream>
 
+//--------------------//* ENEMY *\\--------------------\\
+
+//* UPDATE * \\ 
+
 void Enemy::updatePosition(float deltaTime)
 {
 	velocity = { -20 * deltaTime * this->speed, 0 };
 	this->position += velocity;
 	this->hitbox.setPosition(this->position);
 }
+
+//* CONSTRUCTOR | DESTRUCTOR *\\
+
+Enemy::Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
+{
+	this->initPosition(position_);
+	this->initHitbox(hitboxSize_);
+	this->initProperties(health_, damage_, speed_, canShoot_, cooldownSeconds_);
+}
+
+//--------------------//* ENEMY MANAGER *\\--------------------\\
+
+//* FUNCTIONS * \\ 
 
 Enemy* EnemyManager::spawnEnemy(float health_, float damage_, sf::Vector2f position_, float speed_)
 {
@@ -19,6 +36,8 @@ Enemy* EnemyManager::spawnEnemy(float health_, float damage_, sf::Vector2f posit
 	return newEnemy;
 }
 
+//* GRAPHICS * \\ 
+
 void EnemyManager::drawEnemies(sf::RenderWindow& window)
 {
 	for (Enemy* adress : this->enemies)
@@ -26,6 +45,8 @@ void EnemyManager::drawEnemies(sf::RenderWindow& window)
 		adress->draw(window, { 50, 50 }, sf::Color::Red);
 	}
 }
+
+//* UPDATING * \\ 
 
 void EnemyManager::updatePositions(float deltaTime)
 {
@@ -66,11 +87,4 @@ void EnemyManager::update(float deltaTime)
 	{
 		enemy->update(deltaTime);
 	}
-}
-
-Enemy::Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
-{
-	this->initPosition(position_);
-	this->initHitbox(hitboxSize_);
-	this->initProperties(health_, damage_, speed_, canShoot_, cooldownSeconds_);
 }

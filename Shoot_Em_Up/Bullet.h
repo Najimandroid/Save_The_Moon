@@ -42,7 +42,10 @@ public:
 
 	void setPosition(sf::Vector2f newPosition) { position = newPosition; }
 	void setVelocity(sf::Vector2f newVelocity) { velocity = newVelocity; }
-	void setOwner(Entity* owner_) { owner = owner_; }
+	void setOwner(Entity* owner_) { 
+		if (owner_ == nullptr) { std::cout << "Can't set a bullet's owner with nullptr\n" ; return; }
+		owner = owner_; 
+	}
 
 	//* BOOLEANS *\\
 
