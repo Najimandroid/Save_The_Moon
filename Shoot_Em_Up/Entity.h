@@ -56,6 +56,7 @@ public:
 	//* BOOL *\\
 
 	bool isDead();
+	bool isPlayer();
 	bool isOnCooldown();
 
 	//* UPDATE *\\

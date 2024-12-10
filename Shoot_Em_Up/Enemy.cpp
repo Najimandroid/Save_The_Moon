@@ -67,6 +67,8 @@ void EnemyManager::updateStates()
 
 		if (enemy->isDead()) {
 			// delete enemy if dead
+			BulletManager* bulletManager = BulletManager::getInstance();
+			bulletManager->updateOwners(enemy);
 			delete enemy;
 			it = this->enemies.erase(it);
 		}

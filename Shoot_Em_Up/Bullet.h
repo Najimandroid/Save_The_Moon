@@ -80,7 +80,9 @@ public:
 	void despawnBullets();
 
 	void drawBullets(sf::RenderWindow& window);
+
 	void updatePositions(float deltaTime);
+	void updateOwners(Entity* entity);
 
 	std::vector <Bullet*> getBullets()
 	{

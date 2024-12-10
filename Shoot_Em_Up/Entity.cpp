@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include "Bullet.h"
+#include "Player.h"
 #include  <SFML/Graphics.hpp>
 
 #include <vector> 
@@ -15,6 +16,11 @@ bool Entity::isDead()
 bool Entity::isOnCooldown()
 {
 	return (this->shootCooldown < this->shootCooldownMax);
+}
+
+bool Entity::isPlayer()
+{
+	return (dynamic_cast<Player*>(this));
 }
 
 //* UPDATING *\\

@@ -27,6 +27,8 @@ void BulletManager::checkCollisions(Entity* entity)
 	unsigned index = 0;
 	for (Bullet* bullet : this->bullets)
 	{
+		if (bullet == nullptr) { index++;  continue; }
+
 		if (bullet->collided(entity) && entity != bullet->getOwner())
 		{
 			if (dynamic_cast<Player*>(entity)) {
@@ -57,10 +59,9 @@ Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, float s
 
 void BulletManager::moveBullet(float deltaTime, Bullet* bullet)
 {
-	if (bullet == nullptr || bullet->getOwner() == nullptr) { std::cout << "erreur lors du mouvement d'un projectile\n"; return; }
+	//if (bullet == nullptr || bullet->getOwner() == nullptr) { std::cout << "erreur lors du mouvement d'un projectile\n"; return; }
 
-	Player* player = dynamic_cast<Player*>(bullet->getOwner());
-	if (player) {
+	if (bullet->getOwner()->isPlayer()) {
 		bullet->setVelocity(sf::Vector2f{ 20 * deltaTime * bullet->getSpeed() , 0 });
 		bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
 		bullet->getHitbox().setPosition(bullet->getPosition());
@@ -78,6 +79,8 @@ void BulletManager::despawnBullets()
 	unsigned index = 0;
 	for (Bullet* bullet : this->bullets)
 	{
+		if (bullet == nullptr) { index++;  continue;; }
+
 		if (bullet->getPosition().x > 1900 || bullet->getPosition().x < 0)
 		{
 			//delete
@@ -96,6 +99,8 @@ void BulletManager::drawBullets(sf::RenderWindow& window)
 {
 	for (Bullet* adress : this->bullets)
 	{
+		if (adress == nullptr) { continue; }
+
 		sf::RectangleShape body_(sf::Vector2f(10, 10));
 		body_.setFillColor(sf::Color::White);
 		body_.setPosition(adress->getPosition());
@@ -109,6 +114,21 @@ void BulletManager::updatePositions(float deltaTime)
 {
 	for (Bullet* adress : this->bullets)
 	{
+		if (adress == nullptr) { continue; }
+
 		this->moveBullet(deltaTime, adress);
+	}
+}
+
+void BulletManager::updateOwners(Entity* owner) //Updates null owners
+{
+	for (Bullet* adress : this->bullets)
+	{
+		if (adress == nullptr) { continue; }
+
+		if (adress->getOwner() == owner)
+		{
+			adress->setNullOwner();
+		}
 	}
 }

@@ -15,7 +15,7 @@ EnemyManager* enemyManager = EnemyManager::getInstance();
 
 void spawnEnemiesTest()
 {
-    enemyManager->spawnEnemy(500, 25, { 1900, 950 / float(rand() % 5 + 1)}, 3);
+    enemyManager->spawnEnemy(500, 25, { 1900, 950 / float(rand() % 5 + 1) }, 3);
     enemyManager->spawnEnemy(100, 25, { 1900, 950 / float(rand() % 5 + 1) }, 3);
     enemyManager->spawnEnemy(100, 25, { 1900, 950 / float(rand() % 5 + 1) }, 3);
     enemyManager->spawnEnemy(100, 25, { 1900, 950 / float(rand() % 5 + 1) }, 3);
