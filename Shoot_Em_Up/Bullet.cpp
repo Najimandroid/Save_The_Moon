@@ -6,7 +6,6 @@
 
 #include <iostream>
 #include <thread>
-#include <type_traits>
 
 //--------------------//* BULLET *\\--------------------\\
 
@@ -37,6 +36,7 @@ void BulletManager::checkCollisions(Entity* entity)
 			entity->updateHealth(-(bullet->getDamage())); // -x hp
 
 			//delete
+			bullet->setNullOwner();
 			delete this->bullets.at(index);
 			this->bullets.erase(this->bullets.begin() + index);
 			index--;
@@ -57,7 +57,7 @@ Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, float s
 
 void BulletManager::moveBullet(float deltaTime, Bullet* bullet)
 {
-	if (bullet->getOwner() == nullptr) { std::cout << "erreur lors du mouvement d'un projectile\n"; return; }
+	if (bullet == nullptr || bullet->getOwner() == nullptr) { std::cout << "erreur lors du mouvement d'un projectile\n"; return; }
 
 	Player* player = dynamic_cast<Player*>(bullet->getOwner());
 	if (player) {
@@ -78,9 +78,10 @@ void BulletManager::despawnBullets()
 	unsigned index = 0;
 	for (Bullet* bullet : this->bullets)
 	{
-		if (bullet->getPosition().x > 1900)
+		if (bullet->getPosition().x > 1900 || bullet->getPosition().x < 0)
 		{
 			//delete
+			bullet->setNullOwner();
 			delete this->bullets.at(index);
 			this->bullets.erase(this->bullets.begin() + index);
 			index--;

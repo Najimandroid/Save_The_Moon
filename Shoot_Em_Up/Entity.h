@@ -33,6 +33,8 @@ public:
 	Entity(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_);
 	Entity();
 
+	virtual ~Entity() = 0;
+
 	//* GET *\\
 
 	sf::Vector2f getPosition() const { return position; }

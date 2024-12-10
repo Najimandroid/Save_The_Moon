@@ -105,3 +105,10 @@ Entity::Entity()
 	this->initHitbox({ 0, 0 });
 	this->initProperties(0, 0, 0, false, 0);
 }
+
+Entity::~Entity() {}
+
+//Entity::~Entity()
+//{
+	//idk
+//}
