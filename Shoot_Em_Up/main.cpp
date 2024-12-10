@@ -14,8 +14,8 @@ struct Niveau
 
 struct BoutonMenu
 {
-    sf::Color couleurtest;
-    sf::Vector2f positiontest;
+    sf::Color couleurmenu;
+    sf::Vector2f positionmenu;
 };
 
 
@@ -30,13 +30,13 @@ int main()
         { sf::Color::Yellow, {800,575} },
     };
 
-    std::vector <sf::RectangleShape> test;
+    std::vector <sf::RectangleShape> StructMenu;
     for (const auto& BoutonMenu : Press)
     {
             sf::RectangleShape test2(sf::Vector2f(250, 75));
-            test2.setFillColor(BoutonMenu.couleurtest);
-            test2.setPosition(BoutonMenu.positiontest);
-            test.push_back(test2);
+            test2.setFillColor(BoutonMenu.couleurmenu);
+            test2.setPosition(BoutonMenu.positionmenu);
+            StructMenu.push_back(test2);
     }
 
 
@@ -65,6 +65,9 @@ int main()
     menu.setFramerateLimit(60);
 
     sf::Event event;
+
+
+    menu.setVisible(true);
 
     while (menu.isOpen())
     {
@@ -192,7 +195,57 @@ int main()
                         }
                     }
                 }
-            }                        
+            }
+
+
+            //Bouton Option
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                if (mouse.x >= 800 && mouse.x <= 1050)
+                {
+                    if (mouse.y >= 475 && mouse.y <= 550)
+                    {
+                        menu.setVisible(false);
+
+                        //Selection des niveaux
+                        sf::RenderWindow Option(sf::VideoMode(1900, 1080), "Option");
+                        Option.setFramerateLimit(60);
+
+                        sf::RectangleShape Back(sf::Vector2f(20, 20));
+
+                        sf::Event event;
+
+                        while (Option.isOpen())
+                        {
+                            sf::Vector2i mouse3 = sf::Mouse::getPosition(Option);
+
+                            while (Option.pollEvent(event))
+                            {
+                                if (event.type == sf::Event::Closed)
+                                {
+                                    Option.close();
+                                }
+
+                                if (event.type == sf::Event::MouseButtonPressed)
+                                {
+                                    if (mouse3.x >= 0 && mouse3.x <= 20)
+                                    {
+                                        if (mouse3.y >= 0 && mouse3.y <= 20)
+                                        {
+                                            Option.close();
+                                            menu.setVisible(true);
+                                        }
+                                    }
+                                }
+
+                            }
+                            Option.draw(Back);
+                            Option.display();
+                        }
+                    }
+                }
+            }
+
             //Bouton Close Menu
             if (event.type == sf::Event::MouseButtonPressed)
             {
@@ -206,7 +259,7 @@ int main()
             }
         }
         menu.clear();
-        for (const auto& test2 : test)
+        for (const auto& test2 : StructMenu)
         {
             menu.draw(test2);
         }
