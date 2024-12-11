@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "Wall.h"
+#include "Level.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
@@ -110,8 +111,9 @@ void Player::updateShoot(float deltaTime)
         {
             if (sf::Keyboard::isKeyPressed(key))
             {
+                LevelManager* levelManager = LevelManager::getInstance();
                 BulletManager* bulletManager = BulletManager::getInstance();
-                bulletManager->spawnbullet(this, { this->position }, this->speed);
+                bulletManager->spawnbullet(this, { this->position }, 2 * this->speed);
             }
         }
     }

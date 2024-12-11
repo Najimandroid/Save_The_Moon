@@ -5,7 +5,6 @@
 #include <iostream>
 #include <vector>
 
-
 //=> Tile size : 60px * 60px
 
 class LevelManager 
@@ -22,8 +21,8 @@ private:
 
 	LevelManager() {};
 public:
-
 	float TILE_SIZE = 60;
+	float SCROLLING_SPEED = 100;
 
 	static LevelManager* getInstance()
 	{

@@ -1,6 +1,7 @@
 #include "Entity.h"
 #include "Bullet.h"
 #include "Player.h"
+#include "Level.h"
 #include  <SFML/Graphics.hpp>
 
 #include <vector> 
@@ -27,18 +28,28 @@ bool Entity::isPlayer()
 
 void Entity::updateHealth(float value)
 {
+	if (!this->active) return; // doesn't update health if the entity is inactive
 	this->health += value;
 }
 
 void Entity::updatePosition(float deltaTime)
 {
-	velocity = { -20 * deltaTime * this->speed, 0 };
+	LevelManager* levelManager = LevelManager::getInstance();
+	if (this->active)
+	{
+		velocity = { levelManager->SCROLLING_SPEED * deltaTime * this->speed, 0 };
+	}
+	else
+	{
+		velocity = { levelManager->SCROLLING_SPEED * deltaTime, 0 };
+	}
 	this->position += velocity;
 	this->hitbox.setPosition(this->position);
 }
 
 void Entity::update(float deltaTime)
 {
+	if (this->position.x <= 2000) { this->active = true; }
 	this->updatePosition(deltaTime);
 	this->updateShoot(deltaTime);
 	//this->updateState();
@@ -48,11 +59,14 @@ void Entity::updateShoot(float deltaTime)
 {
 	if (!this->isOnCooldown() && this->canShoot)
 	{
+		if (!this->active) return; //returns if not active
+
 		//reset cooldown
 		this->shootCooldown = 0.f;
 
+		LevelManager* levelManager = LevelManager::getInstance();
 		BulletManager* bulletManager = BulletManager::getInstance();
-		bulletManager->spawnbullet(this, { this->position }, this->speed);
+		bulletManager->spawnbullet(this, { this->position }, 10 * this->speed);
 	}
 	else
 	{
@@ -93,7 +107,7 @@ void Entity::initHitbox(sf::Vector2f hitboxSize_)
 
 void Entity::initProperties(float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
 {
-	this->health = health_; this->damage = damage_; this->speed = speed_; this->canShoot = canShoot_, this->shootCooldownMax = cooldownSeconds_;
+	this->health = health_; this->damage = damage_; this->speed = speed_; this->canShoot = canShoot_, this->shootCooldownMax = cooldownSeconds_; this->active = false;
 }
 
 //* CONSTRUCTOR *\\

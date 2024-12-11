@@ -1,5 +1,6 @@
 #include "Wall.h"
 #include "Player.h"
+#include "Level.h"
 
 #include  <SFML/Graphics.hpp>
 
@@ -56,9 +57,10 @@ void WallManager::drawWalls(sf::RenderWindow& window)
 
 void WallManager::updatePositions(float deltaTime)
 {
+	LevelManager* levelManager = LevelManager::getInstance();
 	for (Wall* wall : this->walls)
 	{
-		wall->setVelocity(sf::Vector2f{ -100 * deltaTime, 0 });
+		wall->setVelocity(sf::Vector2f{ -levelManager->SCROLLING_SPEED * deltaTime, 0 });
 		wall->setPosition(wall->getPosition() + wall->getVelocity());
 		wall->getHitbox().setPosition(wall->getPosition());
 	}

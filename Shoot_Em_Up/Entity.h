@@ -23,6 +23,7 @@ protected:
 	float shootCooldownMax;
 
 	bool canShoot;
+	bool active;
 
 	sf::RectangleShape hitbox;
 
@@ -45,10 +46,12 @@ public:
 	float getHealth() const { return health; }
 	float getSpeed() const { return speed; }
 	float getDamage() const { return damage; }
+	bool getActive() const { return active; }
 
 	//* SET *\\
 
 	void setPosition(sf::Vector2f newPosition) { position = newPosition; }
+	void setActive(bool newState) { active = newState; }
 
 	//* INIT *\\
 

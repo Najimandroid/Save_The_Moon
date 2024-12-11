@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "Level.h"
 
 #include  <SFML/Graphics.hpp>
 
@@ -66,15 +67,14 @@ Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, float s
 void BulletManager::moveBullet(float deltaTime, Bullet* bullet)
 {
 	//if (bullet == nullptr || bullet->getOwner() == nullptr) { std::cout << "erreur lors du mouvement d'un projectile\n"; return; }
-
 	if (bullet->getOwner()->isPlayer()) {
-		bullet->setVelocity(sf::Vector2f{ 20 * deltaTime * bullet->getSpeed() , 0 });
+		bullet->setVelocity(sf::Vector2f{ 10 * deltaTime * bullet->getSpeed() , 0 });
 		bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
 		bullet->getHitbox().setPosition(bullet->getPosition());
 	}
 	else
 	{
-		bullet->setVelocity(sf::Vector2f{ -20 * deltaTime * bullet->getSpeed() * 2 , 0 });
+		bullet->setVelocity(sf::Vector2f{ -10 * deltaTime * bullet->getSpeed() * 2 , 0 });
 		bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
 		bullet->getHitbox().setPosition(bullet->getPosition());
 	}

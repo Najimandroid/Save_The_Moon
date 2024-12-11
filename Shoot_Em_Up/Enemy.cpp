@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Level.h"
 #include  <SFML/Graphics.hpp>
 
 #include <vector> 
@@ -13,7 +14,15 @@
 
 void Enemy::updatePosition(float deltaTime)
 {
-	velocity = { -20 * deltaTime * this->speed, 0 };
+	LevelManager* levelManager = LevelManager::getInstance();
+	if (this->active)
+	{
+		velocity = { -levelManager->SCROLLING_SPEED * deltaTime * this->speed, 0 };
+	}
+	else
+	{
+		velocity = { -levelManager->SCROLLING_SPEED * deltaTime, 0 };
+	}
 	this->position += velocity;
 	this->hitbox.setPosition(this->position);
 }
@@ -45,7 +54,7 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 
 	switch (enemyType)
 	{
-		case DEFAULT: newEnemy = new Enemy(position_, { 50, 50 }, 50, 25, 3, true, 2.f);  break;
+		case DEFAULT: newEnemy = new Enemy(position_, { 50, 50 }, 50, 25, 1.5f, true, 2.f);  break;
 		case TANK: newEnemy = new Tank(position_);  break;
 		case SWARM: newEnemy = new Swarm(position_);  break;
 	}
@@ -110,6 +119,7 @@ void EnemyManager::update(float deltaTime)
 
 	for (Enemy* enemy : this->enemies)
 	{
-		enemy->update(deltaTime);
+		if (enemy->getPosition().x <= 2000) { enemy->setActive(true); }
+		enemy->updateShoot(deltaTime);
 	}
 }
