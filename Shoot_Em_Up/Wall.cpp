@@ -58,7 +58,7 @@ void WallManager::updatePositions(float deltaTime)
 {
 	for (Wall* wall : this->walls)
 	{
-		wall->setVelocity(sf::Vector2f{ -40 * deltaTime, 0 });
+		wall->setVelocity(sf::Vector2f{ -100 * deltaTime, 0 });
 		wall->setPosition(wall->getPosition() + wall->getVelocity());
 		wall->getHitbox().setPosition(wall->getPosition());
 	}

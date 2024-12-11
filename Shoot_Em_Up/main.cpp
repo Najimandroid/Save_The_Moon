@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Wall.h"
+#include "Level.h"
 
 #include <iostream>
 #include <vector>   
@@ -11,10 +12,12 @@
 BulletManager* BulletManager::instance = nullptr;
 EnemyManager* EnemyManager::instance = nullptr;
 WallManager* WallManager::instance = nullptr;
+LevelManager* LevelManager::instance = nullptr;
 
 BulletManager* bulletManager = BulletManager::getInstance();
 EnemyManager* enemyManager = EnemyManager::getInstance();
 WallManager* wallManager = WallManager::getInstance();
+LevelManager* levelManager = LevelManager::getInstance();
 
 void spawnEnemiesTest()
 {
@@ -24,12 +27,10 @@ void spawnEnemiesTest()
     enemyManager->spawnEnemy({1900, float(rand() % int(max - min + 1) + min)}, EnemyType::TANK);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
-    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
-    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);
     enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);
 
-    wallManager->spawnWall({ 1900, 180 }, { 100, 100 });
-    wallManager->spawnWall({ 1900, 900 }, { 100, 100 });
+    wallManager->spawnWall({ 1900, 180 }, { 60, 60 });
+    wallManager->spawnWall({ 1900, 900 }, { 60, 60 });
 }
 
 int main()
@@ -44,7 +45,8 @@ int main()
     Player* player = new Player({ 1900 / 2, 1080 / 2 }, { 50, 50 }, 100, 20, 20, true, .1f);
 
     float spawnCooldown = 0.f;
-    spawnEnemiesTest();
+    //spawnEnemiesTest();
+    levelManager->loadLevel(1);
 
     //creation d'une horloge
     sf::Clock clock;
@@ -72,7 +74,7 @@ int main()
 
         if (spawnCooldown >= 5.f) {
             spawnCooldown = 0.f;
-            spawnEnemiesTest();
+            //spawnEnemiesTest();
         }
 
         for (Enemy* enemy : enemyManager->getEnemies())

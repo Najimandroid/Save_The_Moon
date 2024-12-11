@@ -9,7 +9,7 @@
 
 //--------------------//* ENEMY *\\--------------------\\
 
-//* UPDATE * \\ 
+//* UPDATE *\\ 
 
 void Enemy::updatePosition(float deltaTime)
 {
@@ -30,7 +30,7 @@ Enemy::Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, fl
 
 //--------------------//* ENEMY MANAGER *\\--------------------\\
 
-//* FUNCTIONS * \\ 
+//* FUNCTIONS *\\ 
 
 Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, float health_, float damage_, float speed_)
 {
@@ -59,7 +59,7 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 	return newEnemy;
 }
 
-//* GRAPHICS * \\ 
+//* GRAPHICS *\\ 
 
 void EnemyManager::drawEnemies(sf::RenderWindow& window)
 {
@@ -69,7 +69,7 @@ void EnemyManager::drawEnemies(sf::RenderWindow& window)
 	}
 }
 
-//* UPDATING * \\ 
+//* UPDATING *\\ 
 
 void EnemyManager::updatePositions(float deltaTime)
 {
