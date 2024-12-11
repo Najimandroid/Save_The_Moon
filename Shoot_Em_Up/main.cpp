@@ -83,16 +83,16 @@ int main()
         }
         bulletManager->checkCollisions(player);
 
-        bulletManager->updatePositions(deltaTime);
-        enemyManager->update(deltaTime);
         wallManager->updatePositions(deltaTime);
         player->update(deltaTime);
+        enemyManager->update(deltaTime);
+        bulletManager->updatePositions(deltaTime);
 
 
-        bulletManager->drawBullets(window);
+        wallManager->drawWalls(window);
         player->draw(window, sf::Color::Green);
         enemyManager->drawEnemies(window);
-        wallManager->drawWalls(window);
+        bulletManager->drawBullets(window);
 
         window.display();
 
