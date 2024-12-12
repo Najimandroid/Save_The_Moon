@@ -12,6 +12,16 @@
 float DEFAULT_SPEED = 35.0f;
 float WALL_OFFSET = 10.f;
 
+//* INIT *\\
+
+void Player::initHit(float hitCooldown_)
+{
+    this->hit = false;
+    this->hitCooldown = 0;
+
+    this->hitCooldownMax = hitCooldown_;
+}
+
 //* UPDATING *\\
 
 void Player::updatePosition(float deltaTime)
@@ -124,6 +134,62 @@ void Player::updateShoot(float deltaTime)
     }
 }
 
+void Player::updateHealth(float value)
+{
+    if (!this->active) return; // doesn't update health if the entity is inactive
+
+    if (value < 0)
+    {
+        if (this->hit) return;
+        this->hit = true;
+    }
+
+    this->health += value;
+}
+
+void Player::updateState(float deltaTime)
+{
+    if (this->hit)
+    {
+        std::cout << "player hit\n";
+        if (this->isOnHitCooldown())
+        {
+            this->hitCooldown += deltaTime;
+            std::cout << "player on hit cooldown: " << this->hitCooldown << ", " << this->hitCooldownMax << std::endl;
+        }
+        else
+        {
+            this->hit = false;
+            this->hitCooldown = 0.f;
+            std::cout << "player on hit cooldown is finished\n";
+        }
+    }
+
+   /* if (this->isDead()) {
+        // delete if dead
+        delete this;
+        return;
+    }*/
+}
+
+void Player::draw(sf::RenderWindow& window, sf::Color color)
+{
+    sf::RectangleShape body_(this->getHitbox().getSize());
+    body_.setOrigin(this->getHitbox().getSize() / 2.f);
+    body_.setFillColor(color);
+    body_.setPosition(this->getPosition());
+
+    if (this->hit) 
+    { 
+       // if (this->hitCooldown % 2 <= 0)
+        {
+            body_.setFillColor(sf::Color::Transparent);
+        }
+    }
+
+    window.draw(body_);
+}
+
 //* CONSTRUCTOR *\\
 
 Player::Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
@@ -131,6 +197,7 @@ Player::Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, 
     this->initPosition(position_);
     this->initHitbox(hitboxSize_);
     this->initProperties(health_, damage_, speed_, canShoot_, cooldownSeconds_);
+    this->initHit(2);
 
     HealthBarManager* healthBarManager = HealthBarManager::getInstance();
     HealthBar* bar = healthBarManager->createHealthBar(health_);

@@ -67,13 +67,13 @@ public:
 
 	//* UPDATE *\\
 
-	void updateHealth(float value);
 	void update(float deltaTime);
+	virtual void updateHealth(float value);
 	virtual void updatePosition(float deltaTime);
 	virtual void updateShoot(float deltaTime);
-	virtual void updateState();
+	virtual void updateState(float deltaTime);
 
 	//* GRAPHICS *\\
 
-	void draw(sf::RenderWindow& window, sf::Color color);
+	virtual void draw(sf::RenderWindow& window, sf::Color color);
 };

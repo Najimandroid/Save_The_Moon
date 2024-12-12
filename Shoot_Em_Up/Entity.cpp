@@ -53,7 +53,7 @@ void Entity::update(float deltaTime)
 	if (this->position.x <= 2000) { this->active = true; }
 	this->updatePosition(deltaTime);
 	this->updateShoot(deltaTime);
-	//this->updateState();
+	this->updateState(deltaTime);
 }
 
 void Entity::updateShoot(float deltaTime)
@@ -75,7 +75,7 @@ void Entity::updateShoot(float deltaTime)
 	}
 }
 
-void Entity::updateState()
+void Entity::updateState(float deltaTime)
 {
 	if (this->isDead()) {
 		// delete if dead
