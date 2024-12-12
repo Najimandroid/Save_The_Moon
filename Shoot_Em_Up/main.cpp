@@ -7,6 +7,10 @@
 
 BulletManager* BulletManager::instance = nullptr;
 
+
+int Long = 1900;
+int Larg = 1080;
+
 struct Niveau 
 {
     sf::Color couleur;
@@ -25,12 +29,21 @@ struct BoutonSon
     sf::Vector2f PositionSon;
 };
 
+struct LvlAvailable
+{
+    bool Lvl2 = false;
+    bool Lvl3 = true; 
+    bool Lvl4 = false;
+    bool Lvl5 = false;
+    bool Lvl6 = false;
+};
+
 bool music = true;
 
 
 int main()
 {
-
+    struct LvlAvailable Dispo;
 
 
     sf::SoundBuffer MusicMenu;
@@ -72,6 +85,10 @@ int main()
             StructMenu.push_back(test2);
     }
 
+    //test bouton résolution
+    sf::RectangleShape taille(sf::Vector2f(50, 50));
+    taille.setFillColor(sf::Color::White);
+    taille.setPosition(sf::Vector2f(150, 150));
 
 
     std::vector <Niveau> niveaux =
@@ -96,7 +113,7 @@ int main()
 
 
 
-    sf::RenderWindow menu(sf::VideoMode(1900, 1080), "Menu : Save The Moon");
+    sf::RenderWindow menu(sf::VideoMode(Long, Larg), "Menu : Save The Moon");
     menu.setFramerateLimit(60);
 
     sf::Event event;
@@ -115,6 +132,19 @@ int main()
             if (event.type == sf::Event::Closed)
             {
                 menu.close();
+            }
+
+
+            //Résolution fenetre
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                if (mouse.x >= 150 && mouse.x <= 200)
+                {
+                    if (mouse.y >= 150 && mouse.y <= 200)
+                    {
+                        menu.setSize(sf::Vector2u(1024, 768));
+                    }
+                }
             }
 
             //Bouton Lancer Jeu
@@ -164,7 +194,7 @@ int main()
 
                         LvlSelect.display();
 
-
+                        //Menu Selection Lvl
                         while (LvlSelect.isOpen())
                         {
                             sf::Vector2i mouse1 = sf::Mouse::getPosition(LvlSelect);
@@ -180,9 +210,10 @@ int main()
                                 //Bouton Lancer Jeu
                                 if (event.type == sf::Event::MouseButtonPressed)
                                 {
-                                    if (mouse1.x >= 300 && mouse1.x <= 350)
+                                    //Niveaux1
+                                    if (mouse1.x >= 300 && mouse1.x <= 380)
                                     {
-                                        if (mouse1.y >= 400 && mouse1.y <= 450)
+                                        if (mouse1.y >= 400 && mouse1.y <= 480)
                                         {
                                             LvlSelect.setVisible(false);
 
@@ -252,6 +283,57 @@ int main()
                                         }
                                     }
 
+
+                                    //Niveaux 2
+                                    if (mouse1.x >= 600 && mouse1.x <= 680)
+                                    {
+                                        if (mouse1.y >= 100 && mouse1.y <= 180 && Dispo.Lvl2 == true)
+                                        {
+                                            LvlSelect.setVisible(false);
+                                        }
+                                    }
+
+
+                                    //Niveaux 3
+                                    if (mouse1.x >= 750 && mouse1.x <= 830)
+                                    {
+                                        if (mouse1.y >= 600 && mouse1.y <= 680 && Dispo.Lvl3 == true)
+                                        {
+                                            Dispo.Lvl2 = true;
+                                        }
+                                    }
+
+
+                                    //Niveaux 4
+                                    if (mouse1.x >= 1050 && mouse1.x <= 1130)
+                                    {
+                                        if (mouse1.y >= 350 && mouse1.y <= 430 && Dispo.Lvl4 == true)
+                                        {
+                                            LvlSelect.setVisible(false);
+                                        }
+                                    }
+
+
+                                    //Niveaux 5
+                                    if (mouse1.x >= 1300 && mouse1.x <= 1380)
+                                    {
+                                        if (mouse1.y >= 800 && mouse1.y <= 880 && Dispo.Lvl5 == true)
+                                        {
+                                            LvlSelect.setVisible(false);
+                                        }
+                                    }
+
+
+                                    //Niveaux 6
+                                    if (mouse1.x >= 1700 && mouse1.x <= 1780)
+                                    {
+                                        if (mouse1.y >= 500 && mouse1.y <= 580 && Dispo.Lvl6 == true)
+                                        {
+                                            LvlSelect.setVisible(false);
+                                        }
+                                    }
+
+                                    //Back to menu
                                     if (mouse1.x >= 0 && mouse1.x <= 20)
                                     {
                                         if (mouse1.y >= 0 && mouse1.y <= 20)
@@ -262,7 +344,6 @@ int main()
                                             {
                                                 MusicProc.play();
                                             }
-
                                         }
                                     }
                                 }
@@ -283,7 +364,7 @@ int main()
                         menu.setVisible(false);
                         MusicProc.stop();
 
-                        //Selection des niveaux
+                        //Menu Option
                         sf::RenderWindow Option(sf::VideoMode(1900, 1080), "Option");
                         Option.setFramerateLimit(60);
 
@@ -398,7 +479,9 @@ int main()
         {
             menu.draw(test2);
         }
+        menu.draw(taille);
         menu.display();
+
     }
 return 0;
 }
