@@ -282,6 +282,23 @@ int main()
                                                     {
                                                         Boutique.close();
                                                     }
+
+                                                    //Back to LvlSelect
+                                                    if (event.type == sf::Event::MouseButtonPressed)
+                                                    {
+                                                        if (mouseBoutique.x >= 0 && mouseBoutique.x <= 20)
+                                                        {
+                                                            if (mouseBoutique.y >= 0 && mouseBoutique.y <= 20)
+                                                            {
+                                                                Boutique.close();
+                                                                LvlSelect.setVisible(true);
+                                                                if (music == true)
+                                                                {
+                                                                    MusicNiv.play();
+                                                                }
+                                                            }
+                                                        }
+                                                    }
                                                 }
 
                                                 for (const auto& BUP : UPG)
