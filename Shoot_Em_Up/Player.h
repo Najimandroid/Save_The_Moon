@@ -13,6 +13,7 @@ private:
 	bool hit; // checks if player is hit (imune ti damage during that state)
 	float hitCooldown;
 	float hitCooldownMax;
+	float count; //used to do the flashing effect
 
 	//* CONTROL KEYS *\\
 
@@ -30,7 +31,7 @@ public:
 
 	void initHit(float hitCooldown_);
 
-	bool isOnHitCooldown() { return (this->hitCooldown < this->hitCooldownMax); } 
+	bool isOnHitCooldown() { return (hit && (this->hitCooldown < this->hitCooldownMax)); } 
 
 	void updateShoot(float deltaTime) override;
 	void updatePosition(float deltaTime) override;

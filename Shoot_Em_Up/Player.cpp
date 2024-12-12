@@ -20,6 +20,7 @@ void Player::initHit(float hitCooldown_)
     this->hitCooldown = 0;
 
     this->hitCooldownMax = hitCooldown_;
+    this->count = 0;
 }
 
 //* UPDATING *\\
@@ -151,18 +152,25 @@ void Player::updateState(float deltaTime)
 {
     if (this->hit)
     {
-        std::cout << "player hit\n";
+       // std::cout << "player hit\n";
         if (this->isOnHitCooldown())
         {
             this->hitCooldown += deltaTime;
-            std::cout << "player on hit cooldown: " << this->hitCooldown << ", " << this->hitCooldownMax << std::endl;
+            this->count += deltaTime;
+            //std::cout << "player on hit cooldown: " << this->hitCooldown << ", " << this->hitCooldownMax << std::endl;
         }
         else
         {
             this->hit = false;
             this->hitCooldown = 0.f;
-            std::cout << "player on hit cooldown is finished\n";
+            this->count = 0.f;
+            //std::cout << "player on hit cooldown is finished\n";
         }
+    }
+
+    if (this->position.x < -30)
+    {
+        this->health = 0;
     }
 
    /* if (this->isDead()) {
@@ -179,11 +187,20 @@ void Player::draw(sf::RenderWindow& window, sf::Color color)
     body_.setFillColor(color);
     body_.setPosition(this->getPosition());
 
+    //FLASHING EFFECT
     if (this->hit) 
     { 
-       // if (this->hitCooldown % 2 <= 0)
+        if (this->count < .125f) //this->hitCooldownMax/4 
         {
             body_.setFillColor(sf::Color::Transparent);
+        }
+        else if (this->count < .25f)
+        {
+            body_.setFillColor(sf::Color::Green);
+        }
+        else if (this->count > .25f)
+        {
+            this->count = 0.f;
         }
     }
 
@@ -197,7 +214,7 @@ Player::Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, 
     this->initPosition(position_);
     this->initHitbox(hitboxSize_);
     this->initProperties(health_, damage_, speed_, canShoot_, cooldownSeconds_);
-    this->initHit(2);
+    this->initHit(1.5f);
 
     HealthBarManager* healthBarManager = HealthBarManager::getInstance();
     HealthBar* bar = healthBarManager->createHealthBar(health_);
