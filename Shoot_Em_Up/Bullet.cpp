@@ -55,10 +55,10 @@ void BulletManager::checkCollisions(Entity* entity)
 	}
 }
 
-Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, float speed)
+Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed)
 {
 
-	Bullet* newBullet = new Bullet(20, speed * 2, position, { 0,0 });
+	Bullet* newBullet = new Bullet(20, speed * 10, position, direction);
 	this->bullets.push_back(newBullet);
 	newBullet->setOwner(owner);
 	newBullet->setColor(owner->getColor());
@@ -68,18 +68,16 @@ Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, float s
 
 void BulletManager::moveBullet(float deltaTime, Bullet* bullet)
 {
+	//LevelManager* levelManager = LevelManager::getInstance();
 	//if (bullet == nullptr || bullet->getOwner() == nullptr) { std::cout << "erreur lors du mouvement d'un projectile\n"; return; }
-	if (bullet->getOwner()->isPlayer()) {
-		bullet->setVelocity(sf::Vector2f{ 10 * deltaTime * bullet->getSpeed() , 0 });
-		bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
-		bullet->getHitbox().setPosition(bullet->getPosition());
-	}
-	else
-	{
-		bullet->setVelocity(sf::Vector2f{ -10 * deltaTime * bullet->getSpeed() * 2 , 0 });
-		bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
-		bullet->getHitbox().setPosition(bullet->getPosition());
-	}
+
+	bullet->setVelocity(sf::Vector2f{ floor(20 * deltaTime * bullet->getSpeed() * bullet->getDirection().x)
+									 , floor(20 * deltaTime* bullet->getSpeed()* bullet->getDirection().y) });
+
+	std::cout << "OMG: " << 20 * deltaTime * bullet->getSpeed() * bullet->getDirection().y << std::endl;
+
+	bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
+	bullet->getHitbox().setPosition(bullet->getPosition());
 }
 
 void BulletManager::despawnBullets()

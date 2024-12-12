@@ -24,12 +24,17 @@ bool LevelManager::loadLevel(int levelIndex)
 
 			if(this->levelImage.getPixel(x, y) == sf::Color::Black)
 			{
-				wallManager->spawnWall( SPAWN_POSITION , { TILE_SIZE, TILE_SIZE });
+				wallManager->spawnWall( SPAWN_POSITION , { TILE_SIZE , TILE_SIZE });
 			}
 			else
 			if (this->levelImage.getPixel(x, y) == sf::Color::Red) 
 			{
 				enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::WAVE);
+			}
+			else
+			if (this->levelImage.getPixel(x, y) == sf::Color::Yellow)
+			{
+				enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::WHEEL);
 			}
 		}
 	}

@@ -41,6 +41,7 @@ public:
 	//* GET *\\
 
 	sf::Vector2f getPosition() const { return position; }
+	sf::Vector2f getVelocity() const { return velocity; }
 	sf::RectangleShape& getHitbox() { return hitbox; }
 	sf::Color getColor() { return color; }
 	float getHealth() const { return health; }

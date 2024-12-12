@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "Bullet.h"
 #include "Level.h"
 
 #include  <SFML/Graphics.hpp>
@@ -9,7 +10,7 @@
 
 enum EnemyType
 {
-	DEFAULT, TANK, SWARM, WAVE
+	DEFAULT, TANK, SWARM, WAVE, WHEEL
 };
 
 class Enemy : public Entity
@@ -46,12 +47,12 @@ public:
 		initProperties(100, 25, 2.f, true, .5f);
 	}
 
-	void updatePosition(float deltaTime) override 
+	void updatePosition(float deltaTime) override
 	{
 		LevelManager* levelManager = LevelManager::getInstance();
 		if (this->active)
 		{
-			velocity = { -levelManager->SCROLLING_SPEED * deltaTime * this->speed, (sin(position.x/75))*1.5f};
+			velocity = { -levelManager->SCROLLING_SPEED * deltaTime * this->speed, (sin(position.x / 75)) * 1.5f };
 		}
 		else
 		{
@@ -59,6 +60,40 @@ public:
 		}
 		this->position += velocity;
 		this->hitbox.setPosition(this->position);
+	}
+};
+
+class Wheel : public Enemy
+{
+public:
+	Wheel(sf::Vector2f position_)
+	{
+		position = position_;
+		color = sf::Color::Yellow;
+
+		initHitbox({ 50, 50 });
+		initProperties(75, 10, 1.f, true, 1.f);
+	}
+
+	void updateShoot(float deltaTime) override
+	{
+		if (!this->isOnCooldown() && this->canShoot)
+		{
+			if (!this->active) return; //returns if not active
+
+			//reset cooldown
+			this->shootCooldown = 0.f;
+
+			BulletManager* bulletManager = BulletManager::getInstance();
+			bulletManager->spawnbullet(this, { this->position }, { -1, 0 }, 3 * this->speed);
+			bulletManager->spawnbullet(this, { this->position }, { 1, 0 }, 3 * this->speed);
+			bulletManager->spawnbullet(this, { this->position }, { 0, 1 }, 3 * this->speed);
+			bulletManager->spawnbullet(this, { this->position }, { 0, -1 }, 3 * this->speed);
+		}
+		else
+		{
+			this->shootCooldown += deltaTime;
+		}
 	}
 };
 

@@ -22,16 +22,19 @@ WallManager* wallManager = WallManager::getInstance();
 LevelManager* levelManager = LevelManager::getInstance();
 HealthBarManager* healthBarManager = HealthBarManager::getInstance();
 
+int WINDOW_SIZE_X = 1920;
+int WINDOW_SIZE_Y = 1080;
+
 int main()
 {
     srand(std::chrono::system_clock::now().time_since_epoch().count());
     //creation d'une fenetre
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Save The Moon", sf::Style::Fullscreen);
+    sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE_X, WINDOW_SIZE_Y), "Save The Moon", sf::Style::Fullscreen); //sf::Style::Fullscreen
     window.setFramerateLimit(120);
 
     //test
     //creation d'un objet joueur
-    Player* player = new Player({ 100, 1080 / 2 }, { 50, 50 }, 100, 20, 20, true, .1f);
+    Player* player = new Player({ 100, WINDOW_SIZE_Y / 2.f }, { 50, 50 }, 100, 20, 3.f, true, .1f);
 
     float spawnCooldown = 0.f;
     levelManager->loadLevel(1);

@@ -27,12 +27,14 @@ void Player::initHit(float hitCooldown_)
 
 void Player::updatePosition(float deltaTime)
 {
+    LevelManager* levelManager = LevelManager::getInstance();
     WallManager* wallManager = WallManager::getInstance();
+
     for (sf::Keyboard::Key key : this->upKeys)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y > 50)
         {
-            this->velocity = sf::Vector2f{ 0, -20 * deltaTime * this->speed };
+            this->velocity = sf::Vector2f{ 0, -levelManager->SCROLLING_SPEED * deltaTime * this->speed };
 
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
             {
@@ -52,7 +54,7 @@ void Player::updatePosition(float deltaTime)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y < 1030)
         {
-            this->velocity = sf::Vector2f{ 0, 20 * deltaTime * this->speed };
+            this->velocity = sf::Vector2f{ 0, levelManager->SCROLLING_SPEED * deltaTime * this->speed };
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
             {
                 this->position +=
@@ -70,7 +72,7 @@ void Player::updatePosition(float deltaTime)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x > 50)
         {
-            this->velocity = sf::Vector2f{ -20 * deltaTime * this->speed , 0 };
+            this->velocity = sf::Vector2f{ -levelManager->SCROLLING_SPEED * deltaTime * this->speed , 0 };
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
             {
                 this->position +=
@@ -88,7 +90,7 @@ void Player::updatePosition(float deltaTime)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x < 1875)
         {
-            this->velocity = sf::Vector2f{ 20 * deltaTime * this->speed , 0 };
+            this->velocity = sf::Vector2f{ levelManager->SCROLLING_SPEED * deltaTime * this->speed , 0 };
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
             {
                 this->position +=
@@ -125,7 +127,7 @@ void Player::updateShoot(float deltaTime)
             {
                 LevelManager* levelManager = LevelManager::getInstance();
                 BulletManager* bulletManager = BulletManager::getInstance();
-                bulletManager->spawnbullet(this, { this->position }, 2 * this->speed);
+                bulletManager->spawnbullet(this, { this->position }, { 1, 0 }, 2 * this->speed);
             }
         }
     }
