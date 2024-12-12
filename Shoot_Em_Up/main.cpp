@@ -3,6 +3,7 @@
 #include "Bullet.h"
 #include "Wall.h"
 #include "Level.h"
+#include "HealthBar.h"
 
 #include <iostream>
 #include <vector>   
@@ -13,25 +14,13 @@ BulletManager* BulletManager::instance = nullptr;
 EnemyManager* EnemyManager::instance = nullptr;
 WallManager* WallManager::instance = nullptr;
 LevelManager* LevelManager::instance = nullptr;
+HealthBarManager* HealthBarManager::instance = nullptr;
 
 BulletManager* bulletManager = BulletManager::getInstance();
 EnemyManager* enemyManager = EnemyManager::getInstance();
 WallManager* wallManager = WallManager::getInstance();
 LevelManager* levelManager = LevelManager::getInstance();
-
-void spawnEnemiesTest()
-{
-    float max = 950.f;
-    float min = 150.f;
-
-    enemyManager->spawnEnemy({1900, float(rand() % int(max - min + 1) + min)}, EnemyType::TANK);
-    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
-    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::SWARM);
-    enemyManager->spawnEnemy({ 1900, float(rand() % int(max - min + 1) + min) }, EnemyType::DEFAULT);
-
-    wallManager->spawnWall({ 1900, 180 }, { 60, 60 });
-    wallManager->spawnWall({ 1900, 900 }, { 60, 60 });
-}
+HealthBarManager* healthBarManager = HealthBarManager::getInstance();
 
 int main()
 {
@@ -45,7 +34,6 @@ int main()
     Player* player = new Player({ 1900 / 2, 1080 / 2 }, { 50, 50 }, 100, 20, 20, true, .1f);
 
     float spawnCooldown = 0.f;
-    //spawnEnemiesTest();
     levelManager->loadLevel(1);
 
     //creation d'une horloge
@@ -74,7 +62,6 @@ int main()
 
         if (spawnCooldown >= 5.f) {
             spawnCooldown = 0.f;
-            //spawnEnemiesTest();
         }
 
         for (Enemy* enemy : enemyManager->getEnemies())
@@ -87,12 +74,13 @@ int main()
         player->update(deltaTime);
         enemyManager->update(deltaTime);
         bulletManager->updatePositions(deltaTime);
-
+        healthBarManager->updateBars();
 
         wallManager->drawWalls(window);
         player->draw(window, sf::Color::Green);
         enemyManager->drawEnemies(window);
         bulletManager->drawBullets(window);
+        healthBarManager->drawBars(window);
 
         window.display();
 
