@@ -1,13 +1,15 @@
 #pragma once
 #include "Entity.h"
+#include "Level.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 enum EnemyType
 {
-	DEFAULT, TANK, SWARM
+	DEFAULT, TANK, SWARM, WAVE
 };
 
 class Enemy : public Entity
@@ -29,6 +31,34 @@ public:
 
 		initHitbox({ 75, 75 });
 		initProperties(300, 50, 1.5f, true, 5.f);
+	}
+};
+
+class Wave : public Enemy
+{
+public:
+	Wave(sf::Vector2f position_)
+	{
+		position = position_;
+		color = sf::Color::Red;
+
+		initHitbox({ 50, 50 });
+		initProperties(100, 25, 2.f, true, .5f);
+	}
+
+	void updatePosition(float deltaTime) override 
+	{
+		LevelManager* levelManager = LevelManager::getInstance();
+		if (this->active)
+		{
+			velocity = { -levelManager->SCROLLING_SPEED * deltaTime * this->speed, (sin(position.x/75))*1.5f};
+		}
+		else
+		{
+			velocity = { -levelManager->SCROLLING_SPEED * deltaTime, 0 };
+		}
+		this->position += velocity;
+		this->hitbox.setPosition(this->position);
 	}
 };
 

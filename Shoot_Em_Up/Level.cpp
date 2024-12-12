@@ -29,7 +29,7 @@ bool LevelManager::loadLevel(int levelIndex)
 			else
 			if (this->levelImage.getPixel(x, y) == sf::Color::Red) 
 			{
-				enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::DEFAULT);
+				enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::WAVE);
 			}
 		}
 	}

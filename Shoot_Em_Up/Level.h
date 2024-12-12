@@ -22,7 +22,7 @@ private:
 	LevelManager() {};
 public:
 	float TILE_SIZE = 60;
-	float SCROLLING_SPEED = 100;
+	float SCROLLING_SPEED = 150;
 
 	static LevelManager* getInstance()
 	{

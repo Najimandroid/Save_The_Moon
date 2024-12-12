@@ -57,6 +57,7 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 		case DEFAULT: newEnemy = new Enemy(position_, { 50, 50 }, 50, 25, 1.5f, true, 2.f);  break;
 		case TANK: newEnemy = new Tank(position_);  break;
 		case SWARM: newEnemy = new Swarm(position_);  break;
+		case WAVE: newEnemy = new Wave(position_); break;
 	}
 
 	if (newEnemy == nullptr) 
