@@ -149,7 +149,7 @@ int main()
                 }
             }
 
-            //Bouton Lancer Jeu
+            //Bouton Menu Selection Niveau
             if (event.type == sf::Event::MouseButtonPressed)
             {
                 if (mouse.x >= 800 && mouse.x <= 1050)
@@ -187,9 +187,9 @@ int main()
                         sf::RectangleShape BackLvl(sf::Vector2f(20, 20));
                         BackLvl.setFillColor(sf::Color::White);
 
-                        sf::RectangleShape Shop(sf::Vector2f(150,50));
-                        Shop.setFillColor(sf::Color::Magenta);
-                        Shop.setPosition(sf::Vector2f(1700, 10));
+                        sf::RectangleShape ShopBouton(sf::Vector2f(150,50));
+                        ShopBouton.setFillColor(sf::Color::Magenta);
+                        ShopBouton.setPosition(sf::Vector2f(1700, 10));
 
                         
                         sf::Event event;
@@ -200,7 +200,7 @@ int main()
                         }
 
                         LvlSelect.draw(BackLvl);
-                        LvlSelect.draw(Shop);
+                        LvlSelect.draw(ShopBouton);
 
                         LvlSelect.display();
 
@@ -224,7 +224,27 @@ int main()
                                     {
                                         if (mouse1.y >= 10 && mouse1.y <= 60)
                                         {
-                                            LvlSelect.close();
+                                            LvlSelect.setVisible(false);
+
+                                            sf::RenderWindow Boutique(sf::VideoMode(1900, 1080), "Boutique");
+                                            Boutique.setFramerateLimit(60);
+
+                                            Boutique.setVisible(true);
+
+                                            sf::Event event;
+                                            while (Boutique.isOpen())
+                                            {
+                                                sf::Vector2i mouseBoutique = sf::Mouse::getPosition(Boutique);
+
+                                                while (Boutique.pollEvent(event))
+                                                {
+                                                    if (event.type == sf::Event::Closed)
+                                                    {
+                                                        Boutique.close();
+                                                    }
+                                                }
+                                                Boutique.display();
+                                            }
                                         }
                                     }
 
@@ -491,15 +511,12 @@ int main()
 
 
                             }
-
                             for (auto& SoundB : StructSon)
                             {
                                 Option.draw(SoundB);
                             }
                             Option.display();
                         }
-
-
                     }
                 }
             }
