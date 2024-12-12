@@ -40,6 +40,8 @@ int main()
     sf::Clock clock;
     float deltaTime;
 
+    bool isPaused = false;
+
     while (window.isOpen())
     {
         window.clear();
@@ -58,23 +60,21 @@ int main()
         }
 
         deltaTime = clock.restart().asSeconds();
-        spawnCooldown += deltaTime;
 
-        if (spawnCooldown >= 5.f) {
-            spawnCooldown = 0.f;
-        }
-
-        for (Enemy* enemy : enemyManager->getEnemies())
+        if (!isPaused) 
         {
-            bulletManager->checkCollisions(enemy);
-        }
-        bulletManager->checkCollisions(player);
+            for (Enemy* enemy : enemyManager->getEnemies())
+            {
+                bulletManager->checkCollisions(enemy);
+            }
+            bulletManager->checkCollisions(player);
 
-        wallManager->updatePositions(deltaTime);
-        player->update(deltaTime);
-        enemyManager->update(deltaTime);
-        bulletManager->updatePositions(deltaTime);
-        healthBarManager->updateBars();
+            wallManager->updatePositions(deltaTime);
+            player->update(deltaTime);
+            enemyManager->update(deltaTime);
+            bulletManager->updatePositions(deltaTime);
+            healthBarManager->updateBars();
+        }
 
         wallManager->drawWalls(window);
         player->draw(window, sf::Color::Green);
@@ -85,6 +85,8 @@ int main()
         window.display();
 
         bulletManager->despawnBullets();
+
+        if (player->getHealth() <= 0) isPaused = true;
     }
 
 
