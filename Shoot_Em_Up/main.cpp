@@ -38,6 +38,15 @@ struct LvlAvailable
     bool Lvl6 = false;
 };
 
+struct Upgrade
+{
+    sf::Color colorupgrade;
+    sf::Vector2f positionupgrade;
+};
+
+
+
+
 bool music = true;
 
 
@@ -87,11 +96,22 @@ int main()
             StructMenu.push_back(test2);
     }
 
-    //test bouton résolution
-    sf::RectangleShape taille(sf::Vector2f(50, 50));
-    taille.setFillColor(sf::Color::White);
-    taille.setPosition(sf::Vector2f(150, 150));
 
+    std::vector <BoutonSon> Sound =
+    {
+        { sf::Color::White,{0,0} },
+        { sf::Color::Red, {150,150} },
+        { sf::Color::Blue, {300,150} },
+    };
+
+    std::vector <sf::RectangleShape> StructSon;
+    for (const auto& BoutonSon : Sound)
+    {
+        sf::RectangleShape SoundB(sf::Vector2f(30, 30));
+        SoundB.setFillColor(BoutonSon.CouleurSon);
+        SoundB.setPosition(BoutonSon.PositionSon);
+        StructSon.push_back(SoundB);
+    }
 
     std::vector <Niveau> niveaux =
     {
@@ -112,6 +132,28 @@ int main()
         lvl.setPosition(Niveau.position);
         lvls.push_back(lvl);
     }
+
+    std::vector <Upgrade> UP =
+    {
+        {sf::Color::Blue, {300,500} },
+        {sf::Color::Red, {600,500} },
+        {sf::Color::Green, {900,500} },
+    };
+
+    std::vector <sf::CircleShape> UPG;
+    for (const auto& Upgrade : UP)
+    {
+        sf::CircleShape BUP(10);
+        BUP.setFillColor(Upgrade.colorupgrade);
+        BUP.setPosition(Upgrade.positionupgrade);
+        UPG.push_back(BUP);
+    }
+
+
+    //test bouton résolution
+    sf::RectangleShape taille(sf::Vector2f(50, 50));
+    taille.setFillColor(sf::Color::White);
+    taille.setPosition(sf::Vector2f(150, 150));
 
 
 
@@ -163,7 +205,6 @@ int main()
                         sf::SoundBuffer MusicSelect;
 
                         if (!MusicSelect.loadFromFile("SelectLvl.wav")) {
-                            std::cout << "Erreur : Impossible de charger le fichier audio." << std::endl;
                             return -1;
                         }
 
@@ -225,6 +266,7 @@ int main()
                                         if (mouse1.y >= 10 && mouse1.y <= 60)
                                         {
                                             LvlSelect.setVisible(false);
+                                            MusicNiv.stop();
 
                                             sf::RenderWindow Boutique(sf::VideoMode(1900, 1080), "Boutique");
                                             Boutique.setFramerateLimit(60);
@@ -242,6 +284,11 @@ int main()
                                                     {
                                                         Boutique.close();
                                                     }
+                                                }
+
+                                                for (const auto& BUP : UPG)
+                                                {
+                                                    Boutique.draw(BUP);
                                                 }
                                                 Boutique.display();
                                             }
@@ -261,7 +308,6 @@ int main()
                                             sf::SoundBuffer Niv1;
 
                                             if (!Niv1.loadFromFile("Niv1.wav")) {
-                                                std::cout << "Erreur : Impossible de charger le fichier audio." << std::endl;
                                                 return -1;
                                             }
 
@@ -425,28 +471,13 @@ int main()
                         sf::RenderWindow Option(sf::VideoMode(1900, 1080), "Option");
                         Option.setFramerateLimit(60);
 
-                        std::vector <BoutonSon> Sound =
-                        {
-                            { sf::Color::White,{0,0} },
-                            { sf::Color::Red, {150,150} },
-                            { sf::Color::Blue, {300,150} },
-                        };
 
-                        std::vector <sf::RectangleShape> StructSon;
-                        for (const auto& BoutonSon : Sound)
-                        {
-                            sf::RectangleShape SoundB(sf::Vector2f(30, 30));
-                            SoundB.setFillColor(BoutonSon.CouleurSon);
-                            SoundB.setPosition(BoutonSon.PositionSon);
-                            StructSon.push_back(SoundB);
-                        }
 
                         sf::SoundBuffer MusicOption;
 
                         
 
                         if (!MusicOption.loadFromFile("Option.wav")) {
-                            std::cout << "Erreur : Impossible de charger le fichier audio." << std::endl;
                             return -1;
                         }
 
