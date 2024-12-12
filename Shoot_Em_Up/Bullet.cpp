@@ -68,15 +68,20 @@ Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, sf::Vec
 
 void BulletManager::moveBullet(float deltaTime, Bullet* bullet)
 {
-	//LevelManager* levelManager = LevelManager::getInstance();
+	LevelManager* levelManager = LevelManager::getInstance();
 	//if (bullet == nullptr || bullet->getOwner() == nullptr) { std::cout << "erreur lors du mouvement d'un projectile\n"; return; }
 
-	bullet->setVelocity(sf::Vector2f{ floor(20 * deltaTime * bullet->getSpeed() * bullet->getDirection().x)
-									 , floor(20 * deltaTime* bullet->getSpeed()* bullet->getDirection().y) });
+	//make them move
 
-	std::cout << "OMG: " << 20 * deltaTime * bullet->getSpeed() * bullet->getDirection().y << std::endl;
-
+	bullet->setVelocity({ 20 * deltaTime * bullet->getSpeed() * bullet->getDirection().x
+						, 20 * deltaTime* bullet->getSpeed()* bullet->getDirection().y });
 	bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
+
+	//make them follow the scrolling speed
+
+	bullet->setVelocity({ -levelManager->SCROLLING_SPEED * deltaTime, 0 });
+	bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
+
 	bullet->getHitbox().setPosition(bullet->getPosition());
 }
 

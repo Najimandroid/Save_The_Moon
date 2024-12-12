@@ -91,6 +91,7 @@ void Entity::draw(sf::RenderWindow& window, sf::Color color)
 	body_.setOrigin( this->getHitbox().getSize() / 2.f );
 	body_.setFillColor(color);
 	body_.setPosition(this->getPosition());
+	body_.setRotation(this->getHitbox().getRotation());
 	window.draw(body_);
 }
 

@@ -85,15 +85,17 @@ public:
 			this->shootCooldown = 0.f;
 
 			BulletManager* bulletManager = BulletManager::getInstance();
-			bulletManager->spawnbullet(this, { this->position }, { -1, 0 }, 3 * this->speed);
-			bulletManager->spawnbullet(this, { this->position }, { 1, 0 }, 3 * this->speed);
-			bulletManager->spawnbullet(this, { this->position }, { 0, 1 }, 3 * this->speed);
-			bulletManager->spawnbullet(this, { this->position }, { 0, -1 }, 3 * this->speed);
+			bulletManager->spawnbullet(this, { this->position }, { -1, 0}, 2 * this->speed);
+			bulletManager->spawnbullet(this, { this->position }, { 1, 0 }, 2 * this->speed);
+			bulletManager->spawnbullet(this, { this->position }, { 0, 1 }, 2 * this->speed);
+			bulletManager->spawnbullet(this, { this->position }, { 0, -1 }, 2 * this->speed);
 		}
 		else
 		{
 			this->shootCooldown += deltaTime;
 		}
+
+		this->hitbox.rotate(1);
 	}
 };
 
