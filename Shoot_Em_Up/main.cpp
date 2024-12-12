@@ -45,8 +45,6 @@ struct Upgrade
 };
 
 
-
-
 bool music = true;
 
 
@@ -355,7 +353,7 @@ int main()
                                                     if (event.type == sf::Event::KeyPressed)
                                                     {
                                                         if (event.key.code == sf::Keyboard::Escape)
-                                                            game.close(); // Fermer avec Échap
+                                                            game.close(); 
                                                     }
                                                 }
 
@@ -471,11 +469,7 @@ int main()
                         sf::RenderWindow Option(sf::VideoMode(1900, 1080), "Option");
                         Option.setFramerateLimit(60);
 
-
-
-                        sf::SoundBuffer MusicOption;
-
-                        
+                        sf::SoundBuffer MusicOption;                        
 
                         if (!MusicOption.loadFromFile("Option.wav")) {
                             return -1;
