@@ -31,7 +31,7 @@ int main()
 
     //test
     //creation d'un objet joueur
-    Player* player = new Player({ 1900 / 2, 1080 / 2 }, { 50, 50 }, 100, 20, 20, true, .1f);
+    Player* player = new Player({ 100, 1080 / 2 }, { 50, 50 }, 100, 20, 20, true, .1f);
 
     float spawnCooldown = 0.f;
     levelManager->loadLevel(1);
