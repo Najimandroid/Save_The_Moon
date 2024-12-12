@@ -61,6 +61,8 @@ int main()
         MusicProc.play();
     }
 
+    MusicProc.setLoop(true);
+
     if (music == false)
     {
         MusicProc.stop();
@@ -174,6 +176,8 @@ int main()
                             MusicNiv.setVolume(0);
                         }
 
+                        MusicNiv.setLoop(true);
+
                         //Selection des niveaux
                         sf::RenderWindow LvlSelect(sf::VideoMode(1900, 1080), "Selection Niveaux");
                         LvlSelect.setFramerateLimit(60);
@@ -182,6 +186,11 @@ int main()
 
                         sf::RectangleShape BackLvl(sf::Vector2f(20, 20));
                         BackLvl.setFillColor(sf::Color::White);
+
+                        sf::RectangleShape Shop(sf::Vector2f(150,50));
+                        Shop.setFillColor(sf::Color::Magenta);
+                        Shop.setPosition(sf::Vector2f(1700, 10));
+
                         
                         sf::Event event;
 
@@ -191,6 +200,7 @@ int main()
                         }
 
                         LvlSelect.draw(BackLvl);
+                        LvlSelect.draw(Shop);
 
                         LvlSelect.display();
 
@@ -198,7 +208,6 @@ int main()
                         while (LvlSelect.isOpen())
                         {
                             sf::Vector2i mouse1 = sf::Mouse::getPosition(LvlSelect);
-
 
                             while (LvlSelect.pollEvent(event))
                             {
@@ -210,13 +219,41 @@ int main()
                                 //Bouton Lancer Jeu
                                 if (event.type == sf::Event::MouseButtonPressed)
                                 {
+
+                                    if (mouse1.x >= 1700 && mouse1.x <= 1850)
+                                    {
+                                        if (mouse1.y >= 10 && mouse1.y <= 60)
+                                        {
+                                            LvlSelect.close();
+                                        }
+                                    }
+
+
                                     //Niveaux1
                                     if (mouse1.x >= 300 && mouse1.x <= 380)
                                     {
                                         if (mouse1.y >= 400 && mouse1.y <= 480)
                                         {
                                             LvlSelect.setVisible(false);
+                                            MusicNiv.stop();
 
+
+                                            sf::SoundBuffer Niv1;
+
+                                            if (!Niv1.loadFromFile("Niv1.wav")) {
+                                                std::cout << "Erreur : Impossible de charger le fichier audio." << std::endl;
+                                                return -1;
+                                            }
+
+                                            sf::Sound Lvl1;
+                                            Lvl1.setBuffer(Niv1);
+                                            Lvl1.play();
+                                            if (music == false)
+                                            {
+                                                Lvl1.setVolume(0);
+                                            }
+
+                                            Lvl1.setLoop(true);
 
                                             //creation d'une fenetre
                                             sf::RenderWindow game(sf::VideoMode(1900, 1080), "Save The Moon");
@@ -270,8 +307,8 @@ int main()
                                                 for (Bullet* adress : bulletManager->balles)
                                                 {
                                                     bulletManager->movebullet(deltaTime, adress);
-                                                    std::cout << "[ " << adress << ", ";
-                                                } std::cout << " ]" << std::endl;
+                                                }
+
                                                 bulletManager->despawnbullet();
                                                 player.updatePosition(deltaTime);
 
@@ -388,7 +425,7 @@ int main()
 
                         
 
-                        if (!MusicOption.loadFromFile("OptionMenu.wav")) {
+                        if (!MusicOption.loadFromFile("Option.wav")) {
                             std::cout << "Erreur : Impossible de charger le fichier audio." << std::endl;
                             return -1;
                         }
@@ -396,10 +433,14 @@ int main()
                         sf::Sound MusicOp;
                         MusicOp.setBuffer(MusicOption);
                         MusicOp.play();
+
                         if (music == false)
                         {
                             MusicOp.setVolume(0);
                         }
+                        
+                        MusicOp.setLoop(true);
+
                         sf::Event event;
 
                         while (Option.isOpen())
