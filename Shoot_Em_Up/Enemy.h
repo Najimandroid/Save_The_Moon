@@ -52,7 +52,7 @@ public:
 		LevelManager* levelManager = LevelManager::getInstance();
 		if (this->active)
 		{
-			velocity = { -levelManager->SCROLLING_SPEED * deltaTime * this->speed, (sin(position.x / 75)) * 1.5f };
+			velocity = { -levelManager->SCROLLING_SPEED * deltaTime * this->speed, (sin(position.x / 75)) * ((1.5f *WindowConfig::getInstance()->SIZE_Y)/1080)};
 		}
 		else
 		{

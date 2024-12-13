@@ -33,7 +33,7 @@ void Player::updatePosition(float deltaTime)
 
     for (sf::Keyboard::Key key : this->upKeys)
     {
-        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y > 50)
+        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y > this->hitbox.getSize().y / 2)
         {
             this->velocity = sf::Vector2f{ 0, -levelManager->SCROLLING_SPEED * deltaTime * this->speed };
 
@@ -53,7 +53,7 @@ void Player::updatePosition(float deltaTime)
 
     for (sf::Keyboard::Key key : this->downKeys)
     {
-        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y < 1030)
+        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y < (WindowConfig::getInstance()->SIZE_Y - this->hitbox.getSize().y / 2))
         {
             this->velocity = sf::Vector2f{ 0, levelManager->SCROLLING_SPEED * deltaTime * this->speed };
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
@@ -71,7 +71,7 @@ void Player::updatePosition(float deltaTime)
 
     for (sf::Keyboard::Key key : this->leftKeys)
     {
-        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x > 50)
+        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x > this->hitbox.getSize().x / 2)
         {
             this->velocity = sf::Vector2f{ -levelManager->SCROLLING_SPEED * deltaTime * this->speed , 0 };
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
@@ -89,7 +89,7 @@ void Player::updatePosition(float deltaTime)
 
     for (sf::Keyboard::Key key : this->rightKeys)
     {
-        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x < 1875)
+        if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x < WindowConfig::getInstance()->SIZE_X - this->hitbox.getSize().x / 2)
         {
             this->velocity = sf::Vector2f{ levelManager->SCROLLING_SPEED * deltaTime * this->speed , 0 };
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
