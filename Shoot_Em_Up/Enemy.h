@@ -20,6 +20,16 @@ public:
 	Enemy() {};
 
 	void updatePosition(float deltaTime) override;
+
+	sf::Vector2f normalize(const sf::Vector2f& vector) {
+		
+		float length = std::sqrt(vector.x * vector.x + vector.y * vector.y);
+
+		if (length > 0) {
+			return sf::Vector2f(vector.x / length, vector.y / length);
+		}
+		return sf::Vector2f(0.f, 0.f);
+	}
 };
 
 class Tank : public Enemy
@@ -44,7 +54,7 @@ public:
 		color = sf::Color::Red;
 
 		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
-		initProperties(100, 25, 2.f, true, .5f);
+		initProperties(100, 25, 2.f, true, 1.f);
 	}
 
 	void updatePosition(float deltaTime) override
@@ -65,14 +75,17 @@ public:
 
 class Wheel : public Enemy
 {
+private:
+	int count;
 public:
 	Wheel(sf::Vector2f position_)
 	{
 		position = position_;
 		color = sf::Color::Yellow;
+		count = 0;
 
 		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
-		initProperties(75, 10, 1.f, true, 1.f);
+		initProperties(75, 10, 1.f, true, .5f);
 	}
 
 	void updateShoot(float deltaTime) override
@@ -85,10 +98,23 @@ public:
 			this->shootCooldown = 0.f;
 
 			BulletManager* bulletManager = BulletManager::getInstance();
-			bulletManager->spawnbullet(this, { this->position }, { -1, 0}, 2 * this->speed);
-			bulletManager->spawnbullet(this, { this->position }, { 1, 0 }, 2 * this->speed);
-			bulletManager->spawnbullet(this, { this->position }, { 0, 1 }, 2 * this->speed);
-			bulletManager->spawnbullet(this, { this->position }, { 0, -1 }, 2 * this->speed);
+
+			if (count % 2 == 0)
+			{
+				bulletManager->spawnbullet(this, { this->position }, normalize({ -1, 0 }), 2 * this->speed);
+				bulletManager->spawnbullet(this, { this->position }, normalize({ 1, 0 }), 2 * this->speed);
+				bulletManager->spawnbullet(this, { this->position }, normalize({ 0, 1 }), 2 * this->speed);
+				bulletManager->spawnbullet(this, { this->position }, normalize({ 0, -1 }), 2 * this->speed);
+			}
+			else 
+			{
+				bulletManager->spawnbullet(this, { this->position }, normalize({ -1, 1 }), 2 * this->speed);
+				bulletManager->spawnbullet(this, { this->position }, normalize({ 1, -1 }), 2 * this->speed);
+				bulletManager->spawnbullet(this, { this->position }, normalize({ -1, -1 }), 2 * this->speed);
+				bulletManager->spawnbullet(this, { this->position }, normalize({ 1, 1 }), 2 * this->speed);
+			}
+
+			count++;
 		}
 		else
 		{
