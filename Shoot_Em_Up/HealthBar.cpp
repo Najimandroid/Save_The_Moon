@@ -1,4 +1,5 @@
 #include "HealthBar.h"
+#include "Window.h"
 
 #include  <SFML/Graphics.hpp>
 #include <vector> 
@@ -29,7 +30,7 @@ void HealthBarManager::drawBars(sf::RenderWindow& window)
 
 	for (HealthBar* bar : this->bars)
 	{
-		sf::RectangleShape background_(sf::Vector2f(300, 40));
+		sf::RectangleShape background_(sf::Vector2f(WindowConfig::getInstance()->SIZE_X/5, WindowConfig::getInstance()->SIZE_Y/16));
 		background_.setFillColor(sf::Color::Red);
 		background_.setPosition({ 300, 40 });
 		window.draw(background_);
@@ -38,7 +39,7 @@ void HealthBarManager::drawBars(sf::RenderWindow& window)
 		float healthBarSizeX = ((bar->getRemaingingHealth() * bar->getTotalHealth()) / 100) * (background_.getSize().x/100);
 
 		if (healthBarSizeX <= 0) { body_.setSize(sf::Vector2f(0, 40)); }
-		else{ body_.setSize(sf::Vector2f(healthBarSizeX, 40)); }
+		else{ body_.setSize(sf::Vector2f(healthBarSizeX, WindowConfig::getInstance()->SIZE_Y / 16)); }
 		
 		body_.setFillColor(sf::Color::Green);
 		body_.setPosition({ 300, 40 });

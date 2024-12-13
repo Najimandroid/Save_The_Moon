@@ -3,6 +3,7 @@
 #include "Wall.h"
 #include "Level.h"
 #include "HealthBar.h"
+#include "Window.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
@@ -215,7 +216,7 @@ Player::Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, 
 {
     this->initPosition(position_);
     this->initHitbox(hitboxSize_);
-    this->initProperties(health_, damage_, speed_, canShoot_, cooldownSeconds_);
+    this->initProperties(health_, damage_, ((speed_ * WindowConfig::getInstance()->SIZE_X) / 1920), canShoot_, cooldownSeconds_);
     this->initHit(1.5f);
 
     HealthBarManager* healthBarManager = HealthBarManager::getInstance();

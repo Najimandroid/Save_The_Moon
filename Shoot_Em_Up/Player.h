@@ -19,10 +19,10 @@ private:
 
 	typedef std::vector<sf::Keyboard::Key> KeyVector;
 
-	KeyVector upKeys = { sf::Keyboard::Key::Z, sf::Keyboard::Key::Up };
-	KeyVector downKeys = { sf::Keyboard::Key::S, sf::Keyboard::Key::Down };
-	KeyVector leftKeys = { sf::Keyboard::Key::Q, sf::Keyboard::Key::Left };
-	KeyVector rightKeys = { sf::Keyboard::Key::D, sf::Keyboard::Key::Right };
+	KeyVector upKeys = { sf::Keyboard::Key::Z };
+	KeyVector downKeys = { sf::Keyboard::Key::S };
+	KeyVector leftKeys = { sf::Keyboard::Key::Q };
+	KeyVector rightKeys = { sf::Keyboard::Key::D };
 
 	KeyVector shootKeys = { sf::Keyboard::Key::Space };
 

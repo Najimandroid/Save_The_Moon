@@ -30,7 +30,7 @@ public:
 		position = position_;
 		color = sf::Color::Yellow;
 
-		initHitbox({ 75, 75 });
+		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 27.f, WindowConfig::getInstance()->SIZE_Y / 27.f });
 		initProperties(300, 50, 1.5f, true, 5.f);
 	}
 };
@@ -43,7 +43,7 @@ public:
 		position = position_;
 		color = sf::Color::Red;
 
-		initHitbox({ 50, 50 });
+		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 		initProperties(100, 25, 2.f, true, .5f);
 	}
 
@@ -71,7 +71,7 @@ public:
 		position = position_;
 		color = sf::Color::Yellow;
 
-		initHitbox({ 50, 50 });
+		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 		initProperties(75, 10, 1.f, true, 1.f);
 	}
 
@@ -107,7 +107,7 @@ public:
 		position = position_;
 		color = sf::Color::Cyan;
 
-		initHitbox({ 25, 25 });
+		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 9.f, WindowConfig::getInstance()->SIZE_Y / 9.f });
 		initProperties(10, 0, 6.f, false, 0.f);
 	}
 };

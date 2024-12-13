@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Bullet.h"
+#include "Window.h"
 #include "Level.h"
 #include  <SFML/Graphics.hpp>
 
@@ -33,7 +34,7 @@ Enemy::Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, fl
 {
 	this->initPosition(position_);
 	this->initHitbox(hitboxSize_);
-	this->initProperties(health_, damage_, speed_, canShoot_, cooldownSeconds_);
+	this->initProperties(health_, damage_, ((speed_ * WindowConfig::getInstance()->SIZE_X) / 1920), canShoot_, cooldownSeconds_);
 	this->color = sf::Color::Red;
 }
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Wall.h"
+#include "Window.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
@@ -21,8 +22,8 @@ private:
 
 	LevelManager() {};
 public:
-	float TILE_SIZE = 60;
-	float SCROLLING_SPEED = 150;
+	float TILE_SIZE = WindowConfig::getInstance()->SIZE_Y/18;
+	float SCROLLING_SPEED = WindowConfig::getInstance()->SIZE_X/ 12.8f;
 
 	static LevelManager* getInstance()
 	{

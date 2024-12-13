@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Level.h"
+#include "Window.h"
 
 #include  <SFML/Graphics.hpp>
 
@@ -58,7 +59,7 @@ void BulletManager::checkCollisions(Entity* entity)
 Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed)
 {
 
-	Bullet* newBullet = new Bullet(20, speed * 10, position, direction);
+	Bullet* newBullet = new Bullet(20, speed * WindowConfig::getInstance()->SIZE_X/192, position, direction);
 	this->bullets.push_back(newBullet);
 	newBullet->setOwner(owner);
 	newBullet->setColor(owner->getColor());
@@ -73,8 +74,8 @@ void BulletManager::moveBullet(float deltaTime, Bullet* bullet)
 
 	//make them move
 
-	bullet->setVelocity({ 20 * deltaTime * bullet->getSpeed() * bullet->getDirection().x
-						, 20 * deltaTime* bullet->getSpeed()* bullet->getDirection().y });
+	bullet->setVelocity({ WindowConfig::getInstance()->SIZE_X / 96 * deltaTime * bullet->getSpeed() * bullet->getDirection().x
+						, WindowConfig::getInstance()->SIZE_Y / 108 * deltaTime* bullet->getSpeed()* bullet->getDirection().y });
 	bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
 
 	//make them follow the scrolling speed
@@ -110,7 +111,7 @@ void BulletManager::drawBullets(sf::RenderWindow& window)
 {
 	for (Bullet* adress : this->bullets)
 	{
-		sf::RectangleShape body_(sf::Vector2f(10, 10));
+		sf::RectangleShape body_(sf::Vector2f(WindowConfig::getInstance()->SIZE_X / 192, WindowConfig::getInstance()->SIZE_X / 192));
 		body_.setFillColor(adress->getColor());
 		body_.setOrigin(adress->getHitbox().getSize() / 2.f);
 		body_.setPosition(adress->getPosition());

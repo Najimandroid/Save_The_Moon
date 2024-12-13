@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include "Player.h"
 #include "Level.h"
+#include "Window.h"
 
 #include  <SFML/Graphics.hpp>
 
@@ -50,7 +51,7 @@ void Entity::updatePosition(float deltaTime)
 
 void Entity::update(float deltaTime)
 {
-	if (this->position.x <= 2000) { this->active = true; }
+	if (this->position.x <= (WindowConfig::getInstance()->SIZE_X + WindowConfig::getInstance()->SIZE_X/96)) { this->active = true; }
 	this->updatePosition(deltaTime);
 	this->updateShoot(deltaTime);
 	this->updateState(deltaTime);
@@ -109,7 +110,7 @@ void Entity::initHitbox(sf::Vector2f hitboxSize_)
 
 void Entity::initProperties(float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
 {
-	this->health = health_; this->damage = damage_; this->speed = speed_; this->canShoot = canShoot_, this->shootCooldownMax = cooldownSeconds_; this->active = false;
+	this->health = health_; this->damage = damage_; this->speed = ((speed_ * WindowConfig::getInstance()->SIZE_X)/1920); this->canShoot = canShoot_, this->shootCooldownMax = cooldownSeconds_; this->active = false;
 }
 
 //* CONSTRUCTOR *\\
@@ -117,7 +118,7 @@ void Entity::initProperties(float health_, float damage_, float speed_, bool can
 Entity::Entity(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
 {
 	this->initPosition(position_);
-	this->initHitbox(hitboxSize_);
+	this->initHitbox({ WindowConfig::getInstance()->SIZE_Y/hitboxSize_.x, WindowConfig::getInstance()->SIZE_Y/hitboxSize_.y });
 	this->initProperties(health_, damage_, speed_, canShoot_, cooldownSeconds_);
 }
 

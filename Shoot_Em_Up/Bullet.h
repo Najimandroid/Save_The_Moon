@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "Window.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
@@ -27,7 +28,7 @@ public:
 	Bullet(float damage_, float speed_, sf::Vector2f position_, sf::Vector2f direction_) :
 		damage(damage_), speed(speed_), position(position_), velocity({0, 0}), direction(direction_), owner(nullptr), color(sf::Color::White)
 	{
-		sf::RectangleShape hitbox_(sf::Vector2f(10, 10));
+		sf::RectangleShape hitbox_(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y/108, WindowConfig::getInstance()->SIZE_Y / 108));
 		hitbox = hitbox_;
 		hitbox.setPosition(position);
 	}
