@@ -47,7 +47,6 @@ struct Upgrade
 
 bool music = true;
 
-
 int main()
 {
     struct LvlAvailable Dispo;
@@ -59,7 +58,6 @@ int main()
         std::cout << "Erreur : Impossible de charger le fichier audio." << std::endl;
         return -1;
     }
-
 
     sf::Sound MusicProc;
     MusicProc.setBuffer(MusicMenu);
@@ -75,6 +73,23 @@ int main()
         MusicProc.stop();
        MusicProc.setVolume(0);
     }
+
+
+    sf::SoundBuffer MusicSelect;
+
+    if (!MusicSelect.loadFromFile("SelectLvl.wav")) {
+        return -1;
+    }
+
+
+    sf::Sound MusicNiv;
+    MusicNiv.setBuffer(MusicSelect);
+    if (music == false)
+    {
+        MusicNiv.setVolume(0);
+    }
+
+    MusicNiv.setLoop(true);
 
 
 
@@ -100,6 +115,8 @@ int main()
         { sf::Color::White,{0,0} },
         { sf::Color::Red, {150,150} },
         { sf::Color::Blue, {300,150} },
+        { sf::Color::Green, {450,150} },
+        { sf::Color::Magenta, {600,150} },
     };
 
     std::vector <sf::RectangleShape> StructSon;
@@ -166,7 +183,6 @@ int main()
     while (menu.isOpen())
     {
 
-
         sf::Vector2i mouse = sf::Mouse::getPosition(menu);
 
         while (menu.pollEvent(event))
@@ -198,25 +214,9 @@ int main()
                     {
                         menu.setVisible(false);
                         MusicProc.stop();
-
-
-                        sf::SoundBuffer MusicSelect;
-
-                        if (!MusicSelect.loadFromFile("SelectLvl.wav")) {
-                            return -1;
-                        }
-
-
-                        sf::Sound MusicNiv;
-                        MusicNiv.setBuffer(MusicSelect);
                         MusicNiv.play();
-                        if (music == false)
-                        {
-                            MusicNiv.setVolume(0);
-                        }
 
-                        MusicNiv.setLoop(true);
-
+                    
                         //Selection des niveaux
                         sf::RenderWindow LvlSelect(sf::VideoMode(1900, 1080), "Selection Niveaux");
                         LvlSelect.setFramerateLimit(60);
@@ -380,7 +380,8 @@ int main()
                                                         if (event.key.code == sf::Keyboard::Escape)
                                                             game.close(); 
                                                     }
-                                                }
+                                                }                                               
+
 
                                                 for (Bullet* adress : bulletManager->balles)
                                                 {
@@ -468,6 +469,7 @@ int main()
                                             menu.setVisible(true);
                                             if (music == true)
                                             {
+                                                MusicNiv.stop();
                                                 MusicProc.play();
                                             }
                                         }
@@ -555,6 +557,27 @@ int main()
                                         {
                                             music = true;
                                             MusicOp.play();
+
+                                        }
+                                    }
+
+                                    if (mouse3.x >= 450 && mouse3.x <= 480)
+                                    {
+                                        if (mouse3.y >= 150 && mouse3.y <= 180)
+                                        {
+                                            MusicOp.setVolume(50);
+                                            MusicProc.setVolume(50);
+                                            MusicNiv.setVolume(50);
+                                        }
+                                    }
+
+                                    if (mouse3.x >= 600 && mouse3.x <= 630)
+                                    {
+                                        if (mouse3.y >= 150 && mouse3.y <= 180)
+                                        {
+                                            MusicOp.setVolume(100);
+                                            MusicProc.setVolume(100);
+                                            MusicNiv.setVolume(100);
 
                                         }
                                     }
