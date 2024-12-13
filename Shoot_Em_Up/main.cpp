@@ -47,6 +47,7 @@ struct Upgrade
 
 bool music = true;
 
+
 int main()
 {
     struct LvlAvailable Dispo;
@@ -216,7 +217,9 @@ int main()
                         MusicProc.stop();
                         MusicNiv.play();
 
-                    
+
+                        
+
                         //Selection des niveaux
                         sf::RenderWindow LvlSelect(sf::VideoMode(1900, 1080), "Selection Niveaux");
                         LvlSelect.setFramerateLimit(60);
@@ -380,8 +383,7 @@ int main()
                                                         if (event.key.code == sf::Keyboard::Escape)
                                                             game.close(); 
                                                     }
-                                                }                                               
-
+                                                }
 
                                                 for (Bullet* adress : bulletManager->balles)
                                                 {
