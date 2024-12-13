@@ -122,7 +122,7 @@ void EnemyManager::update(float deltaTime)
 
 	for (Enemy* enemy : this->enemies)
 	{
-		if (enemy->getPosition().x <= 2000) { enemy->setActive(true); }
+		if (enemy->getPosition().x <= WindowConfig::getInstance()->SIZE_X + WindowConfig::getInstance()->SIZE_X / LevelManager::getInstance()->TILE_SIZE ) { enemy->setActive(true); }
 		enemy->updateShoot(deltaTime);
 	}
 }

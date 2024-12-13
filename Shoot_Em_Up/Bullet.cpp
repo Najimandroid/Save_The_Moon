@@ -60,6 +60,7 @@ Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, sf::Vec
 {
 
 	Bullet* newBullet = new Bullet(20, speed * WindowConfig::getInstance()->SIZE_X/192, position, direction);
+	std::cout << "[SPEED] = " << newBullet->getSpeed() << std::endl;
 	this->bullets.push_back(newBullet);
 	newBullet->setOwner(owner);
 	newBullet->setColor(owner->getColor());
@@ -74,8 +75,11 @@ void BulletManager::moveBullet(float deltaTime, Bullet* bullet)
 
 	//make them move
 
-	bullet->setVelocity({ WindowConfig::getInstance()->SIZE_X / 96 * deltaTime * bullet->getSpeed() * bullet->getDirection().x
-						, WindowConfig::getInstance()->SIZE_Y / 108 * deltaTime* bullet->getSpeed()* bullet->getDirection().y });
+	std::cout << "[BULLET X VELOCITY] = " << WindowConfig::getInstance()->SIZE_X / 96 * deltaTime * bullet->getSpeed() * bullet->getDirection().x << std::endl;
+	std::cout << "[BULLET Y VELOCITY] = " << WindowConfig::getInstance()->SIZE_Y / 108 * deltaTime * bullet->getSpeed() * bullet->getDirection().y << std::endl;
+
+	bullet->setVelocity({ WindowConfig::getInstance()->SIZE_X / 96 * deltaTime * bullet->getSpeed() * bullet->getDirection().x * 1920 / WindowConfig::getInstance()->SIZE_X
+						, WindowConfig::getInstance()->SIZE_Y / 108 * deltaTime* bullet->getSpeed()* bullet->getDirection().y * 1080 / WindowConfig::getInstance()->SIZE_Y });
 	bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
 
 	//make them follow the scrolling speed

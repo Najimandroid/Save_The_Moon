@@ -35,7 +35,7 @@ void Player::updatePosition(float deltaTime)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y > this->hitbox.getSize().y / 2)
         {
-            this->velocity = sf::Vector2f{ 0, -levelManager->SCROLLING_SPEED * deltaTime * this->speed };
+            this->velocity = sf::Vector2f{ 0, -levelManager->SCROLLING_SPEED * deltaTime * this->speed * 1080 / WindowConfig::getInstance()->SIZE_Y };
 
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
             {
@@ -55,7 +55,7 @@ void Player::updatePosition(float deltaTime)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().y < (WindowConfig::getInstance()->SIZE_Y - this->hitbox.getSize().y / 2))
         {
-            this->velocity = sf::Vector2f{ 0, levelManager->SCROLLING_SPEED * deltaTime * this->speed };
+            this->velocity = sf::Vector2f{ 0, levelManager->SCROLLING_SPEED * deltaTime * this->speed * 1080 / WindowConfig::getInstance()->SIZE_Y };
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
             {
                 this->position +=
@@ -73,7 +73,7 @@ void Player::updatePosition(float deltaTime)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x > this->hitbox.getSize().x / 2)
         {
-            this->velocity = sf::Vector2f{ -levelManager->SCROLLING_SPEED * deltaTime * this->speed , 0 };
+            this->velocity = sf::Vector2f{ -levelManager->SCROLLING_SPEED * deltaTime * this->speed * 1920 / WindowConfig::getInstance()->SIZE_X, 0 };
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
             {
                 this->position +=
@@ -91,7 +91,7 @@ void Player::updatePosition(float deltaTime)
     {
         if (sf::Keyboard::isKeyPressed(key) && this->getPosition().x < WindowConfig::getInstance()->SIZE_X - this->hitbox.getSize().x / 2)
         {
-            this->velocity = sf::Vector2f{ levelManager->SCROLLING_SPEED * deltaTime * this->speed , 0 };
+            this->velocity = sf::Vector2f{ levelManager->SCROLLING_SPEED * deltaTime * this->speed * 1920 / WindowConfig::getInstance()->SIZE_X, 0 };
             if (wallManager->detectCollision(this->position + this->velocity, this->hitbox.getSize()))
             {
                 this->position +=

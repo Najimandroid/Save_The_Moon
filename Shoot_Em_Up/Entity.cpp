@@ -39,7 +39,7 @@ void Entity::updatePosition(float deltaTime)
 	LevelManager* levelManager = LevelManager::getInstance();
 	if (this->active)
 	{
-		velocity = { levelManager->SCROLLING_SPEED * deltaTime * this->speed, 0 };
+		velocity = { levelManager->SCROLLING_SPEED * deltaTime * this->speed * 1920 / WindowConfig::getInstance()->SIZE_X, 0 };
 	}
 	else
 	{
@@ -68,7 +68,7 @@ void Entity::updateShoot(float deltaTime)
 
 		LevelManager* levelManager = LevelManager::getInstance();
 		BulletManager* bulletManager = BulletManager::getInstance();
-		bulletManager->spawnbullet(this, { this->position }, { -1, 0 }, 2 * this->speed);
+		bulletManager->spawnbullet(this, { this->position }, { -1, 0 }, 2 * this->speed * 1920 / WindowConfig::getInstance()->SIZE_X);
 	}
 	else
 	{
@@ -110,7 +110,7 @@ void Entity::initHitbox(sf::Vector2f hitboxSize_)
 
 void Entity::initProperties(float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
 {
-	this->health = health_; this->damage = damage_; this->speed = ((speed_ * WindowConfig::getInstance()->SIZE_X)/1920); this->canShoot = canShoot_, this->shootCooldownMax = cooldownSeconds_; this->active = false;
+	this->health = health_; this->damage = damage_; this->speed = speed_ * WindowConfig::getInstance()->SIZE_X / WindowConfig::getInstance()->SIZE_X ; this->canShoot = canShoot_, this->shootCooldownMax = cooldownSeconds_; this->active = false;
 }
 
 //* CONSTRUCTOR *\\
