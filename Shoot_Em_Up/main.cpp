@@ -292,6 +292,14 @@ int main()
                                                             {
                                                                 Boutique.close();
                                                                 LvlSelect.setVisible(true);
+                                                                for (const auto& lvl : lvls)
+                                                                {
+                                                                    LvlSelect.draw(lvl);
+                                                                }
+                                                                LvlSelect.draw(BackLvl);
+                                                                LvlSelect.draw(ShopBouton);
+                                                                LvlSelect.display();
+
                                                                 if (music == true)
                                                                 {
                                                                     MusicNiv.play();
@@ -467,6 +475,7 @@ int main()
                                 }
                             }
                         }
+                        LvlSelect.display();
                     }
                 }
             }
