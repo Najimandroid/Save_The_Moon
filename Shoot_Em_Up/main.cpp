@@ -18,6 +18,7 @@ WallManager* WallManager::instance = nullptr;
 LevelManager* LevelManager::instance = nullptr;
 HealthBarManager* HealthBarManager::instance = nullptr;
 WindowConfig* WindowConfig::instance = nullptr;
+PlayerManager* PlayerManager::instance = nullptr;
 
 BulletManager* bulletManager = BulletManager::getInstance();
 EnemyManager* enemyManager = EnemyManager::getInstance();

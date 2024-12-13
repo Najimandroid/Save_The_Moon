@@ -223,4 +223,6 @@ Player::Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, 
     HealthBar* bar = healthBarManager->createHealthBar(health_);
 
     bar->linkEntity(this);
+
+    PlayerManager::getInstance()->getPlayers().push_back(this);
 }

@@ -2,6 +2,7 @@
 #include "Entity.h"
 #include "Bullet.h"
 #include "Level.h"
+#include "Player.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
@@ -10,7 +11,7 @@
 
 enum EnemyType
 {
-	DEFAULT, TANK, SWARM, WAVE, WHEEL
+	DEFAULT, TANK, SNIPER, SWARM, WAVE, WHEEL
 };
 
 class Enemy : public Entity
@@ -42,6 +43,49 @@ public:
 
 		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 27.f, WindowConfig::getInstance()->SIZE_Y / 27.f });
 		initProperties(300, 50, 1.5f, true, 5.f);
+	}
+};
+
+class Sniper : public Enemy
+{
+public:
+	Sniper(sf::Vector2f position_)
+	{
+		position = position_;
+		color = sf::Color::Magenta;
+
+		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
+		initProperties(50, 25, 1.75f, true, 2.5f);
+	}
+
+	void updateShoot(float deltaTime) override
+	{
+		if (!this->isOnCooldown() && this->canShoot)
+		{
+			if (!this->active) return; //returns if not active
+
+			//reset cooldown
+			this->shootCooldown = 0.f;
+
+			if (PlayerManager::getInstance()->getPlayers().empty()) { std::cout << "players empty\n"; return; }
+			if (PlayerManager::getInstance()->getPlayers()[0] == nullptr) { std::cout << "sniper error\n"; return; }
+
+			BulletManager* bulletManager = BulletManager::getInstance();
+
+			bulletManager->spawnbullet(this, { this->position }, 
+				normalize(
+					{ 
+					  (PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - this->getPosition().x) / (sqrt((PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - this->getPosition().x) * (PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - this->getPosition().x) + (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - this->getPosition().y) * (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - this->getPosition().y)))
+					, (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - this->getPosition().y) / (sqrt((PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - this->getPosition().x) * (PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - this->getPosition().x) + (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - this->getPosition().y) * (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - this->getPosition().y)))
+					}
+				), 
+				2 * this->speed);
+
+		}
+		else
+		{
+			this->shootCooldown += deltaTime;
+		}
 	}
 };
 

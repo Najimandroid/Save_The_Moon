@@ -40,3 +40,26 @@ public:
 
 	void draw(sf::RenderWindow& window, sf::Color color) override;
 };
+
+class PlayerManager
+{
+private:
+	static PlayerManager* instance;
+
+	std::vector <Player*> players;
+
+	PlayerManager() {}
+public:
+	static PlayerManager* getInstance()
+	{
+		if (instance == nullptr) {
+			instance = new PlayerManager();
+		}
+		return instance;
+	}
+
+	std::vector<Player*>& getPlayers()
+	{
+		return players;
+	}
+};
