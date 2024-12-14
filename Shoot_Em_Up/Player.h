@@ -38,7 +38,7 @@ public:
 	void updateState(float deltaTime) override;
 	void updateHealth(float value) override;
 
-	void draw(sf::RenderWindow& window, sf::Color color) override;
+	void draw(sf::RenderWindow& window, sf::Color color);
 };
 
 class PlayerManager

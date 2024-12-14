@@ -86,14 +86,23 @@ void Entity::updateState(float deltaTime)
 
 //* GRAPHICS *\\
 
-void Entity::draw(sf::RenderWindow& window, sf::Color color)
+void Entity::draw(sf::RenderWindow& window, sf::Texture texture, sf::Vector2f textureCoords)
 {
-	sf::RectangleShape body_( this->getHitbox().getSize() );
-	body_.setOrigin( this->getHitbox().getSize() / 2.f );
-	body_.setFillColor(color);
-	body_.setPosition(this->getPosition());
-	body_.setRotation(this->getHitbox().getRotation());
-	window.draw(body_);
+	sf::Sprite body;
+	body.setTexture(texture);
+	body.setScale({ 2, 2 });
+
+	body.setTextureRect(sf::IntRect(
+		this->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
+		this->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
+		LevelManager::getInstance()->TILE_SIZE / 2,
+		LevelManager::getInstance()->TILE_SIZE / 2));
+
+
+	body.setOrigin({ 30 / 2.f }, { 30 / 2.f });
+	body.setPosition(this->getPosition());
+
+	window.draw(body);
 }
 
 //* INITIALIZATION *\\
@@ -115,11 +124,13 @@ void Entity::initProperties(float health_, float damage_, float speed_, bool can
 
 //* CONSTRUCTOR *\\
 
-Entity::Entity(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
+Entity::Entity(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_, sf::Vector2f textureCoords_)
 {
 	this->initPosition(position_);
 	this->initHitbox({ WindowConfig::getInstance()->SIZE_Y/hitboxSize_.x, WindowConfig::getInstance()->SIZE_Y/hitboxSize_.y });
 	this->initProperties(health_, damage_, speed_, canShoot_, cooldownSeconds_);
+
+	this->textureCoords = textureCoords_;
 }
 
 Entity::Entity()
@@ -128,6 +139,7 @@ Entity::Entity()
 	this->initHitbox({ 0, 0 });
 	this->initProperties(0, 0, 0, false, 0);
 	this->color = sf::Color::White;
+	this->textureCoords = { 0, 0 };
 }
 
 Entity::~Entity() {}

@@ -30,12 +30,13 @@ void Enemy::updatePosition(float deltaTime)
 
 //* CONSTRUCTOR | DESTRUCTOR *\\
 
-Enemy::Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
+Enemy::Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_, sf::Vector2f textureCoords_)
 {
 	this->initPosition(position_);
 	this->initHitbox(hitboxSize_);
 	this->initProperties(health_, damage_, ((speed_ * WindowConfig::getInstance()->SIZE_X) / 1920), canShoot_, cooldownSeconds_);
 	this->color = sf::Color::Red;
+	this->textureCoords = textureCoords_;
 }
 
 //--------------------//* ENEMY MANAGER *\\--------------------\\
@@ -44,7 +45,7 @@ Enemy::Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, fl
 
 Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, float health_, float damage_, float speed_)
 {
-	Enemy* newEnemy = new Enemy(position_, { 50, 50 }, health_, damage_, speed_, true, 2.f);
+	Enemy* newEnemy = new Enemy(position_, { 50, 50 }, health_, damage_, speed_, true, 2.f, {0, 0});
 	this->enemies.push_back(newEnemy);
 	return newEnemy;
 }
@@ -55,7 +56,7 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 
 	switch (enemyType)
 	{
-		case DEFAULT: newEnemy = new Enemy(position_, { 50, 50 }, 50, 25, 1.5f, true, 2.f);  break;
+		case DEFAULT: newEnemy = new Enemy(position_, { 50, 50 }, 50, 25, 1.5f, true, 2.f, {0, 0});  break;
 		case TANK: newEnemy = new Tank(position_);  break;
 		case SWARM: newEnemy = new Swarm(position_);  break;
 		case WAVE: newEnemy = new Wave(position_); break;
@@ -74,11 +75,17 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 
 //* GRAPHICS *\\ 
 
+bool EnemyManager::loadTexture()
+{
+	if (!this->texture.loadFromFile("assets/textures/Enemies.png")) return false;
+	return true;
+}
+
 void EnemyManager::drawEnemies(sf::RenderWindow& window)
 {
 	for (Enemy* adress : this->enemies)
 	{
-		adress->draw(window, adress->getColor());
+		adress->draw(window,this->texture, adress->getTextureCoords());
 	}
 }
 

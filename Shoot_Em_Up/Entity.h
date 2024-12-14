@@ -16,6 +16,8 @@ protected:
 
 	float speed;
 
+	sf::Vector2f textureCoords;
+
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 
@@ -33,7 +35,7 @@ public:
 
 	//* CONSTRUCTOR | DESTRUCTOR *\\
 
-	Entity(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_);
+	Entity(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_, sf::Vector2f textureCoords_);
 	Entity();
 
 	virtual ~Entity() = 0;
@@ -42,6 +44,7 @@ public:
 
 	sf::Vector2f getPosition() const { return position; }
 	sf::Vector2f getVelocity() const { return velocity; }
+	sf::Vector2f getTextureCoords() const { return textureCoords; }
 	sf::RectangleShape& getHitbox() { return hitbox; }
 	sf::Color getColor() { return color; }
 	float getHealth() const { return health; }
@@ -76,5 +79,5 @@ public:
 
 	//* GRAPHICS *\\
 
-	virtual void draw(sf::RenderWindow& window, sf::Color color);
+	virtual void draw(sf::RenderWindow& window, sf::Texture texture, sf::Vector2f textureCoords);
 };
