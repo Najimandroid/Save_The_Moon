@@ -13,6 +13,8 @@ private:
 	bool breakable;
 	float health;
 
+	sf::Vector2f textureCoords;
+
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 
@@ -24,7 +26,7 @@ public:
 	Wall(sf::Vector2f position_, sf::Vector2f hitboxSize_, bool isBreakable_, float health_) :
 		position(position_), breakable(isBreakable_), health(health_), color(sf::Color(155, 155, 155))
 	{
-		initHitbox(hitboxSize_); velocity = { 0, 0 };
+		initHitbox(hitboxSize_); velocity = { 0, 0 }; textureCoords = { 0, 0 };
 	}
 
 	Wall(sf::Vector2f position_, sf::Vector2f hitboxSize_) :
@@ -46,11 +48,14 @@ public:
 
 	sf::Vector2f getPosition() { return position; }
 	sf::Vector2f getVelocity() { return velocity; }
+	sf::Vector2f getTextureCoords() { return textureCoords; }
+
 	sf::RectangleShape& getHitbox() { return hitbox; }
 	sf::Color getColor() { return color; }
 
 	void setVelocity(sf::Vector2f newVelocity) { velocity = newVelocity; }
 	void setPosition(sf::Vector2f newPosition) { position = newPosition; }
+	void setTextureCoords(sf::Vector2f newCoords) { textureCoords = newCoords; }
 
 	void initHitbox(sf::Vector2f hitboxSize);
 };
@@ -61,8 +66,9 @@ private:
 	static WallManager* instance;
 
 	std::vector <Wall*> walls;
+	sf::Texture texture;
 
-	WallManager() {}
+	WallManager() { if (!loadTexture()) std::cout << "Walls texture not loaded!"; }
 public:
 	static WallManager* getInstance()
 	{
@@ -76,6 +82,8 @@ public:
 	Wall* spawnWall(sf::Vector2f position, sf::Vector2f hitboxSize, bool isBreakable, float health);
 
 	void drawWalls(sf::RenderWindow& window);
+
+	bool loadTexture();
 
 	void updatePositions(float deltaTime);
 

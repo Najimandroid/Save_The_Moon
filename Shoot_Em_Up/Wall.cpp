@@ -43,15 +43,31 @@ sf::Vector2f WallManager::getWallsVelocity()
 	return this->walls[0]->getVelocity();
 }
 
+bool WallManager::loadTexture()
+{
+	if (!this->texture.loadFromFile("assets/textures/Walls.png")) return false;
+	return true;
+}
+
 void WallManager::drawWalls(sf::RenderWindow& window)
 {
 	for (Wall* adress : this->walls)
 	{
-		sf::RectangleShape body_(sf::Vector2f(adress->getHitbox().getSize()));
-		body_.setFillColor(adress->getColor());
-		body_.setOrigin(adress->getHitbox().getSize() / 2.f);
-		body_.setPosition(adress->getPosition());
-		window.draw(body_);
+		sf::Sprite body;
+		body.setTexture(this->texture);
+		body.setScale({2, 2});
+
+		body.setTextureRect(sf::IntRect(
+				adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
+				adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
+				LevelManager::getInstance()->TILE_SIZE/2,
+				LevelManager::getInstance()->TILE_SIZE / 2));
+
+
+		body.setOrigin({30 / 2.f}, { 30 / 2.f });
+		body.setPosition(adress->getPosition());
+
+		window.draw(body);
 	}
 }
 

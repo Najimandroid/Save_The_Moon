@@ -55,7 +55,7 @@ public:
 		color = sf::Color::Magenta;
 
 		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
-		initProperties(50, 25, 1.75f, true, 2.5f);
+		initProperties(50, 25, 1.3f, true, 3.f);
 	}
 
 	void updateShoot(float deltaTime) override

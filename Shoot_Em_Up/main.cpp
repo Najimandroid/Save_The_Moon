@@ -31,7 +31,7 @@ int main()
 {
     srand(std::chrono::system_clock::now().time_since_epoch().count());
     //creation d'une fenetre
-    sf::RenderWindow window(sf::VideoMode(windowConfigs->SIZE_X, windowConfigs->SIZE_Y), "Save The Moon", sf::Style::Fullscreen); //sf::Style::Fullscreen
+    sf::RenderWindow window(sf::VideoMode(windowConfigs->SIZE_X, windowConfigs->SIZE_Y), "Save The Moon"); //sf::Style::Fullscreen
     window.setFramerateLimit(120);
 
     //test

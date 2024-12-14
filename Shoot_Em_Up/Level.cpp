@@ -24,7 +24,8 @@ bool LevelManager::loadLevel(int levelIndex)
 
 			if(this->levelImage.getPixel(x, y) == sf::Color::Black)
 			{
-				wallManager->spawnWall( SPAWN_POSITION , { TILE_SIZE , TILE_SIZE });
+				Wall* newWall = wallManager->spawnWall( SPAWN_POSITION , { TILE_SIZE , TILE_SIZE });
+				newWall->setTextureCoords({ 0, 0 });
 			}
 			else
 			if (this->levelImage.getPixel(x, y) == sf::Color::Red) 
