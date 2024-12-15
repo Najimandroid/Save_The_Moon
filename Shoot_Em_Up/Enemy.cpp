@@ -77,6 +77,7 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 		case TURRET_RIGHT: newEnemy = new TurretRight(position_); break;
 		case TURRET_LEFT: newEnemy = new TurretLeft(position_); break;
 		case SPIKE: newEnemy = new Spike(position_); break;
+		case MOUTH: newEnemy = new Mouth(position_); break;
 	}
 
 	if (newEnemy == nullptr) 

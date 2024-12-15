@@ -16,6 +16,21 @@ public:
 	}
 };
 
+class Mouth : public Enemy
+{
+public:
+	Mouth(sf::Vector2f position_)
+	{
+		position = position_;
+		color = sf::Color::Yellow;
+
+		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 27.f, WindowConfig::getInstance()->SIZE_Y / 27.f });
+		initProperties(100, 20, 2.f, false, 0.f);
+
+		textureCoords = { 3, 1 };
+	}
+};
+
 class Spike : public Enemy
 {
 public:
