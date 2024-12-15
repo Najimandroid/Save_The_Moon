@@ -24,7 +24,7 @@ public:
 		position = position_;
 		color = sf::Color::Yellow;
 
-		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 27.f, WindowConfig::getInstance()->SIZE_Y / 27.f });
+		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 14.f, WindowConfig::getInstance()->SIZE_Y / 14.f });
 		initProperties(100, 20, 2.f, false, 0.f);
 
 		textureCoords = { 3, 1 };
@@ -39,7 +39,7 @@ public:
 		position = position_;
 		color = sf::Color::Red;
 
-		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 27.f, WindowConfig::getInstance()->SIZE_Y / 27.f });
+		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 		initProperties(150, 35, 1.f, false, 0.f);
 
 		textureCoords = { 1, 1 };
@@ -99,7 +99,7 @@ public:
 		position = position_;
 
 		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
-		initProperties(50, 10, 1.f, true, 1.f);
+		initProperties(250, 10, 1.f, true, 1.f);
 
 		textureCoords = { 1, 0 };
 	}
@@ -114,7 +114,7 @@ public:
 			this->shootCooldown = 0.f;
 
 			BulletManager* bulletManager = BulletManager::getInstance();
-			bulletManager->spawnbullet(this, { this->position }, normalize({ 0, -1 }), 2 * this->speed);
+			bulletManager->spawnbullet(this, { this->position }, normalize({ 0, -1 }), 2 * this->speed, {1, 1});
 		}
 		else
 		{
@@ -131,7 +131,7 @@ public:
 		position = position_;
 
 		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
-		initProperties(50, 10, 1.f, true, 1.f);
+		initProperties(250, 10, 1.f, true, 1.f);
 
 		textureCoords = { 2, 0 };
 	}
@@ -146,7 +146,7 @@ public:
 			this->shootCooldown = 0.f;
 
 			BulletManager* bulletManager = BulletManager::getInstance();
-			bulletManager->spawnbullet(this, { this->position }, normalize({ 0, 1 }), 2 * this->speed);
+			bulletManager->spawnbullet(this, { this->position }, normalize({ 0, 1 }), 2 * this->speed, { 1, 1 });
 		}
 		else
 		{
@@ -163,7 +163,7 @@ public:
 		position = position_;
 
 		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
-		initProperties(50, 10, 1.f, true, 1.f);
+		initProperties(250, 10, 1.f, true, 1.f);
 
 		textureCoords = { 3, 0 };
 	}
@@ -178,7 +178,7 @@ public:
 			this->shootCooldown = 0.f;
 
 			BulletManager* bulletManager = BulletManager::getInstance();
-			bulletManager->spawnbullet(this, { this->position }, normalize({ 1, 0 }), 2 * this->speed);
+			bulletManager->spawnbullet(this, { this->position }, normalize({ 1, 0 }), 2 * this->speed, { 1, 1 });
 		}
 		else
 		{
@@ -195,7 +195,7 @@ public:
 		position = position_;
 
 		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
-		initProperties(50, 10, 1.f, true, 1.f);
+		initProperties(250, 10, 1.f, true, 1.f);
 
 		textureCoords = { 4, 0 };
 	}
@@ -210,7 +210,7 @@ public:
 			this->shootCooldown = 0.f;
 
 			BulletManager* bulletManager = BulletManager::getInstance();
-			bulletManager->spawnbullet(this, { this->position }, normalize({ -1, 0 }), 2 * this->speed);
+			bulletManager->spawnbullet(this, { this->position }, normalize({ -1, 0 }), 2 * this->speed, { 1, 1 });
 		}
 		else
 		{

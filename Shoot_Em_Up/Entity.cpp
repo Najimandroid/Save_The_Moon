@@ -90,7 +90,7 @@ void Entity::draw(sf::RenderWindow& window, sf::Texture texture, sf::Vector2f te
 {
 	sf::Sprite body;
 	body.setTexture(texture);
-	body.setScale({ 2, 2 });
+	body.setScale({ this->hitbox.getSize().x * 2 / 60, this->hitbox.getSize().y * 2 / 60 });
 
 	body.setTextureRect(sf::IntRect(
 		this->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
