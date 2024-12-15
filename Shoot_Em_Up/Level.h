@@ -25,7 +25,7 @@ private:
 
 	LevelManager() { currentBackground = nullptr; };
 public:
-	float TILE_SIZE = WindowConfig::getInstance()->SIZE_Y/18;
+	float TILE_SIZE = WindowConfig::getInstance()->SIZE_Y / 18.f;
 	float SCROLLING_SPEED = WindowConfig::getInstance()->SIZE_X/ 12.8f;
 
 	static LevelManager* getInstance()
