@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "CustomEnemies.h"
 #include "Bullet.h"
 #include "Window.h"
 #include "Level.h"
@@ -56,12 +57,16 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 
 	switch (enemyType)
 	{
-		case DEFAULT: newEnemy = new Enemy(position_, { 50, 50 }, 50, 25, 1.5f, true, 2.f, {0, 0});  break;
+		case DEFAULT: newEnemy = new Enemy(position_, { 50, 50 }, 50, 25, 1.5f, true, 2.f, {0, 1});  break;
 		case TANK: newEnemy = new Tank(position_);  break;
 		case SWARM: newEnemy = new Swarm(position_);  break;
 		case WAVE: newEnemy = new Wave(position_); break;
 		case WHEEL: newEnemy = new Wheel(position_); break;
 		case SNIPER: newEnemy = new Sniper(position_); break;
+		case TURRET_UP: newEnemy = new TurretUp(position_); break;
+		case TURRET_DOWN: newEnemy = new TurretDown(position_); break;
+		case TURRET_RIGHT: newEnemy = new TurretRight(position_); break;
+		case TURRET_LEFT: newEnemy = new TurretLeft(position_); break;
 	}
 
 	if (newEnemy == nullptr) 

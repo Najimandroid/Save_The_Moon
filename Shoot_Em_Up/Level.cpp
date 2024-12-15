@@ -42,12 +42,12 @@ bool LevelManager::loadLevel(int levelIndex)
 			else
 			if (this->levelImage.getPixel(x, y) == sf::Color::Red) 
 			{
-				enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SNIPER);
+				enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::DEFAULT);
 			}
 			else
 			if (this->levelImage.getPixel(x, y) == sf::Color::Yellow)
 			{
-				enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::WHEEL);
+				enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SNIPER);
 			}
 		}
 	}
