@@ -31,6 +31,21 @@ public:
 	}
 };
 
+class GigaMouth : public Enemy
+{
+public:
+	GigaMouth(sf::Vector2f position_)
+	{
+		position = position_;
+		color = sf::Color::Yellow;
+
+		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 9.f, WindowConfig::getInstance()->SIZE_Y / 9.f });
+		initProperties(500, 100, 1.1f, false, 0.f);
+
+		textureCoords = { 4, 1 };
+	}
+};
+
 class Spike : public Enemy
 {
 public:

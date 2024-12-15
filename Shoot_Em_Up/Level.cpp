@@ -54,6 +54,7 @@ bool LevelManager::loadLevel(int levelIndex)
 			case 0x59fb80FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::DEFAULT); break; //default
 			case 0xd759fbFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SNIPER); break; //sniper
 			case 0xdbde1aFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::MOUTH); break; //mouth
+			case 0xff905fFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::GIGA_MOUTH); break; //giga mouth
 			case 0xb93729FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SPIKE); break; //spike
 
 			case 0x1000e2FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::TURRET_UP); break; //turret up
