@@ -39,4 +39,5 @@ public:
 	Background* getBackground() { return currentBackground; }
 
 	bool loadLevel(int levelIndex);
+	unsigned int colorToInt(const sf::Color& color);
 };

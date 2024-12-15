@@ -6,6 +6,11 @@
 #include  <SFML/Graphics.hpp>
 #include <iostream>
 
+unsigned int LevelManager::colorToInt(const sf::Color& color)
+{
+	return (color.r << 24) | (color.g << 16) | (color.b << 8) | color.a;
+}
+
 bool LevelManager::loadLevel(int levelIndex)
 {
 	if (!this->levelImage.loadFromFile("assets/levels/TestLevel.png"))  //this->levels.at(size_t(levelIndex))
@@ -34,20 +39,14 @@ bool LevelManager::loadLevel(int levelIndex)
 		{
 			sf::Vector2f SPAWN_POSITION = { TILE_SIZE * float(x), TILE_SIZE * float(y) };
 
-			if(this->levelImage.getPixel(x, y) == sf::Color::Black)
+			sf::Color color = this->levelImage.getPixel(x, y);
+			unsigned int colorCode = colorToInt(color);
+
+			switch (colorCode)
 			{
-				Wall* newWall = wallManager->spawnWall( SPAWN_POSITION , { TILE_SIZE , TILE_SIZE });
-				newWall->setTextureCoords({ 0, 0 });
-			}
-			else
-			if (this->levelImage.getPixel(x, y) == sf::Color::Red) 
-			{
-				enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::DEFAULT);
-			}
-			else
-			if (this->levelImage.getPixel(x, y) == sf::Color::Yellow)
-			{
-				enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SNIPER);
+			case 0x000000FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 0, 0 }); break;
+			case 0xFF0000FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::DEFAULT); break;
+			case 0xFFFF00FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SNIPER); break;
 			}
 		}
 	}
