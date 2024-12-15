@@ -63,6 +63,7 @@ public:
 
 	void setPosition(sf::Vector2f newPosition) { position = newPosition; }
 	void setVelocity(sf::Vector2f newVelocity) { velocity = newVelocity; }
+	void setDamage(float newDamage) { damage = newDamage; }
 
 	void setColor(sf::Color newColor) { color = newColor; }
 		

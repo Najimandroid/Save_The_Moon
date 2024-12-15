@@ -47,6 +47,7 @@ bool LevelManager::loadLevel(int levelIndex)
 			case 0x000000FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 0, 0 }); break;
 			case 0xFF0000FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::DEFAULT); break;
 			case 0xFFFF00FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SNIPER); break;
+			case 0x0000FFFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SPIKE); break;
 			}
 		}
 	}

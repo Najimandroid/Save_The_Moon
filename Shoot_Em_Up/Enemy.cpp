@@ -12,6 +12,15 @@
 
 //--------------------//* ENEMY *\\--------------------\\
 
+//* BOOLEANS *\\
+
+bool Enemy::collided(Entity* entity)
+{
+	sf::FloatRect  floatRect = this->hitbox.getGlobalBounds();
+	sf::FloatRect  otherFloatRect = entity->getHitbox().getGlobalBounds();
+	return(floatRect.intersects(otherFloatRect));
+}
+
 //* UPDATE *\\ 
 
 void Enemy::updatePosition(float deltaTime)
@@ -67,6 +76,7 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 		case TURRET_DOWN: newEnemy = new TurretDown(position_); break;
 		case TURRET_RIGHT: newEnemy = new TurretRight(position_); break;
 		case TURRET_LEFT: newEnemy = new TurretLeft(position_); break;
+		case SPIKE: newEnemy = new Spike(position_); break;
 	}
 
 	if (newEnemy == nullptr) 
@@ -126,6 +136,23 @@ void EnemyManager::updateStates()
 	}
 
 	//std::cout << " ]\n";
+}
+
+void EnemyManager::checkCollisions(Entity* entity)
+{
+	for (Enemy* enemy : this->enemies)
+	{
+
+		if (enemy->collided(entity) && !dynamic_cast<Enemy*>(entity))
+		{
+			Player* player = dynamic_cast<Player*>(entity);
+			if (player) {
+				if (player->isOnHitCooldown()) return;
+			}
+
+			entity->updateHealth(-(enemy->getDamage())); // -x hp
+		}
+	}
 }
 
 void EnemyManager::update(float deltaTime)

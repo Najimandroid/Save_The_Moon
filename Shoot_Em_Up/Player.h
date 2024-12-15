@@ -25,6 +25,9 @@ private:
 	KeyVector rightKeys = { sf::Keyboard::Key::D };
 
 	KeyVector shootKeys = { sf::Keyboard::Key::Space };
+	KeyVector secondaryShootKeys = { sf::Keyboard::Key::LShift };
+
+	bool usingPrimary = true;
 
 public:
 	Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_);

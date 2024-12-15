@@ -116,19 +116,36 @@ void Player::updatePosition(float deltaTime)
 
 void Player::updateShoot(float deltaTime)
 {
+    this->usingPrimary = false;
     if (!this->isOnCooldown())
     {
         //reset cooldown
         this->shootCooldown = 0.f;
 
-        //then shoot
+        //primary
         for (sf::Keyboard::Key key : this->shootKeys)
         {
             if (sf::Keyboard::isKeyPressed(key))
             {
+                this->usingPrimary = true;
                 LevelManager* levelManager = LevelManager::getInstance();
                 BulletManager* bulletManager = BulletManager::getInstance();
-                bulletManager->spawnbullet(this, { this->position }, { 1, 0 }, 2 * this->speed);
+                bulletManager->spawnbullet(this, { this->position }, { 1, 0 }, 2 * this->speed, {0, 0})->setDamage(25);
+                return;
+            }
+        }
+
+        //secondary
+        for (sf::Keyboard::Key key : this->secondaryShootKeys)
+        {
+            if (sf::Keyboard::isKeyPressed(key) && !this->usingPrimary)
+            {
+                this->usingPrimary = false;
+                LevelManager* levelManager = LevelManager::getInstance();
+                BulletManager* bulletManager = BulletManager::getInstance();
+                bulletManager->spawnbullet(this, { this->position }, { 1, 0.25 }, 2 * this->speed, { 1, 0 })->setDamage(10);
+                bulletManager->spawnbullet(this, { this->position }, { 1, -0.25 }, 2 * this->speed, { 1, 0 })->setDamage(10);
+                return;
             }
         }
     }

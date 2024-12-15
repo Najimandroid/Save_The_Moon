@@ -16,6 +16,21 @@ public:
 	}
 };
 
+class Spike : public Enemy
+{
+public:
+	Spike(sf::Vector2f position_)
+	{
+		position = position_;
+		color = sf::Color::Red;
+
+		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 27.f, WindowConfig::getInstance()->SIZE_Y / 27.f });
+		initProperties(150, 35, 1.f, false, 0.f);
+
+		textureCoords = { 1, 1 };
+	}
+};
+
 class Sniper : public Enemy
 {
 public:

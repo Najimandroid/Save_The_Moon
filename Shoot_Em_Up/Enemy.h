@@ -11,7 +11,7 @@
 
 enum EnemyType
 {
-	DEFAULT, TANK, SNIPER, SWARM, WAVE, WHEEL, TURRET_UP, TURRET_DOWN, TURRET_LEFT, TURRET_RIGHT
+	DEFAULT, TANK, SNIPER, SWARM, WAVE, WHEEL, TURRET_UP, TURRET_DOWN, TURRET_LEFT, TURRET_RIGHT, SPIKE
 };
 
 class Enemy : public Entity
@@ -19,6 +19,8 @@ class Enemy : public Entity
 public:
 	Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_, sf::Vector2f textureCoords_);
 	Enemy() {};
+
+	bool collided(Entity* obstacle);
 
 	void updatePosition(float deltaTime) override;
 
@@ -64,6 +66,8 @@ public:
 	void drawEnemies(sf::RenderWindow& window);
 	void updatePositions(float deltaTime);
 	void updateStates();
+	
+	void checkCollisions(Entity* entity);
 
 	void update(float deltaTime);
 };
