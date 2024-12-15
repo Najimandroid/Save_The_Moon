@@ -1,6 +1,7 @@
 #pragma once
 #include "Wall.h"
 #include "Window.h"
+#include "Background.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
@@ -15,12 +16,14 @@ private:
 
 	sf::Image levelImage;
 
+	Background* currentBackground;
+
 	std::vector<std::string> levels =
 	{
 		"assets/levels/TestLevel.png",
 	};
 
-	LevelManager() {};
+	LevelManager() { currentBackground = nullptr; };
 public:
 	float TILE_SIZE = WindowConfig::getInstance()->SIZE_Y/18;
 	float SCROLLING_SPEED = WindowConfig::getInstance()->SIZE_X/ 12.8f;
@@ -32,6 +35,8 @@ public:
 		}
 		return instance;
 	}
+
+	Background* getBackground() { return currentBackground; }
 
 	bool loadLevel(int levelIndex);
 };

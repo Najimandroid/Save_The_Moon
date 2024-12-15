@@ -13,6 +13,9 @@ class Bullet
 private:
 	float damage;
 	float speed;
+
+	sf::Vector2f textureCoords;
+
 	sf::Vector2f position;
 	sf::Vector2f velocity;
 
@@ -25,10 +28,18 @@ private:
 	sf::Color color;
 
 public:
-	Bullet(float damage_, float speed_, sf::Vector2f position_, sf::Vector2f direction_) :
-		damage(damage_), speed(speed_), position(position_), velocity({0, 0}), direction(direction_), owner(nullptr), color(sf::Color::White)
+	Bullet(float damage_, float speed_, sf::Vector2f position_, sf::Vector2f direction_, sf::Vector2f textureCoords_) :
+		damage(damage_), speed(speed_), position(position_), velocity({0, 0}), direction(direction_), owner(nullptr), color(sf::Color::White), textureCoords(textureCoords_)
 	{
 		sf::RectangleShape hitbox_(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y/108, WindowConfig::getInstance()->SIZE_Y / 108));
+		hitbox = hitbox_;
+		hitbox.setPosition(position);
+	}
+
+	Bullet(float damage_, float speed_, sf::Vector2f position_, sf::Vector2f direction_) :
+		damage(damage_), speed(speed_), position(position_), velocity({ 0, 0 }), direction(direction_), owner(nullptr), color(sf::Color::White), textureCoords({ 1, 1 })
+	{
+		sf::RectangleShape hitbox_(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y / 108, WindowConfig::getInstance()->SIZE_Y / 108));
 		hitbox = hitbox_;
 		hitbox.setPosition(position);
 	}
@@ -41,6 +52,7 @@ public:
 	sf::Vector2f getPosition() const { return position; }
 	sf::Vector2f getVelocity() const { return velocity; }
 	sf::Vector2f getDirection() const { return direction; }
+	sf::Vector2f getTextureCoords() const { return textureCoords; }
 
 	sf::RectangleShape& getHitbox() { return hitbox; }
 	sf::Color getColor() { return color; }
@@ -72,9 +84,10 @@ class BulletManager
 private:
 	static BulletManager* instance;
 
+	sf::Texture texture;
 	std::vector <Bullet*> bullets;
 
-	BulletManager() {}
+	BulletManager() { if (!loadTexture()) std::cout << "Bullets texture not loaded!"; }
 public:
 	static BulletManager* getInstance()
 	{
@@ -85,11 +98,13 @@ public:
 	}
 
 	Bullet* spawnbullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed);
+	Bullet* spawnbullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed, sf::Vector2f textureCoords);
 
 	void moveBullet(float deltatime, Bullet* bullet);
 
 	void despawnBullets();
 
+	bool loadTexture();
 	void drawBullets(sf::RenderWindow& window);
 
 	void updatePositions(float deltaTime);
@@ -100,6 +115,7 @@ public:
 		return bullets;
 	}
 
+	
 
 	void checkCollisions(Entity* obstacle);
 };

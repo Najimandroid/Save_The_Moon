@@ -4,6 +4,7 @@
 #include "Wall.h"
 #include "Level.h"
 #include "HealthBar.h"
+#include "Background.h"
 
 #include "Window.h"
 
@@ -68,6 +69,8 @@ int main()
 
         if (!isPaused) 
         {
+            levelManager->getBackground()->moveBackground(deltaTime);
+
             for (Enemy* enemy : enemyManager->getEnemies())
             {
                 bulletManager->checkCollisions(enemy);
@@ -81,6 +84,7 @@ int main()
             healthBarManager->updateBars();
         }
 
+        levelManager->getBackground()->drawBackground(window);
         wallManager->drawWalls(window);
         player->draw(window, sf::Color::Green);
         enemyManager->drawEnemies(window);

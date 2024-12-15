@@ -65,7 +65,18 @@ Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, sf::Vec
 	newBullet->setColor(owner->getColor());
 	return newBullet;
 
+} 
+
+Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed, sf::Vector2f textureCoords)
+{
+
+	Bullet* newBullet = new Bullet(20, speed * WindowConfig::getInstance()->SIZE_X / 192, position, direction, textureCoords);
+	this->bullets.push_back(newBullet);
+	newBullet->setOwner(owner);
+	newBullet->setColor(owner->getColor());
+	return newBullet;
 }
+
 
 void BulletManager::moveBullet(float deltaTime, Bullet* bullet)
 {
@@ -107,15 +118,31 @@ void BulletManager::despawnBullets()
 
 //* GRAPHICS *\\
 
+bool BulletManager::loadTexture()
+{
+	if (!this->texture.loadFromFile("assets/textures/Bullets.png")) return false;
+	return true;
+}
+
 void BulletManager::drawBullets(sf::RenderWindow& window)
 {
 	for (Bullet* adress : this->bullets)
 	{
-		sf::RectangleShape body_(sf::Vector2f(WindowConfig::getInstance()->SIZE_X / 192, WindowConfig::getInstance()->SIZE_X / 192));
-		body_.setFillColor(adress->getColor());
-		body_.setOrigin(adress->getHitbox().getSize() / 2.f);
-		body_.setPosition(adress->getPosition());
-		window.draw(body_);
+		sf::Sprite body;
+		body.setTexture(texture);
+		body.setScale({ .65f, .65f });
+
+		body.setTextureRect(sf::IntRect(
+			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
+			adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
+			LevelManager::getInstance()->TILE_SIZE / 2,
+			LevelManager::getInstance()->TILE_SIZE / 2));
+
+
+		body.setOrigin({ 30 / 2.f }, { 30 / 2.f }); //idk if it is the correct origin
+		body.setPosition(adress->getPosition());
+
+		window.draw(body);
 	}
 }
 
