@@ -68,7 +68,7 @@ void Entity::updateShoot(float deltaTime)
 
 		LevelManager* levelManager = LevelManager::getInstance();
 		BulletManager* bulletManager = BulletManager::getInstance();
-		bulletManager->spawnbullet(this, { this->position }, { -1, 0 }, 2 * this->speed * 1920 / WindowConfig::getInstance()->SIZE_X);
+		bulletManager->spawnbullet(this, { this->position }, { -1, 0 }, 2 * this->speed * 1920 / WindowConfig::getInstance()->SIZE_X, {0, 1});
 	}
 	else
 	{
