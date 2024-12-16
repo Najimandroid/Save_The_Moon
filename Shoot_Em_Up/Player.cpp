@@ -235,6 +235,7 @@ Player::Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, 
     this->initHitbox(hitboxSize_);
     this->initProperties(health_, damage_, ((speed_ * WindowConfig::getInstance()->SIZE_X) / 1920), canShoot_, cooldownSeconds_);
     this->initHit(1.5f);
+    this->score = 0;
 
     HealthBarManager* healthBarManager = HealthBarManager::getInstance();
     HealthBar* bar = healthBarManager->createHealthBar(health_);

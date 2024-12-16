@@ -20,8 +20,25 @@ HealthBar* HealthBarManager::createHealthBar(float health_)
 
 void HealthBarManager::updateBars()
 {
+	//delete
+	for (auto it = this->bars.begin(); it != this->bars.end(); )
+	{
+		HealthBar* bar = *it;
+		//std::cout << enemy->getHealth() << ", ";
+
+		if (bar->getRemaingingHealth() <= 0) {
+			// delete if bar's entity is dead
+			delete bar;
+			it = this->bars.erase(it);
+		}
+		else {
+			++it;  // updates only if the enemy is deleted
+		}
+	}
+
 	for (HealthBar* bar : this->bars)
 	{
+		if (!bar->getEntity()) { continue; }
 		bar->updateBar(bar->getEntity()->getHealth());
 	}
 }
@@ -31,6 +48,8 @@ void HealthBarManager::drawBars(sf::RenderWindow& window)
 	float offset = 0;
 	for (HealthBar* bar : this->bars)
 	{
+		if (!bar->getEntity()) { continue; }
+
 		sf::RectangleShape background_(sf::Vector2f(WindowConfig::getInstance()->SIZE_X/5, WindowConfig::getInstance()->SIZE_Y/16));
 		background_.setFillColor(sf::Color::Red);
 		background_.setPosition({ 300 + 800 * offset, 40 });

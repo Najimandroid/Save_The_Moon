@@ -10,8 +10,6 @@
 #include <vector> 
 #include <iostream>
 
-
-
 //--------------------//* ENEMY *\\--------------------\\
 
 //* BOOLEANS *\\

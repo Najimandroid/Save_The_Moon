@@ -5,6 +5,7 @@
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
+#include <string>
 
 unsigned int LevelManager::colorToInt(const sf::Color& color)
 {
@@ -13,14 +14,15 @@ unsigned int LevelManager::colorToInt(const sf::Color& color)
 
 bool LevelManager::loadLevel(int levelIndex)
 {
-	if (!this->levelImage.loadFromFile("assets/levels/TestLevel2.png"))  //this->levels.at(size_t(levelIndex))
+	
+	if (!this->levelImage.loadFromFile("assets/levels/Level_" + std::to_string(levelIndex) + "/body.png"))  //this->levels.at(size_t(levelIndex))
 	{
 		std::cout << "FAILED LOADING LEVEL: " << levelIndex << '\n';
 		return false;
 	}
 
 	sf::Texture layer1, layer2, layer3;
-	layer1.loadFromFile("assets/backgrounds/Level_1/Layer1.png"); layer2.loadFromFile("assets/backgrounds/Level_1/Layer2.png"); layer3.loadFromFile("assets/backgrounds/Level_1/Layer3.png");
+	layer1.loadFromFile("assets/backgrounds/Level_" + std::to_string(levelIndex) + "/Layer1.png"); layer2.loadFromFile("assets/backgrounds/Level_" + std::to_string(levelIndex) + "/Layer2.png"); layer3.loadFromFile("assets/backgrounds/Level_" + std::to_string(levelIndex) + "/Layer3.png");
 	std::vector<sf::Texture> textures_ =
 	{
 		layer1,
@@ -44,12 +46,12 @@ bool LevelManager::loadLevel(int levelIndex)
 
 			switch (colorCode)
 			{
-			case 0x000000FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 0, 0 }); break; //whole wall
-			case 0x737373FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 0, 1 }); break; //grid
-			case 0x353535FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 1, 0 }); break; //up grid
-			case 0x3a2d2dFF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 2, 0 }); break; //down grid
-			case 0x522a2aFF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 3, 0 }); break; //left grid
-			case 0x561717FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 4, 0 }); break; //right grid
+			case 0x000000FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 0, (float)levelIndex -1}); break; //whole wall
+			case 0x737373FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 5, (float)levelIndex -1}); break; //grid
+			case 0x353535FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 1, (float)levelIndex -1}); break; //up grid
+			case 0x3a2d2dFF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 2, (float)levelIndex -1}); break; //down grid
+			case 0x522a2aFF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 3, (float)levelIndex -1}); break; //left grid
+			case 0x561717FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 4, (float)levelIndex -1}); break; //right grid
 
 			case 0x59fb80FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::DEFAULT); break; //default
 			case 0xd759fbFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SNIPER); break; //sniper

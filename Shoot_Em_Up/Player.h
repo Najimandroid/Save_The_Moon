@@ -15,6 +15,8 @@ private:
 	float hitCooldownMax;
 	float count; //used to do the flashing effect
 
+	float score;
+
 	//* CONTROL KEYS *\\
 
 	typedef std::vector<sf::Keyboard::Key> KeyVector;
