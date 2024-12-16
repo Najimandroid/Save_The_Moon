@@ -26,7 +26,7 @@ public:
 		std::cout << this->hitbox.getPosition().x << ", " << this->hitbox.getPosition().y << std::endl;
 
 		this->setDamage(10);
-		speed = 30;
+		speed = 60;
 
 		lifeTimeMax = 5;
 

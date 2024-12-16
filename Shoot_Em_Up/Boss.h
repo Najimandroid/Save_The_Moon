@@ -59,6 +59,7 @@ void Attack_3(Entity* entity)
 class Boss : public Enemy
 {
 private:
+	float x = 0.f;
 
 	std::vector<std::function<void(Enemy*)>> attacks = { Attack_1 , Attack_2, Attack_3 };
 
@@ -81,7 +82,8 @@ public:
 		{
 			if (this->getPosition().x <= WindowConfig::getInstance()->SIZE_X - this->hitbox.getSize().x) //stay on the side
 			{
-				velocity = { 0, 0 };
+				velocity = { 0, (cos(x/40)) * ( WindowConfig::getInstance()->SIZE_Y / 108) };
+				x += 1;
 			}
 			else
 			{
