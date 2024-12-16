@@ -130,7 +130,7 @@ void Player::updateShoot(float deltaTime)
                 this->usingPrimary = true;
                 LevelManager* levelManager = LevelManager::getInstance();
                 BulletManager* bulletManager = BulletManager::getInstance();
-                bulletManager->spawnbullet(this, { this->position }, { 1, 0 }, 2 * this->speed, {0, 0})->setDamage(25);
+                bulletManager->spawnBullet(this, { this->position }, { 1, 0 }, 2 * this->speed, {0, 0})->setDamage(25);
                 return;
             }
         }
@@ -143,8 +143,8 @@ void Player::updateShoot(float deltaTime)
                 this->usingPrimary = false;
                 LevelManager* levelManager = LevelManager::getInstance();
                 BulletManager* bulletManager = BulletManager::getInstance();
-                bulletManager->spawnbullet(this, { this->position }, { 1, 0.25 }, 2 * this->speed, { 1, 0 })->setDamage(10);
-                bulletManager->spawnbullet(this, { this->position }, { 1, -0.25 }, 2 * this->speed, { 1, 0 })->setDamage(10);
+                bulletManager->spawnBullet(this, { this->position }, { 1, 0.25 }, 2 * this->speed, { 1, 0 })->setDamage(10);
+                bulletManager->spawnBullet(this, { this->position }, { 1, -0.25 }, 2 * this->speed, { 1, 0 })->setDamage(10);
                 return;
             }
         }

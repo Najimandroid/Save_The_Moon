@@ -29,6 +29,7 @@ protected:
 
 	sf::RectangleShape hitbox;
 
+	Entity* target = nullptr;
 	sf::Color color;
 
 public:
@@ -51,6 +52,7 @@ public:
 	float getSpeed() const { return speed; }
 	float getDamage() const { return damage; }
 	bool getActive() const { return active; }
+	Entity*& getTarget() { if(target) return target; }
 
 	//* SET *\\
 

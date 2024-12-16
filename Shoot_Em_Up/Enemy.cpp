@@ -55,7 +55,7 @@ Enemy::Enemy(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, fl
 
 Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, float health_, float damage_, float speed_)
 {
-	Enemy* newEnemy = new Enemy(position_, { 50, 50 }, health_, damage_, speed_, true, 2.f, {0, 0});
+	Enemy* newEnemy = new Enemy(position_, { 50, 50 }, health_, damage_, speed_, true, 2.f, {0, 1});
 	this->enemies.push_back(newEnemy);
 	return newEnemy;
 }
@@ -79,6 +79,7 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 		case SPIKE: newEnemy = new Spike(position_); break;
 		case MOUTH: newEnemy = new Mouth(position_); break;
 		case GIGA_MOUTH: newEnemy = new GigaMouth(position_); break;
+		case HOMING: newEnemy = new Homing(position_, PlayerManager::getInstance()->getPlayers()[0]); break;
 	}
 
 	if (newEnemy == nullptr) 

@@ -5,6 +5,8 @@
 #include "Level.h"
 #include "Window.h"
 
+#include "CustomBullets.h"
+
 #include  <SFML/Graphics.hpp>
 
 #include <iostream>
@@ -25,9 +27,34 @@ bool Bullet::collided(Entity* entity)
 	return(floatRect.intersects(otherFloatRect));
 }
 
+void Bullet::updatePosition(float deltaTime)
+{
+	this->setVelocity({ WindowConfig::getInstance()->SIZE_X / 96 * deltaTime * this->getSpeed() * this->getDirection().x * 1920 / WindowConfig::getInstance()->SIZE_X
+					, WindowConfig::getInstance()->SIZE_X / 96 * deltaTime * this->getSpeed() * this->getDirection().y * 1920 / WindowConfig::getInstance()->SIZE_X });
+	this->setPosition(this->getPosition() + this->getVelocity());
+
+	//make them follow the scrolling speed
+
+	this->setVelocity({ -LevelManager::getInstance()->SCROLLING_SPEED * deltaTime, 0});
+	this->setPosition(this->getPosition() + this->getVelocity());
+
+	this->getHitbox().setPosition(this->getPosition());
+}
+
+sf::Vector2f Bullet::normalize(const sf::Vector2f& vector) {
+
+	float length = std::sqrt(vector.x * vector.x + vector.y * vector.y);
+
+	if (length > 0) {
+		return sf::Vector2f(vector.x / length, vector.y / length);
+	}
+	return sf::Vector2f(0.f, 0.f);
+}
+
 //--------------------//* BULLET MANAGER *\\--------------------\\
 
 //* FUNCTIONS *\\
+
 
 void BulletManager::checkCollisions(Entity* entity)
 {
@@ -56,7 +83,7 @@ void BulletManager::checkCollisions(Entity* entity)
 	}
 }
 
-Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed)
+Bullet* BulletManager::spawnBullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed)
 {
 
 	Bullet* newBullet = new Bullet(20, speed * WindowConfig::getInstance()->SIZE_X/192, position, direction);
@@ -67,7 +94,27 @@ Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, sf::Vec
 
 } 
 
-Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed, sf::Vector2f textureCoords)
+Bullet* BulletManager::spawnBullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, BulletType bulletType, float speed)
+{
+	Bullet* newBullet = nullptr;
+
+	switch (bulletType)
+	{
+	case DEFAULT_b: newBullet = new Bullet(20, speed * WindowConfig::getInstance()->SIZE_X / 192, position, direction);  break;
+	case HUMING_b: newBullet = new HomingBullet(position, owner->getTarget(), {0, 0});  break;
+	}
+
+	if (newBullet == nullptr)
+	{
+		std::cout << "CAN'T CREATE ENEMY OF TYPE " << std::to_string(bulletType) << '\n'; return spawnBullet(owner, position, direction, speed);
+	}
+
+	newBullet->setOwner(owner);
+	this->bullets.push_back(newBullet);
+	return newBullet;
+}
+
+Bullet* BulletManager::spawnBullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed, sf::Vector2f textureCoords)
 {
 
 	Bullet* newBullet = new Bullet(20, speed * WindowConfig::getInstance()->SIZE_X / 192, position, direction, textureCoords);
@@ -77,26 +124,6 @@ Bullet* BulletManager::spawnbullet(Entity* owner, sf::Vector2f position, sf::Vec
 	return newBullet;
 }
 
-
-void BulletManager::moveBullet(float deltaTime, Bullet* bullet)
-{
-	LevelManager* levelManager = LevelManager::getInstance();
-	//if (bullet == nullptr || bullet->getOwner() == nullptr) { std::cout << "erreur lors du mouvement d'un projectile\n"; return; }
-
-	//make them move
-
-	bullet->setVelocity({ WindowConfig::getInstance()->SIZE_X / 96 * deltaTime * bullet->getSpeed() * bullet->getDirection().x * 1920 / WindowConfig::getInstance()->SIZE_X
-						, WindowConfig::getInstance()->SIZE_X / 96 * deltaTime* bullet->getSpeed()* bullet->getDirection().y * 1920 / WindowConfig::getInstance()->SIZE_X });
-	bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
-
-	//make them follow the scrolling speed
-
-	bullet->setVelocity({ -levelManager->SCROLLING_SPEED * deltaTime, 0 });
-	bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
-
-	bullet->getHitbox().setPosition(bullet->getPosition());
-}
-
 void BulletManager::despawnBullets()
 {
 	unsigned index = 0;
@@ -104,7 +131,7 @@ void BulletManager::despawnBullets()
 	{
 		if (bullet == nullptr) { index++;  continue;; }
 
-		if (bullet->getPosition().x > WindowConfig::getInstance()->SIZE_X || bullet->getPosition().x < 0)
+		if (bullet->getPosition().x > WindowConfig::getInstance()->SIZE_X || bullet->getPosition().x < 0 || bullet->getLifeTime() >= bullet->getLifeTimeMax())
 		{
 			//delete
 			bullet->setNullOwner();
@@ -152,9 +179,10 @@ void BulletManager::updatePositions(float deltaTime)
 {
 	for (Bullet* adress : this->bullets)
 	{
+		adress->updatetLifeTime(deltaTime);
 		if (adress == nullptr) { continue; }
 
-		this->moveBullet(deltaTime, adress);
+		adress->updatePosition(deltaTime);
 	}
 }
 

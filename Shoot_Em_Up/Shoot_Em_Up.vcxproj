@@ -154,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="CustomBullets.h" />
     <ClInclude Include="CustomEnemies.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />

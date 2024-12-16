@@ -8,11 +8,19 @@
 #include <cmath>
 
 
+enum BulletType
+{
+	DEFAULT_b, HUMING_b
+};
+
 class Bullet
 {
-private:
+protected:
 	float damage;
 	float speed;
+
+	float lifeTime;
+	float lifeTimeMax;
 
 	sf::Vector2f textureCoords;
 
@@ -33,7 +41,11 @@ public:
 	{
 		sf::RectangleShape hitbox_(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y/108, WindowConfig::getInstance()->SIZE_Y / 108));
 		hitbox = hitbox_;
+		hitbox.setOrigin(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y / 108 / 2.f, WindowConfig::getInstance()->SIZE_Y / 108 / 2.f));
 		hitbox.setPosition(position);
+
+		lifeTime = 0;
+		lifeTimeMax = 10;
 	}
 
 	Bullet(float damage_, float speed_, sf::Vector2f position_, sf::Vector2f direction_) :
@@ -41,13 +53,24 @@ public:
 	{
 		sf::RectangleShape hitbox_(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y / 108, WindowConfig::getInstance()->SIZE_Y / 108));
 		hitbox = hitbox_;
+		hitbox.setOrigin(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y / 108 / 2.f, WindowConfig::getInstance()->SIZE_Y / 108 / 2.f));
 		hitbox.setPosition(position);
+
+		lifeTime = 0;
+		lifeTimeMax = 10;
 	}
+
+	Bullet() : damage(0), speed(0), lifeTime(0), lifeTimeMax(0), textureCoords({ 0, 0 }), position({ 0, 0 }), velocity({ 0, 0 }), direction({ 0, 0 }),
+		hitbox(sf::RectangleShape({0, 0})), owner(nullptr), color(sf::Color::White)
+	{}
+
 
 	//* GET *\\
 
 	float getSpeed() const { return speed; }
 	float getDamage() { return damage; }
+	float getLifeTime() { return lifeTime; }
+	float getLifeTimeMax() { return lifeTimeMax; }
 
 	sf::Vector2f getPosition() const { return position; }
 	sf::Vector2f getVelocity() const { return velocity; }
@@ -60,6 +83,8 @@ public:
 	Entity* getOwner() { return owner; }
 
 	//* SET *\\
+
+	void updatetLifeTime(float seconds) { lifeTime += seconds; }
 
 	void setPosition(sf::Vector2f newPosition) { position = newPosition; }
 	void setVelocity(sf::Vector2f newVelocity) { velocity = newVelocity; }
@@ -76,6 +101,10 @@ public:
 	//* BOOLEANS *\\
 
 	bool collided(Entity* obstacle);
+
+
+	virtual void updatePosition(float deltaTime);
+	sf::Vector2f normalize(const sf::Vector2f& vector);
 };
 
 
@@ -98,10 +127,9 @@ public:
 		return instance;
 	}
 
-	Bullet* spawnbullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed);
-	Bullet* spawnbullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed, sf::Vector2f textureCoords);
-
-	void moveBullet(float deltatime, Bullet* bullet);
+	Bullet* spawnBullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed);
+	Bullet* spawnBullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed, sf::Vector2f textureCoords);
+	Bullet* spawnBullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, BulletType bulletType, float speed);
 
 	void despawnBullets();
 
