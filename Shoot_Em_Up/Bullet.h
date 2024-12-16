@@ -10,7 +10,9 @@
 
 enum BulletType
 {
-	DEFAULT_b, HOMING_b
+	DEFAULT_b, HOMING_b,
+
+	DEFAULT_boss, HOMING_boss
 };
 
 class Bullet

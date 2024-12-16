@@ -12,13 +12,14 @@
 
 void Attack_1(Enemy* entity)
 {
-
+	float offsetY = -1;
 	for (float offset = -240; offset <= 240; offset += 240)
 	{
-		for (float offsetY = -1; offsetY <= 1; offsetY += .33f)
-		{
-			BulletManager::getInstance()->spawnBullet(entity, { entity->getPosition().x, entity->getPosition().y - offset }, { -1, offsetY }, HOMING_b);
-		}
+		if (PlayerManager::getInstance()->getPlayers().empty()) { std::cout << "players empty\n"; return; }
+		if (entity->getTarget() == nullptr) { std::cout << "huming error\n"; return; }
+
+		BulletManager::getInstance()->spawnBullet(entity, { entity->getPosition().x, entity->getPosition().y - offset }, { -1, offsetY }, HOMING_boss, 2 * entity->getSpeed());
+		offsetY += .33f;
 	}
 
 	std::cout << "attack 1\n";
@@ -36,7 +37,8 @@ void Attack_2(Enemy* entity)
 				, (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - entity->getPosition().y + offset) / (sqrt((PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - entity->getPosition().x) * (PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - entity->getPosition().x) + (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - entity->getPosition().y + offset) * (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - entity->getPosition().y + offset)))
 				}
 			),
-			2 * entity->getSpeed(), { 2, 1 });
+			DEFAULT_boss,
+			4 * entity->getSpeed());
 	}
 
 	std::cout << "attack 2\n";
@@ -45,9 +47,9 @@ void Attack_2(Enemy* entity)
 void Attack_3(Entity* entity)
 {
 
-	for (float offsetY = -1; offsetY <= 1; offsetY += .2f)
+	for (float offsetY = -1; offsetY <= 1; offsetY += .4f)
 	{
-		BulletManager::getInstance()->spawnBullet(entity, entity->getPosition(), { -1, offsetY }, entity->getSpeed());
+		BulletManager::getInstance()->spawnBullet(entity, entity->getPosition(), { -1, offsetY }, DEFAULT_boss, entity->getSpeed());
 	}
 
 

@@ -102,6 +102,8 @@ Bullet* BulletManager::spawnBullet(Entity* owner, sf::Vector2f position, sf::Vec
 	{
 	case DEFAULT_b: newBullet = new Bullet(20, speed * WindowConfig::getInstance()->SIZE_X / 192, position, direction);  break;
 	case HOMING_b: newBullet = new HomingBullet(position, owner->getTarget(), {0, 0});  break;
+	case DEFAULT_boss: newBullet = new DefaultBoss(position, direction);  break;
+	case HOMING_boss: newBullet = new HomingBulletBoss(position, owner->getTarget(), {0, 0});  break;
 	}
 
 	if (newBullet == nullptr)
@@ -157,7 +159,7 @@ void BulletManager::drawBullets(sf::RenderWindow& window)
 	{
 		sf::Sprite body;
 		body.setTexture(texture);
-		body.setScale({ .65f, .65f });
+		body.setScale({ adress->getHitbox().getSize().x * 2 / 35, adress->getHitbox().getSize().y * 2 / 35});
 
 		body.setTextureRect(sf::IntRect(
 			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
