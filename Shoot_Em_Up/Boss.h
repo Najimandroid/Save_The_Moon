@@ -1,0 +1,116 @@
+#pragma once
+
+#include "Enemy.h"
+#include "Window.h"
+#include "Bullet.h"
+#include "CustomBullets.h"
+#include "Player.h"
+
+#include "SFML/Graphics.hpp"
+#include <iostream>
+#include <functional>
+
+void Attack_1(Enemy* entity)
+{
+
+	for (float offset = -240; offset <= 240; offset += 240)
+	{
+		for (float offsetY = -1; offsetY <= 1; offsetY += .33f)
+		{
+			BulletManager::getInstance()->spawnBullet(entity, { entity->getPosition().x, entity->getPosition().y - offset }, { -1, offsetY }, HOMING_b);
+		}
+	}
+
+	std::cout << "attack 1\n";
+}
+
+void Attack_2(Enemy* entity)
+{
+
+	for (float offset = -240; offset <= 240; offset += 240)
+	{
+		BulletManager::getInstance()->spawnBullet(entity, { entity->getPosition().x, entity->getPosition().y - offset },
+			entity->normalize(
+				{
+				  (PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - entity->getPosition().x) / (sqrt((PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - entity->getPosition().x) * (PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - entity->getPosition().x) + (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - entity->getPosition().y + offset) * (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - entity->getPosition().y + offset)))
+				, (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - entity->getPosition().y + offset) / (sqrt((PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - entity->getPosition().x) * (PlayerManager::getInstance()->getPlayers()[0]->getPosition().x - entity->getPosition().x) + (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - entity->getPosition().y + offset) * (PlayerManager::getInstance()->getPlayers()[0]->getPosition().y - entity->getPosition().y + offset)))
+				}
+			),
+			2 * entity->getSpeed(), { 2, 1 });
+	}
+
+	std::cout << "attack 2\n";
+}
+
+void Attack_3(Entity* entity)
+{
+
+	for (float offsetY = -1; offsetY <= 1; offsetY += .2f)
+	{
+		BulletManager::getInstance()->spawnBullet(entity, entity->getPosition(), { -1, offsetY }, entity->getSpeed());
+	}
+
+
+	std::cout << "attack 3\n";
+}
+
+class Boss : public Enemy
+{
+private:
+
+	std::vector<std::function<void(Enemy*)>> attacks = { Attack_1 , Attack_2, Attack_3 };
+
+public:
+	Boss(sf::Vector2f position_) 
+	{
+		target = PlayerManager::getInstance()->getPlayers()[0];
+		position = position_;
+
+		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 4.5f, WindowConfig::getInstance()->SIZE_Y / 4.5f });
+		initProperties(5000, 15, 1.5f, true, 5.f);
+
+		textureCoords = { 4, 1 };
+	}
+
+	virtual void updatePosition(float deltaTime) override
+	{
+		LevelManager* levelManager = LevelManager::getInstance();
+		if (this->active)
+		{
+			if (this->getPosition().x <= WindowConfig::getInstance()->SIZE_X - this->hitbox.getSize().x) //stay on the side
+			{
+				velocity = { 0, 0 };
+			}
+			else
+			{
+				velocity = { -levelManager->SCROLLING_SPEED * deltaTime * this->speed, 0 };
+			}
+		}
+		else
+		{
+			velocity = { -levelManager->SCROLLING_SPEED * deltaTime, 0 };
+		}
+		this->position += velocity;
+		this->hitbox.setPosition(this->position);
+	}
+
+	virtual void updateShoot(float deltaTime) override
+	{
+
+		if (!this->isOnCooldown() && this->canShoot)
+		{
+			if (!this->active) return; //returns if not active
+
+			//reset cooldown
+			this->shootCooldown = 0.f;
+
+			std::function<void(Enemy*)> attack = attacks[rand() % attacks.size()];
+			attack(this);
+		}
+		else
+		{
+			this->shootCooldown += deltaTime;
+		}
+
+	}
+};

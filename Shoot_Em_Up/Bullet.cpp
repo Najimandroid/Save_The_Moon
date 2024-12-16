@@ -101,7 +101,7 @@ Bullet* BulletManager::spawnBullet(Entity* owner, sf::Vector2f position, sf::Vec
 	switch (bulletType)
 	{
 	case DEFAULT_b: newBullet = new Bullet(20, speed * WindowConfig::getInstance()->SIZE_X / 192, position, direction);  break;
-	case HUMING_b: newBullet = new HomingBullet(position, owner->getTarget(), {0, 0});  break;
+	case HOMING_b: newBullet = new HomingBullet(position, owner->getTarget(), {0, 0});  break;
 	}
 
 	if (newBullet == nullptr)

@@ -37,7 +37,7 @@ int main()
 
     //test
     //creation d'un objet joueur
-    Player* player = new Player({ 100, windowConfigs->SIZE_Y / 2.f }, { WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f }, 100, 20, 3.f, true, .1f);
+    Player* player = new Player({ 100, windowConfigs->SIZE_Y / 2.f }, { WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f }, 9999, 20, 3.f, true, .1f);
 
     float spawnCooldown = 0.f;
     levelManager->loadLevel(1);

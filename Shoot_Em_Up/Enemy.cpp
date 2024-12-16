@@ -1,5 +1,7 @@
 #include "Enemy.h"
 #include "CustomEnemies.h"
+#include "Boss.h"
+
 #include "Bullet.h"
 #include "Window.h"
 #include "Level.h"
@@ -80,6 +82,9 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 		case MOUTH: newEnemy = new Mouth(position_); break;
 		case GIGA_MOUTH: newEnemy = new GigaMouth(position_); break;
 		case HOMING: newEnemy = new Homing(position_, PlayerManager::getInstance()->getPlayers()[0]); break;
+
+
+		case BOSS_1: newEnemy = new Boss(position_); break;
 	}
 
 	if (newEnemy == nullptr) 

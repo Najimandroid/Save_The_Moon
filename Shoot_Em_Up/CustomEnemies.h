@@ -134,7 +134,7 @@ public:
 			if (PlayerManager::getInstance()->getPlayers().empty()) { std::cout << "players empty\n"; return; }
 			if (this->target == nullptr) { std::cout << "huming error\n"; return; }
 
-			BulletManager::getInstance()->spawnBullet(this, { this->position }, {-1, 0}, HUMING_b, 2 * this->speed);
+			BulletManager::getInstance()->spawnBullet(this, { this->position }, {-1, 0}, HOMING_b, 2 * this->speed);
 
 		}
 		else
