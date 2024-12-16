@@ -3,6 +3,7 @@
 
 #include  <SFML/Graphics.hpp>
 #include <vector> 
+#include <iostream>
 #include <cmath>
 
 void HealthBar::updateBar(float newHealth)
@@ -27,23 +28,26 @@ void HealthBarManager::updateBars()
 
 void HealthBarManager::drawBars(sf::RenderWindow& window)
 {
-
+	float offset = 0;
 	for (HealthBar* bar : this->bars)
 	{
 		sf::RectangleShape background_(sf::Vector2f(WindowConfig::getInstance()->SIZE_X/5, WindowConfig::getInstance()->SIZE_Y/16));
 		background_.setFillColor(sf::Color::Red);
-		background_.setPosition({ 300, 40 });
+		background_.setPosition({ 300 + 800 * offset, 40 });
 		window.draw(background_);
 
 		sf::RectangleShape body_;
-		float healthBarSizeX = ((bar->getRemaingingHealth() * bar->getTotalHealth()) / 100) * (background_.getSize().x/100);
+		std::cout << "remainging: " << bar->getRemaingingHealth() << "\ntotal: " << bar->getTotalHealth() << "\npercent: " << (bar->getRemaingingHealth() / bar->getTotalHealth() * 100) << "\nbar size: " << (background_.getSize().x) * (bar->getRemaingingHealth() / bar->getTotalHealth() * 100) << std::endl;
+		float healthBarSizeX = float(background_.getSize().x) * (bar->getRemaingingHealth() / bar->getTotalHealth());
 
 		if (healthBarSizeX <= 0) { body_.setSize(sf::Vector2f(0, 40)); }
 		else{ body_.setSize(sf::Vector2f(healthBarSizeX, WindowConfig::getInstance()->SIZE_Y / 16)); }
 		
 		body_.setFillColor(sf::Color::Green);
-		body_.setPosition({ 300, 40 });
+		body_.setPosition({ 300 + 800 * offset, 40 });
 		window.draw(body_);
+
+		offset++;
 	}
 
 }

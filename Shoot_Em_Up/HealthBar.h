@@ -17,8 +17,8 @@ private:
 public:
 	HealthBar(float health_): totalHealth(health_), remaingingHealth(health_), linkedEntity(nullptr) {}
 
-	int getTotalHealth() { return ceil(totalHealth); };
-	int getRemaingingHealth() { return ceil(remaingingHealth); }
+	float getTotalHealth() { return ceil(totalHealth); };
+	float getRemaingingHealth() { return ceil(remaingingHealth); }
 
 	Entity* getEntity() { return linkedEntity; }
 

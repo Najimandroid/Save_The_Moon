@@ -88,6 +88,7 @@ void Entity::updateState(float deltaTime)
 
 void Entity::draw(sf::RenderWindow& window, sf::Texture texture, sf::Vector2f textureCoords)
 {
+	if (this->getPosition().x >= WindowConfig::getInstance()->SIZE_X + WindowConfig::getInstance()->SIZE_X / 10) { return; }
 	sf::Sprite body;
 	body.setTexture(texture);
 	body.setScale({ this->hitbox.getSize().x * 2 / 60, this->hitbox.getSize().y * 2 / 60 });

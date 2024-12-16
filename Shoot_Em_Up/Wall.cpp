@@ -53,6 +53,7 @@ void WallManager::drawWalls(sf::RenderWindow& window)
 {
 	for (Wall* adress : this->walls)
 	{
+		if (adress->getPosition().x >= WindowConfig::getInstance()->SIZE_X + WindowConfig::getInstance()->SIZE_X / 10) { continue; }
 		sf::Sprite body;
 		body.setTexture(this->texture);
 		body.setScale({2, 2});
