@@ -30,7 +30,7 @@ protected:
 	float lifeTimeMax;
 
 	sf::Vector2f textureCoords;
-	sf::Sprite sprite;
+	sf::Sprite* sprite;
 
 	sf::Vector2f position;
 	sf::Vector2f velocity;
@@ -45,7 +45,7 @@ protected:
 
 public:
 	Bullet(float damage_, float speed_, sf::Vector2f position_, sf::Vector2f direction_, sf::Vector2f textureCoords_) :
-		damage(damage_), speed(speed_), position(position_), velocity({0, 0}), direction(direction_), owner(nullptr), color(sf::Color::White), textureCoords(textureCoords_)
+		damage(damage_), speed(speed_), position(position_), velocity({0, 0}), direction(direction_), owner(nullptr), color(sf::Color::White), textureCoords(textureCoords_), sprite(nullptr)
 	{
 		sf::RectangleShape hitbox_(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y/108, WindowConfig::getInstance()->SIZE_Y / 108));
 		hitbox = hitbox_;
@@ -57,7 +57,7 @@ public:
 	}
 
 	Bullet(float damage_, float speed_, sf::Vector2f position_, sf::Vector2f direction_) :
-		damage(damage_), speed(speed_), position(position_), velocity({ 0, 0 }), direction(direction_), owner(nullptr), color(sf::Color::White), textureCoords({ 1, 1 })
+		damage(damage_), speed(speed_), position(position_), velocity({ 0, 0 }), direction(direction_), owner(nullptr), color(sf::Color::White), textureCoords({ 1, 1 }), sprite(nullptr)
 	{
 		sf::RectangleShape hitbox_(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y / 108, WindowConfig::getInstance()->SIZE_Y / 108));
 		hitbox = hitbox_;
@@ -68,11 +68,11 @@ public:
 		lifeTimeMax = 10;
 	}
 
-	Bullet() : damage(0), speed(0), lifeTime(0), lifeTimeMax(0), textureCoords({ 0, 0 }), position({ 0, 0 }), velocity({ 0, 0 }), direction({ 0, 0 }),
+	Bullet() : damage(0), speed(0), lifeTime(0), lifeTimeMax(0), textureCoords({ 0, 0 }), position({ 0, 0 }), velocity({ 0, 0 }), direction({ 0, 0 }), sprite(nullptr),
 		hitbox(sf::RectangleShape({0, 0})), owner(nullptr), color(sf::Color::White)
 	{}
 
-
+	virtual ~Bullet();
 	//* GET *\\
 
 	float getSpeed() const { return speed; }
@@ -88,7 +88,7 @@ public:
 	sf::RectangleShape& getHitbox() { return hitbox; }
 	sf::Color getColor() { return color; }
 
-	sf::Sprite& getSprite() { return sprite; }
+	sf::Sprite* getSprite() { if (sprite) { return sprite; } return nullptr; }
 	Entity* getOwner() { return owner; }
 
 	//* SET *\\
@@ -99,7 +99,7 @@ public:
 	void setVelocity(sf::Vector2f newVelocity) { velocity = newVelocity; }
 	void setDamage(float newDamage) { damage = newDamage; }
 
-	void setSprite(sf::Sprite newSprite) { sprite = newSprite; }
+	void setSprite(sf::Sprite* newSprite) { sprite = newSprite; }
 	void setColor(sf::Color newColor) { color = newColor; }
 		
 	void setOwner(Entity* owner_) { 

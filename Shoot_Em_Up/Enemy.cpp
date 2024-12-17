@@ -57,6 +57,7 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, float health_, float dam
 {
 	Enemy* newEnemy = new Enemy(position_, { 50, 50 }, health_, damage_, speed_, true, 2.f, {0, 1});
 	this->enemies.push_back(newEnemy);
+	this->setSprites();
 	return newEnemy;
 }
 
@@ -91,6 +92,7 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 	}
 
 	this->enemies.push_back(newEnemy);
+	this->setSprites();
 	return newEnemy;
 }
 
@@ -115,10 +117,13 @@ void EnemyManager::setSprites()
 {
 	for (Enemy* adress : this->enemies)
 	{
-		sf::Sprite sprite;
-		sprite.setTexture(this->texture);
+		if (adress->getSprite() != nullptr) continue;
 
-		sprite.setTextureRect(sf::IntRect(
+		sf::Sprite* sprite = new sf::Sprite;
+		sprite->setTexture(this->texture);
+		sprite->setScale({ adress->getHitbox().getSize().x * 2 / 60, adress->getHitbox().getSize().y * 2 / 60});
+
+		sprite->setTextureRect(sf::IntRect(
 			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
 			adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
 			LevelManager::getInstance()->TILE_SIZE / 2,

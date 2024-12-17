@@ -14,6 +14,7 @@ private:
 	float health;
 
 	sf::Vector2f textureCoords;
+	sf::Sprite* sprite;
 
 	sf::Vector2f position;
 	sf::Vector2f velocity;
@@ -27,19 +28,24 @@ public:
 		position(position_), breakable(isBreakable_), health(health_), color(sf::Color(155, 155, 155))
 	{
 		initHitbox(hitboxSize_); velocity = { 0, 0 }; textureCoords = { 0, 0 };
+		sprite = nullptr;
 	}
 
 	Wall(sf::Vector2f position_, sf::Vector2f hitboxSize_) :
 		position(position_), breakable(false), health(1), color(sf::Color(155, 155, 155))
 	{ 
 		initHitbox(hitboxSize_); velocity = { 0, 0 };
+		sprite = nullptr;
 	}
 
 	Wall() :
 		position({0, 0}), breakable(false), health(1), color(sf::Color(155, 155, 155))
 	{ 
 		initHitbox({0, 0}); velocity = { 0, 0 };
+		sprite = nullptr;
 	}
+
+	virtual ~Wall();
 
 	bool isBreakable() { return breakable; }
 	bool collided(sf::Vector2f targetPosition, sf::Vector2f entityHitboxSize);
@@ -51,11 +57,14 @@ public:
 	sf::Vector2f getTextureCoords() { return textureCoords; }
 
 	sf::RectangleShape& getHitbox() { return hitbox; }
+	sf::Sprite* getSprite() { if (sprite) { return sprite; } return nullptr; }
 	sf::Color getColor() { return color; }
 
 	void setVelocity(sf::Vector2f newVelocity) { velocity = newVelocity; }
 	void setPosition(sf::Vector2f newPosition) { position = newPosition; }
-	void setTextureCoords(sf::Vector2f newCoords) { textureCoords = newCoords; }
+
+	void setTextureCoords(sf::Vector2f newCoords) { sprite = nullptr; textureCoords = newCoords; }
+	void setSprite(sf::Sprite* newSprite) { sprite = newSprite; }
 
 	void initHitbox(sf::Vector2f hitboxSize);
 };
@@ -83,6 +92,7 @@ public:
 
 	void drawWalls(sf::RenderWindow& window);
 
+	void setSprites();
 	bool loadTexture();
 
 	void updatePositions(float deltaTime);

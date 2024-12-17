@@ -88,12 +88,14 @@ void Entity::updateState(float deltaTime)
 
 void Entity::draw(sf::RenderWindow& window, sf::Texture texture, sf::Vector2f textureCoords)
 {
+	if (!this->getSprite()) return;
+
 	if (this->getPosition().x >= WindowConfig::getInstance()->SIZE_X + WindowConfig::getInstance()->SIZE_X / 10) { return; }
 
-	this->sprite.setOrigin({ 30 / 2.f }, { 30 / 2.f });
-	this->sprite.setPosition(this->getPosition());
+	this->sprite->setOrigin({ 30 / 2.f }, { 30 / 2.f });
+	this->sprite->setPosition(this->getPosition());
 
-	window.draw(this->sprite);
+	window.draw(*this->sprite);
 }
 
 //* INITIALIZATION *\\
@@ -133,7 +135,10 @@ Entity::Entity()
 	this->textureCoords = { 0, 0 };
 }
 
-Entity::~Entity() {}
+Entity::~Entity() 
+{
+	this->setSprite(nullptr);
+}
 
 //Entity::~Entity()
 //{

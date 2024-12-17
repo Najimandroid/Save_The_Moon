@@ -40,6 +40,11 @@ sf::Vector2f Bullet::normalize(const sf::Vector2f& vector) {
 	return sf::Vector2f(0.f, 0.f);
 }
 
+Bullet::~Bullet()
+{
+	this->setSprite(nullptr);
+}
+
 //--------------------//* BULLET MANAGER *\\--------------------\\
 
 //* FUNCTIONS *\\
@@ -79,6 +84,7 @@ Bullet* BulletManager::spawnBullet(Entity* owner, sf::Vector2f position, sf::Vec
 	this->bullets.push_back(newBullet);
 	newBullet->setOwner(owner);
 	newBullet->setColor(owner->getColor());
+	this->setSprites();
 	return newBullet;
 
 } 
@@ -102,6 +108,7 @@ Bullet* BulletManager::spawnBullet(Entity* owner, sf::Vector2f position, sf::Vec
 
 	newBullet->setOwner(owner);
 	this->bullets.push_back(newBullet);
+	this->setSprites();
 	return newBullet;
 }
 
@@ -112,6 +119,7 @@ Bullet* BulletManager::spawnBullet(Entity* owner, sf::Vector2f position, sf::Vec
 	this->bullets.push_back(newBullet);
 	newBullet->setOwner(owner);
 	newBullet->setColor(owner->getColor());
+	this->setSprites();
 	return newBullet;
 }
 
@@ -147,10 +155,13 @@ void BulletManager::setSprites()
 {
 	for (Bullet* adress : this->bullets)
 	{
-		sf::Sprite sprite;
-		sprite.setTexture(this->texture);
+		if (adress->getSprite() != nullptr) continue;
 
-		sprite.setTextureRect(sf::IntRect(
+		sf::Sprite* sprite = new sf::Sprite;
+		sprite->setTexture(this->texture);
+		sprite->setScale({ adress->getHitbox().getSize().x * 2 / 35, adress->getHitbox().getSize().y * 2 / 35 });
+
+		sprite->setTextureRect(sf::IntRect(
 			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
 			adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
 			LevelManager::getInstance()->TILE_SIZE / 2,
@@ -164,10 +175,12 @@ void BulletManager::drawBullets(sf::RenderWindow& window)
 {
 	for (Bullet* adress : this->bullets)
 	{
-		adress->getSprite().setOrigin({30 / 2.f}, {30 / 2.f}); //idk if it is the correct origin
-		adress->getSprite().setPosition(adress->getPosition());
+		if (!adress->getSprite()) continue;
 
-		window.draw(adress->getSprite());
+		adress->getSprite()->setOrigin({30 / 2.f}, {30 / 2.f}); //idk if it is the correct origin
+		adress->getSprite()->setPosition(adress->getPosition());
+
+		window.draw(*adress->getSprite());
 	}
 }
 

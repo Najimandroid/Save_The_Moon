@@ -16,7 +16,7 @@ protected:
 	float speed;
 
 	sf::Vector2f textureCoords;
-	sf::Sprite sprite;
+	sf::Sprite* sprite;
 
 	sf::Vector2f position;
 	sf::Vector2f velocity;
@@ -38,8 +38,7 @@ public:
 
 	Entity(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_, sf::Vector2f textureCoords_);
 	Entity();
-
-	virtual ~Entity() = 0;
+	virtual ~Entity();
 
 	//* GET *\\
 
@@ -53,13 +52,13 @@ public:
 	float getDamage() const { return damage; }
 	bool getActive() const { return active; }
 	Entity*& getTarget() { if(target) return target; }
-	sf::Sprite& getSprite() { return sprite; }
+	sf::Sprite* getSprite() { if (sprite) { return sprite; } return nullptr; }
 
 	//* SET *\\
 
 	void setPosition(sf::Vector2f newPosition) { position = newPosition; }
 	void setActive(bool newState) { active = newState; }
-	void setSprite(sf::Sprite newSprite) { sprite = newSprite; }
+	void setSprite(sf::Sprite* newSprite) { sprite = newSprite; }
 
 	//* INIT *\\
 

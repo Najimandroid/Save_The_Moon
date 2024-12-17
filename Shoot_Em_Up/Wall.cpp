@@ -20,10 +20,16 @@ void Wall::initHitbox(sf::Vector2f hitboxSize_)
 	this->hitbox.setPosition(this->position);
 }
 
+Wall::~Wall()
+{
+	this->setSprite(nullptr);
+}
+
 Wall* WallManager::spawnWall(sf::Vector2f position, sf::Vector2f hitboxSize)
 {
 	Wall* newWall = new Wall(position, hitboxSize);
 	this->walls.push_back(newWall);
+	setSprites();
 	return newWall;
 }
 
@@ -31,6 +37,7 @@ Wall* WallManager::spawnWall(sf::Vector2f position, sf::Vector2f hitboxSize, boo
 {
 	Wall* newWall = new Wall(position, hitboxSize, isBreakable, health);
 	this->walls.push_back(newWall);
+	setSprites();
 	return newWall;
 }
 
@@ -39,9 +46,32 @@ sf::Vector2f WallManager::getWallsVelocity()
 	return this->walls[0]->getVelocity();
 }
 
+void WallManager::setSprites()
+{
+	for (Wall* adress : this->walls)
+	{
+		if (adress->getSprite() != nullptr) continue;
+
+		sf::Sprite* sprite = new sf::Sprite;
+		sprite->setTexture(this->texture);
+		sprite->setScale({ 2, 2 });
+
+		std::cout << adress->getTextureCoords().x << ", " << adress->getTextureCoords().y << std::endl;
+			 
+		sprite->setTextureRect(sf::IntRect(
+			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
+			adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
+			LevelManager::getInstance()->TILE_SIZE / 2,
+			LevelManager::getInstance()->TILE_SIZE / 2));
+
+		adress->setSprite(sprite);
+	}
+}
+
 bool WallManager::loadTexture()
 {
 	if (!this->texture.loadFromFile("assets/textures/Walls.png")) return false;
+	setSprites();
 	return true;
 }
 
@@ -49,22 +79,13 @@ void WallManager::drawWalls(sf::RenderWindow& window)
 {
 	for (Wall* adress : this->walls)
 	{
+		if (!adress->getSprite()) continue;
 		if (adress->getPosition().x >= WindowConfig::getInstance()->SIZE_X + WindowConfig::getInstance()->SIZE_X / 10) { continue; }
-		sf::Sprite body;
-		body.setTexture(this->texture);
-		body.setScale({2, 2});
 
-		body.setTextureRect(sf::IntRect(
-				adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
-				adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
-				LevelManager::getInstance()->TILE_SIZE/2,
-				LevelManager::getInstance()->TILE_SIZE / 2));
+		adress->getSprite()->setOrigin({30 / 2.f}, {30 / 2.f});
+		adress->getSprite()->setPosition(adress->getPosition());
 
-
-		body.setOrigin({30 / 2.f}, { 30 / 2.f });
-		body.setPosition(adress->getPosition());
-
-		window.draw(body);
+		window.draw(*adress->getSprite());
 	}
 }
 
