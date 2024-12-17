@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Bullet.h"
+#include "Music.h"
 #include <iostream>
 #include <vector>   
 #include <SFML/Graphics.hpp>
@@ -47,52 +48,14 @@ struct Upgrade
 
 bool music = true;
 
-
 int main()
 {
+
+    Music change;
+
     struct LvlAvailable Dispo;
 
-
-    sf::SoundBuffer MusicMenu;
-
-    if (!MusicMenu.loadFromFile("TitleScreen.wav")) {
-        std::cout << "Erreur : Impossible de charger le fichier audio." << std::endl;
-        return -1;
-    }
-
-    sf::Sound MusicProc;
-    MusicProc.setBuffer(MusicMenu);
-    if (music == true)
-    {
-        MusicProc.play();
-    }
-
-    MusicProc.setLoop(true);
-
-    if (music == false)
-    {
-        MusicProc.stop();
-       MusicProc.setVolume(0);
-    }
-
-
-    sf::SoundBuffer MusicSelect;
-
-    if (!MusicSelect.loadFromFile("SelectLvl.wav")) {
-        return -1;
-    }
-
-
-    sf::Sound MusicNiv;
-    MusicNiv.setBuffer(MusicSelect);
-    if (music == false)
-    {
-        MusicNiv.setVolume(0);
-    }
-
-    MusicNiv.setLoop(true);
-
-
+    change.SetSound("TitleScreen.wav");
 
     std::vector <BoutonMenu> Press =
     {
@@ -214,11 +177,14 @@ int main()
                     if (mouse.y >= 375 && mouse.y <= 450)
                     {
                         menu.setVisible(false);
-                        MusicProc.stop();
-                        MusicNiv.play();
+                        change.Stop();
+                        if (music == true)
+                        {
+                            change.SetSound("SelectLvl.wav");
+                        }
 
 
-                        
+
 
                         //Selection des niveaux
                         sf::RenderWindow LvlSelect(sf::VideoMode(1900, 1080), "Selection Niveaux");
@@ -267,7 +233,6 @@ int main()
                                         if (mouse1.y >= 10 && mouse1.y <= 60)
                                         {
                                             LvlSelect.setVisible(false);
-                                            MusicNiv.stop();
 
                                             sf::RenderWindow Boutique(sf::VideoMode(1900, 1080), "Boutique");
                                             Boutique.setFramerateLimit(60);
@@ -305,7 +270,8 @@ int main()
 
                                                                 if (music == true)
                                                                 {
-                                                                    MusicNiv.play();
+                                                                    change.Stop();
+                                                                    change.SetSound("SelectLvl.wav");
                                                                 }
                                                             }
                                                         }
@@ -328,25 +294,9 @@ int main()
                                         if (mouse1.y >= 400 && mouse1.y <= 480)
                                         {
                                             LvlSelect.setVisible(false);
-                                            MusicNiv.stop();
-
-
-                                            sf::SoundBuffer Niv1;
-
-                                            if (!Niv1.loadFromFile("Niv1.wav")) {
-                                                return -1;
-                                            }
-
-                                            sf::Sound Lvl1;
-                                            Lvl1.setBuffer(Niv1);
-                                            Lvl1.play();
-                                            if (music == false)
-                                            {
-                                                Lvl1.setVolume(0);
-                                            }
-
-                                            Lvl1.setLoop(true);
-
+                                            change.Stop();
+                                            change.SetSound("Niv1.wav");
+                                          
                                             //creation d'une fenetre
                                             sf::RenderWindow game(sf::VideoMode(1900, 1080), "Save The Moon");
                                             game.setFramerateLimit(60);
@@ -467,12 +417,15 @@ int main()
                                     {
                                         if (mouse1.y >= 0 && mouse1.y <= 20)
                                         {
+                                            change.Stop();
+                                            change.SetSound("TitleScreen.wav");
                                             LvlSelect.close();
                                             menu.setVisible(true);
                                             if (music == true)
                                             {
-                                                MusicNiv.stop();
-                                                MusicProc.play();
+                                                change.Stop();
+                                                change.SetSound("TitleScreen.wav");
+
                                             }
                                         }
                                     }
@@ -493,28 +446,12 @@ int main()
                     if (mouse.y >= 475 && mouse.y <= 550)
                     {
                         menu.setVisible(false);
-                        MusicProc.stop();
+                        change.Stop();
+                        change.SetSound("Option.wav");
 
                         //Menu Option
                         sf::RenderWindow Option(sf::VideoMode(1900, 1080), "Option");
-                        Option.setFramerateLimit(60);
-
-                        sf::SoundBuffer MusicOption;                        
-
-                        if (!MusicOption.loadFromFile("Option.wav")) {
-                            return -1;
-                        }
-
-                        sf::Sound MusicOp;
-                        MusicOp.setBuffer(MusicOption);
-                        MusicOp.play();
-
-                        if (music == false)
-                        {
-                            MusicOp.setVolume(0);
-                        }
-                        
-                        MusicOp.setLoop(true);
+                        Option.setFramerateLimit(60);                     
 
                         sf::Event event;
 
@@ -536,11 +473,13 @@ int main()
                                         if (mouse3.y >= 0 && mouse3.y <= 20)
                                         {
                                             Option.close();
-                                            menu.setVisible(true);
+                                            change.Stop();
                                             if (music == true)
                                             {
-                                                MusicProc.play();
+                                                change.SetSound("TitleScreen.wav");
                                             }
+                                            menu.setVisible(true);
+
                                         }
                                     }
 
@@ -548,7 +487,7 @@ int main()
                                     {
                                         if (mouse3.y >= 150 && mouse3.y <= 180)
                                         {
-                                            MusicOp.stop();
+                                            change.Stop();
                                             music = false;
                                         }
                                     }
@@ -558,8 +497,8 @@ int main()
                                         if (mouse3.y >= 150 && mouse3.y <= 180)
                                         {
                                             music = true;
-                                            MusicOp.play();
-
+                                            change.Stop();
+                                            change.SetSound("Option.wav");
                                         }
                                     }
 
@@ -567,9 +506,7 @@ int main()
                                     {
                                         if (mouse3.y >= 150 && mouse3.y <= 180)
                                         {
-                                            MusicOp.setVolume(50);
-                                            MusicProc.setVolume(50);
-                                            MusicNiv.setVolume(50);
+                                            change.DOWNVolume();
                                         }
                                     }
 
@@ -577,10 +514,7 @@ int main()
                                     {
                                         if (mouse3.y >= 150 && mouse3.y <= 180)
                                         {
-                                            MusicOp.setVolume(100);
-                                            MusicProc.setVolume(100);
-                                            MusicNiv.setVolume(100);
-
+                                            change.UPVolume();
                                         }
                                     }
                                 }
