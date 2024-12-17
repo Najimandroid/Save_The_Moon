@@ -47,7 +47,11 @@ int main()
     float spawnCooldown = 0.f;
     levelManager->loadLevel(1);
 
-    collectableManager->spawnCollectable({ 500, 500 });
+    collectableManager->spawnCollectable({ 500 + 500, 500 });
+    collectableManager->spawnCollectable({ 500 + 525 + 25, 500 });
+    collectableManager->spawnCollectable({ 500 + 550 + 50, 500 });
+    collectableManager->spawnCollectable({ 500 + 575 + 75, 500 });
+    collectableManager->spawnCollectable({ 500 + 600 + 100, 500 });
 
     //creation d'une horloge
     sf::Clock clock;
