@@ -129,11 +129,6 @@ int main()
     }
 
 
-    //test bouton résolution
-    sf::RectangleShape taille(sf::Vector2f(50, 50));
-    taille.setFillColor(sf::Color::White);
-    taille.setPosition(sf::Vector2f(150, 150));
-
 
 
     sf::RenderWindow menu(sf::VideoMode(Long, Larg), "Menu : Save The Moon");
@@ -156,19 +151,6 @@ int main()
                 menu.close();
             }
 
-
-            //Résolution fenetre
-            if (event.type == sf::Event::MouseButtonPressed)
-            {
-                if (mouse.x >= 150 && mouse.x <= 200)
-                {
-                    if (mouse.y >= 150 && mouse.y <= 200)
-                    {
-                        menu.setSize(sf::Vector2u(1024, 768));
-                    }
-                }
-            }
-
             //Bouton Menu Selection Niveau
             if (event.type == sf::Event::MouseButtonPressed)
             {
@@ -182,9 +164,6 @@ int main()
                         {
                             change.SetSound("SelectLvl.wav");
                         }
-
-
-
 
                         //Selection des niveaux
                         sf::RenderWindow LvlSelect(sf::VideoMode(1900, 1080), "Selection Niveaux");
@@ -453,6 +432,7 @@ int main()
                         sf::RenderWindow Option(sf::VideoMode(1900, 1080), "Option");
                         Option.setFramerateLimit(60);                     
 
+                     
                         sf::Event event;
 
                         while (Option.isOpen())
@@ -547,7 +527,6 @@ int main()
         {
             menu.draw(test2);
         }
-        menu.draw(taille);
         menu.display();
 
     }
