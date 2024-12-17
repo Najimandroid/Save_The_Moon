@@ -3,7 +3,8 @@
 Collectable::Collectable()
 {
 	this->position = { 0, 0 };
-
+	this->sprite = nullptr;
+	this->target = nullptr;
 
 
 	this->effect = [&]()
@@ -17,6 +18,9 @@ Collectable::Collectable()
 Collectable::Collectable(sf::Vector2f position_, void(*effect_)())
 {
 	this->position = position_;
+	this->sprite = nullptr;
+	this->target = nullptr;
+
 	this->effect = effect_;
 
 	this->hitbox.setSize({ 25, 25 });
@@ -45,7 +49,6 @@ void Collectable::updatePosition(float deltaTime)
 }
 
 
-
 Collectable* CollectableManager::spawnCollectable(sf::Vector2f position)
 {
 	Collectable* newCollect = new Collectable(position, []()
@@ -70,7 +73,7 @@ void CollectableManager::drawCollectables(sf::RenderWindow& window)
 	for (Collectable* adress : this->collectables)
 	{
 		sf::RectangleShape body({ adress->getHitbox().getSize().x, adress->getHitbox().getSize().y });
-		body.setOrigin({ body.getSize().x / 2, body.getSize().y / 2});
+		body.setOrigin({ body.getSize().x / 2, body.getSize().y / 2 });
 		body.setPosition(adress->getPosition());
 		body.setFillColor(sf::Color::Yellow);
 

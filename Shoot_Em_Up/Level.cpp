@@ -39,7 +39,7 @@ bool LevelManager::loadLevel(int levelIndex)
 	{
 		for (int y = 0; y < this->levelImage.getSize().y; y++)
 		{
-			sf::Vector2f SPAWN_POSITION = { TILE_SIZE * float(x), TILE_SIZE * float(y) };
+			sf::Vector2f SPAWN_POSITION = { TILE_SIZE * float(x), TILE_SIZE * float(y) + TILE_SIZE / 2 };
 
 			sf::Color color = this->levelImage.getPixel(x, y);
 			unsigned int colorCode = colorToInt(color);

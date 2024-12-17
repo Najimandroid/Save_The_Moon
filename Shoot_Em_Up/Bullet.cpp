@@ -159,7 +159,12 @@ void BulletManager::setSprites()
 
 		sf::Sprite* sprite = new sf::Sprite;
 		sprite->setTexture(this->texture);
+
 		sprite->setScale({ adress->getHitbox().getSize().x * 2 / 35, adress->getHitbox().getSize().y * 2 / 35 });
+		sprite->setOrigin({
+			adress->getHitbox().getOrigin().y / sprite->getScale().y,
+			adress->getHitbox().getOrigin().y / sprite->getScale().y
+			});
 
 		sprite->setTextureRect(sf::IntRect(
 			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
@@ -177,7 +182,6 @@ void BulletManager::drawBullets(sf::RenderWindow& window)
 	{
 		if (!adress->getSprite()) continue;
 
-		adress->getSprite()->setOrigin({30 / 2.f}, {30 / 2.f}); //idk if it is the correct origin
 		adress->getSprite()->setPosition(adress->getPosition());
 
 		window.draw(*adress->getSprite());

@@ -98,9 +98,10 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 
 //* GRAPHICS *\\ 
 
-bool EnemyManager::loadTexture()
+bool EnemyManager::loadTextures()
 {
 	if (!this->texture.loadFromFile("assets/textures/Enemies.png")) return false;
+	if (!this->bossTexture.loadFromFile("assets/textures/Bosses.png")) return false;
 	setSprites();
 	return true;
 }
@@ -120,14 +121,38 @@ void EnemyManager::setSprites()
 		if (adress->getSprite() != nullptr) continue;
 
 		sf::Sprite* sprite = new sf::Sprite;
-		sprite->setTexture(this->texture);
-		sprite->setScale({ adress->getHitbox().getSize().x * 2 / 60, adress->getHitbox().getSize().y * 2 / 60});
 
-		sprite->setTextureRect(sf::IntRect(
-			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
-			adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
-			LevelManager::getInstance()->TILE_SIZE / 2,
-			LevelManager::getInstance()->TILE_SIZE / 2));
+		if (dynamic_cast<Boss*>(adress))
+		{
+			sprite->setScale({ adress->getHitbox().getSize().x * 2 / 120, adress->getHitbox().getSize().y * 2 / 120 });
+			sprite->setOrigin({
+				adress->getHitbox().getOrigin().y / sprite->getScale().y,
+				adress->getHitbox().getOrigin().y / sprite->getScale().y
+				});
+
+			sprite->setTexture(this->bossTexture);
+
+			sprite->setTextureRect(sf::IntRect(
+				adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE,
+				adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE,
+				LevelManager::getInstance()->TILE_SIZE,
+				LevelManager::getInstance()->TILE_SIZE));
+		}
+		else
+		{
+			sprite->setScale({ adress->getHitbox().getSize().x * 2 / 60, adress->getHitbox().getSize().y * 2 / 60 });
+			sprite->setOrigin({
+				adress->getHitbox().getOrigin().y / sprite->getScale().y,
+				adress->getHitbox().getOrigin().y / sprite->getScale().y
+				});
+			sprite->setTexture(this->texture);
+
+			sprite->setTextureRect(sf::IntRect(
+				adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
+				adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
+				LevelManager::getInstance()->TILE_SIZE / 2,
+				LevelManager::getInstance()->TILE_SIZE / 2));
+		}
 
 		adress->setSprite(sprite);
 	}

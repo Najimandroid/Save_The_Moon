@@ -56,6 +56,12 @@ void WallManager::setSprites()
 		sprite->setTexture(this->texture);
 		sprite->setScale({ 2, 2 });
 
+		sprite->setOrigin({
+			adress->getHitbox().getOrigin().y / sprite->getScale().y,
+			adress->getHitbox().getOrigin().y / sprite->getScale().y
+			});
+		//adress->getSprite()->setOrigin({ 30 / 2.f }, { 30 / 2.f });
+
 		std::cout << adress->getTextureCoords().x << ", " << adress->getTextureCoords().y << std::endl;
 			 
 		sprite->setTextureRect(sf::IntRect(
@@ -82,7 +88,7 @@ void WallManager::drawWalls(sf::RenderWindow& window)
 		if (!adress->getSprite()) continue;
 		if (adress->getPosition().x >= WindowConfig::getInstance()->SIZE_X + WindowConfig::getInstance()->SIZE_X / 10) { continue; }
 
-		adress->getSprite()->setOrigin({30 / 2.f}, {30 / 2.f});
+		
 		adress->getSprite()->setPosition(adress->getPosition());
 
 		window.draw(*adress->getSprite());

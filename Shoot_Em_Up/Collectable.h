@@ -14,6 +14,7 @@ private:
 	sf::Vector2f textureCoords = { 0, 0 };
 
 	sf::RectangleShape hitbox;
+	sf::Sprite* sprite;
 
 	Entity* target;
 
@@ -22,9 +23,12 @@ public:
 	Collectable();
 	Collectable(sf::Vector2f position_, void(*effect_)());
 
+	sf::Sprite* getSprite() { if (sprite) { return sprite; } return nullptr; }
 	sf::RectangleShape& getHitbox() { return hitbox; }
 	sf::Vector2f getPosition() { return position; }
 	Entity* getTarget() { return target; }
+
+	void setSprite(sf::Sprite* newSprite) { sprite = newSprite; }
 
 	bool collided(Entity* entity);
 	void collected();

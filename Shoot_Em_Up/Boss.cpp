@@ -5,12 +5,12 @@
 Boss::Boss(sf::Vector2f position_)
 {
 	target = PlayerManager::getInstance()->getPlayers()[0];
-	position = position_;
+	position = { position_.x, WindowConfig::getInstance()->SIZE_Y / 2.f };
 
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 2.5f, WindowConfig::getInstance()->SIZE_Y / 2.5f });
 	initProperties(5000, 15, 1.5f, true, 5.f);
 
-	textureCoords = { 4, 1 };
+	textureCoords = { 0, 0 };
 }
 
 //* UPDATING *\\
@@ -20,13 +20,12 @@ void Boss::updatePosition(float deltaTime)
 	LevelManager* levelManager = LevelManager::getInstance();
 	if (this->active)
 	{
-		if (this->getPosition().x <= WindowConfig::getInstance()->SIZE_X - this->hitbox.getSize().x) //stay on the side
+		if (this->getPosition().x < WindowConfig::getInstance()->SIZE_X - this->hitbox.getSize().x / 2) //stay on the side
 		{
 			if (!healthBarSpawned) { HealthBarManager::getInstance()->createHealthBar(this->health)->linkEntity(this); healthBarSpawned = true; }
 
-
-			velocity = { 0, (cos(x / 40)) * (WindowConfig::getInstance()->SIZE_Y / 108) * .5f };
-			x += 1;
+			velocity = { 0, (cos(x / 100) * (WindowConfig::getInstance()->SIZE_Y / 432*1.5f))}; // (WindowConfig::getInstance()->SIZE_Y / 54)
+			x += 1.f;
 		}
 		else
 		{
