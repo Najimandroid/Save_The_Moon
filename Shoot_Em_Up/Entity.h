@@ -4,7 +4,6 @@
 #include <vector> 
 #include <SFML/Graphics.hpp>
 
-
 class Entity
 {
 protected:

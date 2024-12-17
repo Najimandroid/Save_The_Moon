@@ -1,8 +1,4 @@
 #include "Wall.h"
-#include "Player.h"
-#include "Level.h"
-
-#include  <SFML/Graphics.hpp>
 
 bool Wall::collided(sf::Vector2f targetPosition, sf::Vector2f entityHitboxSize)
 {

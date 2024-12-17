@@ -1,5 +1,6 @@
 #pragma once
 #include "Entity.h"
+#include "Window.h"
 
 #include  <SFML/Graphics.hpp>
 #include <vector> 

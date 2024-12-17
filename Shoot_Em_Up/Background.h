@@ -1,6 +1,5 @@
 #pragma once
 #include "Window.h"
-
 #include  <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
@@ -27,17 +26,7 @@ class Background
 private: 
 	std::vector<std::vector<Layer*>> layers;
 public:
-	Background(std::vector<sf::Texture> textures_) 
-	{
-		layers.resize(textures_.size());
-		for (int i = 0; i < textures_.size(); i++)
-		{
-			Layer* layer_n1 = new Layer(textures_[i], 0.f);
-			Layer* layer_n2 = new Layer(textures_[i], 1.f);
-			layers[i].push_back(layer_n1);
-			layers[i].push_back(layer_n2);
-		}
-	}
+	Background(std::vector<sf::Texture> textures_);
 
 	void drawBackground(sf::RenderWindow& window);
 	void moveBackground(float deltaTime);

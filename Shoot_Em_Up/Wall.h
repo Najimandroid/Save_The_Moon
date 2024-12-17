@@ -1,6 +1,6 @@
 #pragma once
-
 #include "Player.h"
+#include "Level.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>

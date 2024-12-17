@@ -1,13 +1,8 @@
 #include "HealthBar.h"
-#include "Window.h"
-
-#include  <SFML/Graphics.hpp>
-#include <vector> 
-#include <iostream>
-#include <cmath>
 
 void HealthBar::updateBar(float newHealth)
 {
+	if (this->getEntity() == nullptr) { remaingingHealth = 0; return; }
 	this->remaingingHealth = newHealth;
 }
 
@@ -48,7 +43,7 @@ void HealthBarManager::drawBars(sf::RenderWindow& window)
 	float offset = 0;
 	for (HealthBar* bar : this->bars)
 	{
-		if (!bar->getEntity()) { continue; }
+		if (bar->getEntity() == nullptr) { continue; }
 
 		sf::RectangleShape background_(sf::Vector2f(WindowConfig::getInstance()->SIZE_X/5, WindowConfig::getInstance()->SIZE_Y/16));
 		background_.setFillColor(sf::Color::Red);
@@ -56,7 +51,7 @@ void HealthBarManager::drawBars(sf::RenderWindow& window)
 		window.draw(background_);
 
 		sf::RectangleShape body_;
-		std::cout << "remainging: " << bar->getRemaingingHealth() << "\ntotal: " << bar->getTotalHealth() << "\npercent: " << (bar->getRemaingingHealth() / bar->getTotalHealth() * 100) << "\nbar size: " << (background_.getSize().x) * (bar->getRemaingingHealth() / bar->getTotalHealth() * 100) << std::endl;
+		//std::cout << "remainging: " << bar->getRemaingingHealth() << "\ntotal: " << bar->getTotalHealth() << "\npercent: " << (bar->getRemaingingHealth() / bar->getTotalHealth() * 100) << "\nbar size: " << (background_.getSize().x) * (bar->getRemaingingHealth() / bar->getTotalHealth() * 100) << std::endl;
 		float healthBarSizeX = float(background_.getSize().x) * (bar->getRemaingingHealth() / bar->getTotalHealth());
 
 		if (healthBarSizeX <= 0) { body_.setSize(sf::Vector2f(0, 40)); }

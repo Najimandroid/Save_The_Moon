@@ -1,12 +1,17 @@
 #pragma once
+
 #include "Entity.h"
+#include "Enemy.h"
+#include "Player.h"
+
+#include "Level.h"
+
 #include "Window.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
 #include <cmath>
-
 
 enum BulletType
 {

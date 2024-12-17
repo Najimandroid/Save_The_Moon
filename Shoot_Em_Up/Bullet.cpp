@@ -1,16 +1,5 @@
 #include "Bullet.h"
-#include "Entity.h"
-#include "Player.h"
-#include "Enemy.h"
-#include "Level.h"
-#include "Window.h"
-
 #include "CustomBullets.h"
-
-#include  <SFML/Graphics.hpp>
-
-#include <iostream>
-#include <thread>
 
 //--------------------//* BULLET *\\--------------------\\
 

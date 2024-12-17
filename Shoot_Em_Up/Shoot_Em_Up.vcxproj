@@ -142,7 +142,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Collectable.cpp" />
+    <ClCompile Include="CustomBullets.cpp" />
+    <ClCompile Include="CustomEnemies.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="HealthBar.cpp" />
@@ -155,12 +159,14 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="Boss.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Collectable.h" />
     <ClInclude Include="CustomBullets.h" />
     <ClInclude Include="CustomEnemies.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="MiniBoss.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Window.h" />

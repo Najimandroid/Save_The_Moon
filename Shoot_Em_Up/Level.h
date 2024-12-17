@@ -7,6 +7,7 @@
 #include <iostream>
 #include <vector>
 
+
 //=> Tile size : 60px * 60px
 
 class LevelManager 
@@ -17,11 +18,6 @@ private:
 	sf::Image levelImage;
 
 	Background* currentBackground;
-
-	std::vector<std::string> levels =
-	{
-		"assets/levels/TestLevel.png",
-	};
 
 	LevelManager() { currentBackground = nullptr; };
 public:
