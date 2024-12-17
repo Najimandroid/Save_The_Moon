@@ -28,6 +28,11 @@ Collectable::Collectable(sf::Vector2f position_, void(*effect_)())
 	this->hitbox.setPosition(this->position);
 }
 
+Collectable::~Collectable()
+{
+	this->setSprite(nullptr);
+}
+
 bool Collectable::collided(Entity* entity)
 {
 	if (!entity->isPlayer()) { return false; } //ignore if not player
@@ -57,6 +62,7 @@ Collectable* CollectableManager::spawnCollectable(sf::Vector2f position)
 		});
 
 	this->collectables.push_back(newCollect);
+	setSprites();
 	return newCollect;
 }
 
@@ -68,16 +74,52 @@ void CollectableManager::updatePositions(float deltaTime)
 	}
 }
 
+bool CollectableManager::loadTexture()
+{
+	if (!this->texture.loadFromFile("assets/textures/Collectables.png")) return false;
+	setSprites();
+	return true;
+}
+
+void CollectableManager::setSprites()
+{
+	for (Collectable* adress : this->collectables)
+	{
+		if (adress->getSprite() != nullptr) continue;
+
+		sf::Sprite* sprite = new sf::Sprite;
+		sprite->setTexture(this->texture);
+		sprite->setScale({ 2, 2 });
+
+		sprite->setOrigin({
+			adress->getHitbox().getOrigin().y / sprite->getScale().y,
+			adress->getHitbox().getOrigin().y / sprite->getScale().y
+			});
+		//adress->getSprite()->setOrigin({ 30 / 2.f }, { 30 / 2.f });
+
+		std::cout << adress->getTextureCoords().x << ", " << adress->getTextureCoords().y << std::endl;
+
+		sprite->setTextureRect(sf::IntRect(
+			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 4,
+			adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 4,
+			LevelManager::getInstance()->TILE_SIZE / 4,
+			LevelManager::getInstance()->TILE_SIZE / 4));
+
+		adress->setSprite(sprite);
+	}
+}
+
 void CollectableManager::drawCollectables(sf::RenderWindow& window)
 {
 	for (Collectable* adress : this->collectables)
 	{
-		sf::RectangleShape body({ adress->getHitbox().getSize().x, adress->getHitbox().getSize().y });
-		body.setOrigin({ body.getSize().x / 2, body.getSize().y / 2 });
-		body.setPosition(adress->getPosition());
-		body.setFillColor(sf::Color::Yellow);
+		if (!adress->getSprite()) continue;
+		if (adress->getPosition().x >= WindowConfig::getInstance()->SIZE_X + WindowConfig::getInstance()->SIZE_X / 10) { continue; }
 
-		window.draw(body);
+
+		adress->getSprite()->setPosition(adress->getPosition());
+
+		window.draw(*adress->getSprite());
 	}
 }
 

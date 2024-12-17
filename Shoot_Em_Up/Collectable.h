@@ -22,8 +22,10 @@ private:
 public:
 	Collectable();
 	Collectable(sf::Vector2f position_, void(*effect_)());
+	~Collectable();
 
 	sf::Sprite* getSprite() { if (sprite) { return sprite; } return nullptr; }
+	sf::Vector2f getTextureCoords() { return textureCoords; }
 	sf::RectangleShape& getHitbox() { return hitbox; }
 	sf::Vector2f getPosition() { return position; }
 	Entity* getTarget() { return target; }
@@ -40,10 +42,10 @@ class CollectableManager
 private:
 	static CollectableManager* instance;
 
-	sf::Texture texure;
+	sf::Texture texture;
 	std::vector<Collectable*> collectables;
 
-	CollectableManager() {}
+	CollectableManager() { if (!loadTexture()) std::cout << "Collectables texture not loaded!"; }
 
 public:
 	static CollectableManager* getInstance()
@@ -53,6 +55,9 @@ public:
 		}
 		return instance;
 	}
+
+	bool loadTexture();
+	void setSprites();
 
 	Collectable* spawnCollectable(sf::Vector2f position_);
 
