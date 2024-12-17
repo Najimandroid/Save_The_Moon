@@ -99,6 +99,7 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 bool EnemyManager::loadTexture()
 {
 	if (!this->texture.loadFromFile("assets/textures/Enemies.png")) return false;
+	setSprites();
 	return true;
 }
 
@@ -107,6 +108,23 @@ void EnemyManager::drawEnemies(sf::RenderWindow& window)
 	for (Enemy* adress : this->enemies)
 	{
 		adress->draw(window,this->texture, adress->getTextureCoords());
+	}
+}
+
+void EnemyManager::setSprites()
+{
+	for (Enemy* adress : this->enemies)
+	{
+		sf::Sprite sprite;
+		sprite.setTexture(this->texture);
+
+		sprite.setTextureRect(sf::IntRect(
+			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
+			adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
+			LevelManager::getInstance()->TILE_SIZE / 2,
+			LevelManager::getInstance()->TILE_SIZE / 2));
+
+		adress->setSprite(sprite);
 	}
 }
 

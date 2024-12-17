@@ -16,6 +16,7 @@ protected:
 	float speed;
 
 	sf::Vector2f textureCoords;
+	sf::Sprite sprite;
 
 	sf::Vector2f position;
 	sf::Vector2f velocity;
@@ -52,11 +53,13 @@ public:
 	float getDamage() const { return damage; }
 	bool getActive() const { return active; }
 	Entity*& getTarget() { if(target) return target; }
+	sf::Sprite& getSprite() { return sprite; }
 
 	//* SET *\\
 
 	void setPosition(sf::Vector2f newPosition) { position = newPosition; }
 	void setActive(bool newState) { active = newState; }
+	void setSprite(sf::Sprite newSprite) { sprite = newSprite; }
 
 	//* INIT *\\
 

@@ -30,6 +30,7 @@ protected:
 	float lifeTimeMax;
 
 	sf::Vector2f textureCoords;
+	sf::Sprite sprite;
 
 	sf::Vector2f position;
 	sf::Vector2f velocity;
@@ -87,6 +88,7 @@ public:
 	sf::RectangleShape& getHitbox() { return hitbox; }
 	sf::Color getColor() { return color; }
 
+	sf::Sprite& getSprite() { return sprite; }
 	Entity* getOwner() { return owner; }
 
 	//* SET *\\
@@ -97,6 +99,7 @@ public:
 	void setVelocity(sf::Vector2f newVelocity) { velocity = newVelocity; }
 	void setDamage(float newDamage) { damage = newDamage; }
 
+	void setSprite(sf::Sprite newSprite) { sprite = newSprite; }
 	void setColor(sf::Color newColor) { color = newColor; }
 		
 	void setOwner(Entity* owner_) { 
@@ -124,7 +127,10 @@ private:
 	sf::Texture texture;
 	std::vector <Bullet*> bullets;
 
-	BulletManager() { if (!loadTexture()) std::cout << "Bullets texture not loaded!"; }
+	BulletManager() {
+		if (!loadTexture()) std::cout << "Bullets texture not loaded!";
+		setSprites();
+	}
 public:
 	static BulletManager* getInstance()
 	{
@@ -140,6 +146,7 @@ public:
 
 	void despawnBullets();
 
+	void setSprites();
 	bool loadTexture();
 	void drawBullets(sf::RenderWindow& window);
 

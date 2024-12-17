@@ -45,7 +45,9 @@ private:
 	sf::Texture texture;
 	std::vector <Enemy*> enemies;
 
-	EnemyManager() { if (!loadTexture()) std::cout << "Enemies texture not loaded!"; }
+	EnemyManager() { 
+		if (!loadTexture()) { std::cout << "Enemies texture not loaded!"; }
+	}
 public:
 	static EnemyManager* getInstance()
 	{
@@ -64,6 +66,7 @@ public:
 	Enemy* spawnEnemy(sf::Vector2f position, EnemyType enemyType);
 
 	bool loadTexture();
+	void setSprites();
 	void drawEnemies(sf::RenderWindow& window);
 	void updatePositions(float deltaTime);
 	void updateStates();

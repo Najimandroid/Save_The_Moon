@@ -139,28 +139,35 @@ void BulletManager::despawnBullets()
 bool BulletManager::loadTexture()
 {
 	if (!this->texture.loadFromFile("assets/textures/Bullets.png")) return false;
+	this->setSprites();
 	return true;
+}
+
+void BulletManager::setSprites()
+{
+	for (Bullet* adress : this->bullets)
+	{
+		sf::Sprite sprite;
+		sprite.setTexture(this->texture);
+
+		sprite.setTextureRect(sf::IntRect(
+			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
+			adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
+			LevelManager::getInstance()->TILE_SIZE / 2,
+			LevelManager::getInstance()->TILE_SIZE / 2));
+
+		adress->setSprite(sprite);
+	}
 }
 
 void BulletManager::drawBullets(sf::RenderWindow& window)
 {
 	for (Bullet* adress : this->bullets)
 	{
-		sf::Sprite body;
-		body.setTexture(texture);
-		body.setScale({ adress->getHitbox().getSize().x * 2 / 35, adress->getHitbox().getSize().y * 2 / 35});
+		adress->getSprite().setOrigin({30 / 2.f}, {30 / 2.f}); //idk if it is the correct origin
+		adress->getSprite().setPosition(adress->getPosition());
 
-		body.setTextureRect(sf::IntRect(
-			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
-			adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
-			LevelManager::getInstance()->TILE_SIZE / 2,
-			LevelManager::getInstance()->TILE_SIZE / 2));
-
-
-		body.setOrigin({ 30 / 2.f }, { 30 / 2.f }); //idk if it is the correct origin
-		body.setPosition(adress->getPosition());
-
-		window.draw(body);
+		window.draw(adress->getSprite());
 	}
 }
 
