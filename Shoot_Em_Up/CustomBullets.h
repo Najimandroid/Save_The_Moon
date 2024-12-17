@@ -30,6 +30,7 @@ public:
 class HomingBulletBoss : public Bullet
 {
 private:
+	bool deactivated;
 	Entity* target;
 public:
 	HomingBulletBoss(sf::Vector2f position_, Entity* target_, sf::Vector2f textureCoords_);

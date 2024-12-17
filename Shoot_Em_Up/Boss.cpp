@@ -48,6 +48,7 @@ void Boss::updateShoot(float deltaTime)
 		if (!this->active) return; //returns if not active
 
 		//reset cooldown
+		if (this->health <= 7500 / 2.f && !onRageMode) { shootCooldownMax /= 2.f; onRageMode = true; }
 		this->shootCooldown = 0.f;
 
 		std::function<void(Enemy*)> attack = attacks[rand() % attacks.size()];

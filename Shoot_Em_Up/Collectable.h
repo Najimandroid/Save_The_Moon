@@ -7,6 +7,11 @@
 #include <functional>
 #include <iostream>
 
+enum CollectableType
+{
+	COIN, HEART
+};
+
 class Collectable
 {
 private:
@@ -59,7 +64,7 @@ public:
 	bool loadTexture();
 	void setSprites();
 
-	Collectable* spawnCollectable(sf::Vector2f position_);
+	Collectable* spawnCollectable(sf::Vector2f position_, CollectableType type_);
 
 	void drawCollectables(sf::RenderWindow& window);
 

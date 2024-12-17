@@ -1,5 +1,6 @@
 #include "Wall.h"
 #include "Enemy.h"
+#include "Collectable.h"
 #include "Level.h"
 #include "Background.h"
 
@@ -34,6 +35,7 @@ bool LevelManager::loadLevel(int levelIndex)
 
 	WallManager* wallManager = WallManager::getInstance();
 	EnemyManager* enemyManager = EnemyManager::getInstance();
+	CollectableManager* collectableManager = CollectableManager::getInstance();
 
 	for (int x = 0; x < this->levelImage.getSize().x; x++)
 	{
@@ -52,6 +54,8 @@ bool LevelManager::loadLevel(int levelIndex)
 			case 0x3a2d2dFF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 2, (float)levelIndex -1}); break; //down grid
 			case 0x522a2aFF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 3, (float)levelIndex -1}); break; //left grid
 			case 0x561717FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 4, (float)levelIndex -1}); break; //right grid
+
+			case 0xFFFF00FF: collectableManager->spawnCollectable(SPAWN_POSITION, CollectableType::COIN); break; //coin
 
 			case 0x59fb80FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::DEFAULT); break; //default
 			case 0xd759fbFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SNIPER); break; //sniper

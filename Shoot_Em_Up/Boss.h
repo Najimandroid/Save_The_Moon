@@ -23,6 +23,7 @@ class Boss : public Enemy
 private:
 	float x = 0.f;
 	bool healthBarSpawned = false;
+	bool onRageMode = false;
 
 	std::vector<std::function<void(Enemy*)>> attacks = { Attack_1 , Attack_2, Attack_3 };
 

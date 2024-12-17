@@ -54,12 +54,18 @@ void Collectable::updatePosition(float deltaTime)
 }
 
 
-Collectable* CollectableManager::spawnCollectable(sf::Vector2f position)
+Collectable* CollectableManager::spawnCollectable(sf::Vector2f position, CollectableType type)
 {
-	Collectable* newCollect = new Collectable(position, []()
-		{
-			std::cout << "Collected!\n";
-		});
+
+	Collectable* newCollect = nullptr;
+
+	switch (type)
+	{
+	case COIN: newCollect = new Collectable(position, []() { std::cout << "Coin collected!\n"; }); break;
+	case HEART: newCollect = new Collectable(position, []() { std::cout << "+20 HP!\n"; }); break;
+	}
+
+	if (newCollect == nullptr) return spawnCollectable(position, CollectableType::COIN);
 
 	this->collectables.push_back(newCollect);
 	setSprites();
