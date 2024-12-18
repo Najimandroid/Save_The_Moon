@@ -28,6 +28,8 @@ void Player::initHit(float hitCooldown_)
 
 void Player::updatePosition(float deltaTime)
 {
+    std::cout << this->score << '\n';
+
     LevelManager* levelManager = LevelManager::getInstance();
     WallManager* wallManager = WallManager::getInstance();
 

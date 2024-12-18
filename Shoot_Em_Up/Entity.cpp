@@ -93,6 +93,7 @@ void Entity::draw(sf::RenderWindow& window, sf::Texture texture, sf::Vector2f te
 	if (this->getPosition().x >= WindowConfig::getInstance()->SIZE_X + WindowConfig::getInstance()->SIZE_X / 10) { return; }
 	
 	this->sprite->setPosition(this->getPosition());
+	this->sprite->setRotation(this->hitbox.getRotation());
 
 	window.draw(*this->sprite);
 }

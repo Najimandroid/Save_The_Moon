@@ -33,6 +33,9 @@ private:
 public:
 	Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_);
 
+	float getScore() { return score; }
+	void updateScore(float addedScore) { score += addedScore; }
+
 	void initHit(float hitCooldown_);
 
 	bool isOnHitCooldown() { return (hit && (this->hitCooldown < this->hitCooldownMax)); } 

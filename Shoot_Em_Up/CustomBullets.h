@@ -12,6 +12,7 @@
 class HomingBullet : public Bullet
 {
 private:
+	bool deactivated;
 	Entity* target;
 public:
 	HomingBullet(sf::Vector2f position_, Entity* target_, sf::Vector2f textureCoords_);

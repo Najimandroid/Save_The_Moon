@@ -60,6 +60,9 @@ bool LevelManager::loadLevel(int levelIndex)
 			case 0x59fb80FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::DEFAULT); break; //default
 			case 0xd759fbFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SNIPER); break; //sniper
 			case 0xdbde1aFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::MOUTH); break; //mouth
+			case 0x5f75ffFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::WHEEL); break; //wheel
+			case 0xfb6a6aFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::WAVE); break; //wave
+			case 0xfbbb1eFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::HOMING); break; //homing
 
 			case 0xff905fFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::BOSS_1); break; //giga mouth
 

@@ -6,33 +6,34 @@ HomingBullet::HomingBullet(sf::Vector2f position_, Entity* target_, sf::Vector2f
 {
 	position = position_;
 
-	sf::RectangleShape hitbox_(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y / 108, WindowConfig::getInstance()->SIZE_Y / 108));
+	sf::RectangleShape hitbox_(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y / 76, WindowConfig::getInstance()->SIZE_Y / 76));
 	hitbox = hitbox_;
-	hitbox.setOrigin(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y / 108 / 2.f, WindowConfig::getInstance()->SIZE_Y / 108 / 2.f));
+	hitbox.setOrigin(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y / 76 / 2.f, WindowConfig::getInstance()->SIZE_Y / 76 / 2.f));
 	hitbox.setPosition(position);
 
-	this->setDamage(10);
-	speed = 60;
+	this->setDamage(30);
+	speed = 20;
 
-	lifeTimeMax = 5;
+	lifeTimeMax = 30;
 
 	target = target_;
 
 	owner = nullptr;
 	color = sf::Color::Green;
 
-	textureCoords = textureCoords_;
+	textureCoords = { 3, 1 };
+	deactivated = false;
 }
 
 void HomingBullet::updatePosition(float deltaTime)
 {
-	if (this->position.x < this->target->getPosition().x) {
+	if (this->position.x < this->target->getPosition().x || deactivated) {
 		direction = { -1, 0 };
 
-		this->setVelocity({ -LevelManager::getInstance()->SCROLLING_SPEED * deltaTime, 0 });
+		this->setVelocity({ -LevelManager::getInstance()->SCROLLING_SPEED * deltaTime * this->speed/8, 0 });
 		this->setPosition(this->getPosition() + this->getVelocity());
 	}
-	else
+	else if(!deactivated)
 	{
 		direction = {
 		normalize(
@@ -110,6 +111,7 @@ void HomingBulletBoss::updatePosition(float deltaTime)
 {
 
 	if (this->position.x < this->target->getPosition().x || deactivated) {
+		deactivated = true;
 		direction = { -1, 0 };
 
 		//this->setVelocity({ -LevelManager::getInstance()->SCROLLING_SPEED * deltaTime, 0 });

@@ -105,9 +105,9 @@ Homing::Homing(sf::Vector2f position_, Entity* target_)
 	color = sf::Color::Magenta;
 
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
-	initProperties(50, 25, 1.75f, true, 3.f);
+	initProperties(50, 25, 1.2f, true, 3.f);
 
-	textureCoords = { 2, 1 };
+	textureCoords = { 2, 2 };
 }
 
 void Homing::updateShoot(float deltaTime)
@@ -262,6 +262,8 @@ Wave::Wave(sf::Vector2f position_)
 
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 	initProperties(100, 25, 2.f, true, 1.f);
+
+	textureCoords = { 1, 2 };
 }
 
 void Wave::updatePosition(float deltaTime)
@@ -279,6 +281,24 @@ void Wave::updatePosition(float deltaTime)
 	this->hitbox.setPosition(this->position);
 }
 
+void Wave::updateShoot(float deltaTime)
+{
+	if (!this->isOnCooldown() && this->canShoot)
+	{
+		if (!this->active) return; //returns if not active
+
+		//reset cooldown
+		this->shootCooldown = 0.f;
+
+		BulletManager* bulletManager = BulletManager::getInstance();
+		bulletManager->spawnBullet(this, { this->position }, { -1, 0 }, 2 * this->speed * 1920 / WindowConfig::getInstance()->SIZE_X, { 1, 2 });
+	}
+	else
+	{
+		this->shootCooldown += deltaTime;
+	}
+}
+
 //* WHEEL *\\
 
 Wheel::Wheel(sf::Vector2f position_)
@@ -286,6 +306,7 @@ Wheel::Wheel(sf::Vector2f position_)
 	position = position_;
 	color = sf::Color::Yellow;
 	count = 0;
+	textureCoords = { 0, 2 };
 
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 	initProperties(75, 10, 1.f, true, .5f);
@@ -304,17 +325,17 @@ void Wheel::updateShoot(float deltaTime)
 
 		if (count % 2 == 0)
 		{
-			bulletManager->spawnBullet(this, { this->position }, normalize({ -1, 0 }), 2 * this->speed);
-			bulletManager->spawnBullet(this, { this->position }, normalize({ 1, 0 }), 2 * this->speed);
-			bulletManager->spawnBullet(this, { this->position }, normalize({ 0, 1 }), 2 * this->speed);
-			bulletManager->spawnBullet(this, { this->position }, normalize({ 0, -1 }), 2 * this->speed);
+			bulletManager->spawnBullet(this, { this->position }, normalize({ -1, 0 }), 2 * this->speed, { 0, 2 });
+			bulletManager->spawnBullet(this, { this->position }, normalize({ 1, 0 }), 2 * this->speed, { 0, 2 });
+			bulletManager->spawnBullet(this, { this->position }, normalize({ 0, 1 }), 2 * this->speed, { 0, 2 });
+			bulletManager->spawnBullet(this, { this->position }, normalize({ 0, -1 }), 2 * this->speed, { 0, 2 });
 		}
 		else
 		{
-			bulletManager->spawnBullet(this, { this->position }, normalize({ -1, 1 }), 2 * this->speed);
-			bulletManager->spawnBullet(this, { this->position }, normalize({ 1, -1 }), 2 * this->speed);
-			bulletManager->spawnBullet(this, { this->position }, normalize({ -1, -1 }), 2 * this->speed);
-			bulletManager->spawnBullet(this, { this->position }, normalize({ 1, 1 }), 2 * this->speed);
+			bulletManager->spawnBullet(this, { this->position }, normalize({ -1, 1 }), 2 * this->speed, { 0, 2 });
+			bulletManager->spawnBullet(this, { this->position }, normalize({ 1, -1 }), 2 * this->speed, { 0, 2 });
+			bulletManager->spawnBullet(this, { this->position }, normalize({ -1, -1 }), 2 * this->speed, { 0, 2 });
+			bulletManager->spawnBullet(this, { this->position }, normalize({ 1, 1 }), 2 * this->speed, { 0, 2 });
 		}
 
 		count++;
@@ -324,7 +345,7 @@ void Wheel::updateShoot(float deltaTime)
 		this->shootCooldown += deltaTime;
 	}
 
-	this->hitbox.rotate(1);
+	this->hitbox.rotate(2);
 }
 
 //* SWARM *\\

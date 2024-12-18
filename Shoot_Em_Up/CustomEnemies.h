@@ -79,6 +79,7 @@ public:
 	Wave(sf::Vector2f position_);
 
 	void updatePosition(float deltaTime) override;
+	void updateShoot(float deltaTime) override;
 };
 
 class Wheel : public Enemy
