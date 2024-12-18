@@ -43,7 +43,7 @@ void HealthBarManager::drawBars(sf::RenderWindow& window)
 	float offset = 0;
 	for (HealthBar* bar : this->bars)
 	{
-		if (bar->getEntity() == nullptr) { continue; }
+		if (bar->getEntity() == nullptr || bar->getRemaingingHealth() <= 0) { continue; }
 
 		sf::RectangleShape background_(sf::Vector2f(WindowConfig::getInstance()->SIZE_X/5, WindowConfig::getInstance()->SIZE_Y/16));
 		background_.setFillColor(sf::Color::Red);
