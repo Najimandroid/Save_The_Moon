@@ -66,6 +66,7 @@ public:
 		initHitbox({ WindowConfig::getInstance()->SIZE_Y / 4.5f, WindowConfig::getInstance()->SIZE_Y / 4.5f });
 		initProperties(5000, 10, 1.5f, true, 5.f);
 
+		points = 400;
 		textureCoords = { 4, 1 };
 	}
 

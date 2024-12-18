@@ -132,6 +132,7 @@ Entity::Entity(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, 
 	this->initProperties(health_, damage_, speed_, canShoot_, cooldownSeconds_);
 
 	this->textureCoords = textureCoords_;
+	this->points = 0;
 }
 
 Entity::Entity()
@@ -141,6 +142,7 @@ Entity::Entity()
 	this->initProperties(0, 0, 0, false, 0);
 	this->color = sf::Color::White;
 	this->textureCoords = { 0, 0 };
+	this->points = 0;
 }
 
 Entity::~Entity() 

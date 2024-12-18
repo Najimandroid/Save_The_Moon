@@ -10,6 +10,8 @@ Boss::Boss(sf::Vector2f position_)
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 2.5f, WindowConfig::getInstance()->SIZE_Y / 2.5f });
 	initProperties(7500, 15, 1.5f, true, 4.f);
 
+	points = 1000;
+
 	textureCoords = { 0, 0 };
 }
 

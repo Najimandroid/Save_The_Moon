@@ -23,6 +23,8 @@ Mouth::Mouth(sf::Vector2f position_)
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 14.f, WindowConfig::getInstance()->SIZE_Y / 14.f });
 	initProperties(100, 20, 2.f, false, 0.f);
 
+	points = 50;
+
 	textureCoords = { 3, 1 };
 }
 
@@ -35,6 +37,8 @@ GigaMouth::GigaMouth(sf::Vector2f position_)
 
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 9.f, WindowConfig::getInstance()->SIZE_Y / 9.f });
 	initProperties(500, 100, 1.1f, false, 0.f);
+
+	points = 150;
 
 	textureCoords = { 4, 1 };
 }
@@ -49,6 +53,8 @@ Spike::Spike(sf::Vector2f position_)
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 	initProperties(150, 35, 1.f, false, 0.f);
 
+	points = 20;
+
 	textureCoords = { 1, 1 };
 }
 
@@ -61,6 +67,8 @@ Sniper::Sniper(sf::Vector2f position_)
 
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 	initProperties(50, 25, 1.75f, true, 3.f);
+
+	points = 60;
 
 	textureCoords = { 2, 1 };
 }
@@ -107,6 +115,8 @@ Homing::Homing(sf::Vector2f position_, Entity* target_)
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 	initProperties(50, 25, 1.2f, true, 3.f);
 
+	points = 80;
+
 	textureCoords = { 2, 2 };
 }
 
@@ -142,6 +152,8 @@ TurretUp::TurretUp(sf::Vector2f position_)
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 	initProperties(250, 10, 1.f, true, 1.f);
 
+	points = 40;
+
 	textureCoords = { 1, 0 };
 }
 
@@ -172,6 +184,7 @@ TurretDown::TurretDown(sf::Vector2f position_)
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 	initProperties(250, 10, 1.f, true, 1.f);
 
+	points = 40;
 	textureCoords = { 2, 0 };
 }
 
@@ -202,6 +215,7 @@ TurretRight::TurretRight(sf::Vector2f position_)
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 	initProperties(250, 10, 1.f, true, 1.f);
 
+	points = 40;
 	textureCoords = { 3, 0 };
 }
 
@@ -232,6 +246,7 @@ TurretLeft::TurretLeft(sf::Vector2f position_)
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 	initProperties(250, 10, 1.f, true, 1.f);
 
+	points = 40;
 	textureCoords = { 4, 0 };
 }
 
@@ -263,6 +278,7 @@ Wave::Wave(sf::Vector2f position_)
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 	initProperties(100, 25, 2.f, true, 1.f);
 
+	points = 60;
 	textureCoords = { 1, 2 };
 }
 
@@ -307,6 +323,8 @@ Wheel::Wheel(sf::Vector2f position_)
 	color = sf::Color::Yellow;
 	count = 0;
 	textureCoords = { 0, 2 };
+
+	points = 100;
 
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f });
 	initProperties(75, 10, 1.f, true, .5f);
@@ -354,6 +372,8 @@ Swarm::Swarm(sf::Vector2f position_)
 {
 	position = position_;
 	color = sf::Color::Cyan;
+
+	points = 20;
 
 	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 9.f, WindowConfig::getInstance()->SIZE_Y / 9.f });
 	initProperties(10, 0, 6.f, false, 0.f);

@@ -67,7 +67,7 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 
 	switch (enemyType)
 	{
-		case DEFAULT: newEnemy = new Enemy(position_, { 50, 50 }, 50, 25, 1.5f, true, 2.f, {0, 1});  break;
+		case DEFAULT: newEnemy = new Enemy(position_, { 50, 50 }, 50, 25, 1.5f, true, 2.f, { 0, 1 }); newEnemy->setPoints(30);  break;
 		case TANK: newEnemy = new Tank(position_);  break;
 		case SWARM: newEnemy = new Swarm(position_);  break;
 		case WAVE: newEnemy = new Wave(position_); break;

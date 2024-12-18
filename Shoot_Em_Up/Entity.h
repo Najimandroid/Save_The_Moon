@@ -13,6 +13,8 @@ protected:
 	float health;
 	float maxHealth;
 
+	float points; //+score when killed
+
 	float damage;
 
 	float speed;
@@ -52,6 +54,7 @@ public:
 	float getHealth() const { return health; }
 	float getSpeed() const { return speed; }
 	float getDamage() const { return damage; }
+	float getPoints() const { return points; }
 	bool getActive() const { return active; }
 	Entity*& getTarget() { if(target) return target; }
 	sf::Sprite* getSprite() { if (sprite) { return sprite; } return nullptr; }
@@ -61,6 +64,7 @@ public:
 	void setPosition(sf::Vector2f newPosition) { position = newPosition; }
 	void setActive(bool newState) { active = newState; }
 	void setSprite(sf::Sprite* newSprite) { sprite = newSprite; }
+	void setPoints(float newPoints) { points = newPoints; }
 
 	//* INIT *\\
 
