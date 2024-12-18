@@ -11,6 +11,8 @@ protected:
 	//* PROPERTIES *\\
 
 	float health;
+	float maxHealth;
+
 	float damage;
 
 	float speed;

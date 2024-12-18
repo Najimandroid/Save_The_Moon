@@ -45,7 +45,7 @@ int main()
     Player* player = new Player({ 100, windowConfigs->SIZE_Y / 2.f }, { WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f }, 150, 20, 3.f, true, .1f);
 
     float spawnCooldown = 0.f;
-    levelManager->loadLevel(1);
+    levelManager->loadLevel(2);
 
     //creation d'une horloge
     sf::Clock clock;

@@ -62,7 +62,7 @@ void BulletManager::checkCollisions(Entity* entity)
 			Player* player = dynamic_cast<Player*>(entity);
 			if (player) {
 				if (player->isOnHitCooldown()) return;
-				std::cout << "-" << bullet->getDamage() << "HP\n";
+				//std::cout << "-" << bullet->getDamage() << "HP\n";
 			}
 
 			entity->updateHealth(-(bullet->getDamage())); // -x hp

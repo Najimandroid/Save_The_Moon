@@ -28,7 +28,7 @@ void Player::initHit(float hitCooldown_)
 
 void Player::updatePosition(float deltaTime)
 {
-    std::cout << this->score << '\n';
+    //std::cout << this->score << '\n';
 
     LevelManager* levelManager = LevelManager::getInstance();
     WallManager* wallManager = WallManager::getInstance();
@@ -167,7 +167,14 @@ void Player::updateHealth(float value)
         this->hit = true;
     }
 
-    this->health += value;
+    if (this->health + value >= this->maxHealth)
+    {
+        this->health += this->maxHealth - this->health;
+    }
+    else
+    {
+        this->health += value;
+    }
 }
 
 void Player::updateState(float deltaTime)

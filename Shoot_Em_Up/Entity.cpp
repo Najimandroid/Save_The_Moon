@@ -31,7 +31,15 @@ bool Entity::isPlayer()
 void Entity::updateHealth(float value)
 {
 	if (!this->active) return; // doesn't update health if the entity is inactive
-	this->health += value;
+
+	if (this->health + value >= this->maxHealth)
+	{
+		this->health += this->maxHealth - this->health;
+	}
+	else
+	{
+		this->health += value;
+	}
 }
 
 void Entity::updatePosition(float deltaTime)
@@ -112,7 +120,7 @@ void Entity::initHitbox(sf::Vector2f hitboxSize_)
 
 void Entity::initProperties(float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
 {
-	this->health = health_; this->damage = damage_; this->speed = speed_ * WindowConfig::getInstance()->SIZE_X / WindowConfig::getInstance()->SIZE_X ; this->canShoot = canShoot_, this->shootCooldownMax = cooldownSeconds_; this->active = false;
+	this->maxHealth = health_; this->health = health_; this->damage = damage_; this->speed = speed_ * WindowConfig::getInstance()->SIZE_X / WindowConfig::getInstance()->SIZE_X; this->canShoot = canShoot_, this->shootCooldownMax = cooldownSeconds_; this->active = false;
 }
 
 //* CONSTRUCTOR *\\

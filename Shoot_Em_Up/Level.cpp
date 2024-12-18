@@ -56,6 +56,7 @@ bool LevelManager::loadLevel(int levelIndex)
 			case 0x561717FF: wallManager->spawnWall(SPAWN_POSITION, { TILE_SIZE , TILE_SIZE })->setTextureCoords({ 4, (float)levelIndex -1}); break; //right grid
 
 			case 0xFFFF00FF: collectableManager->spawnCollectable(SPAWN_POSITION, CollectableType::COIN); break; //coin
+			case 0xFF0000FF: collectableManager->spawnCollectable(SPAWN_POSITION, CollectableType::HEART); break; //heart
 
 			case 0x59fb80FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::DEFAULT); break; //default
 			case 0xd759fbFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SNIPER); break; //sniper

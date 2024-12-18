@@ -21,23 +21,27 @@ private:
 	sf::RectangleShape hitbox;
 	sf::Sprite* sprite;
 
-	Entity* target;
+	Player* target;
+
+	CollectableType type;
 
 	std::function<void()> effect;
 public:
 	Collectable();
-	Collectable(sf::Vector2f position_, void(*effect_)());
+	Collectable(sf::Vector2f position_, sf::Vector2f textureCoords_, CollectableType type_);
 	~Collectable();
 
 	sf::Sprite* getSprite() { if (sprite) { return sprite; } return nullptr; }
 	sf::Vector2f getTextureCoords() { return textureCoords; }
 	sf::RectangleShape& getHitbox() { return hitbox; }
 	sf::Vector2f getPosition() { return position; }
-	Entity* getTarget() { return target; }
+	Player* getTarget() { return target; }
 
+	void setEffect(std::function<void()> effect_) { effect = effect_; }
+	void setTarget(Player* target_) { target = target_; }
 	void setSprite(sf::Sprite* newSprite) { sprite = newSprite; }
 
-	bool collided(Entity* entity);
+	bool collided(Player* entity);
 	void collected();
 	void updatePosition(float deltaTime);
 };
@@ -70,5 +74,5 @@ public:
 
 	void updatePositions(float deltaTime);
 
-	void checkCollisions(Entity* entity);
+	void checkCollisions(Player* entity);
 };

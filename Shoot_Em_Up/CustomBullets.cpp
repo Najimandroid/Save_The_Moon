@@ -64,7 +64,7 @@ DefaultBoss::DefaultBoss(sf::Vector2f position_, sf::Vector2f direction_)
 	hitbox.setOrigin(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y / 17 / 2.f, WindowConfig::getInstance()->SIZE_Y / 17 / 2.f));
 	hitbox.setPosition(position);
 
-	std::cout << this->hitbox.getPosition().x << ", " << this->hitbox.getPosition().y << std::endl;
+	//std::cout << this->hitbox.getPosition().x << ", " << this->hitbox.getPosition().y << std::endl;
 
 	this->setDamage(15);
 	speed = 40;
@@ -90,7 +90,7 @@ HomingBulletBoss::HomingBulletBoss(sf::Vector2f position_, Entity* target_, sf::
 	hitbox.setOrigin(sf::Vector2f(WindowConfig::getInstance()->SIZE_Y / 24 / 2.f, WindowConfig::getInstance()->SIZE_Y / 24 / 2.f));
 	hitbox.setPosition(position);
 
-	std::cout << this->hitbox.getPosition().x << ", " << this->hitbox.getPosition().y << std::endl;
+	//std::cout << this->hitbox.getPosition().x << ", " << this->hitbox.getPosition().y << std::endl;
 
 	this->setDamage(10);
 	speed = 18;

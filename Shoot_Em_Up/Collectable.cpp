@@ -13,19 +13,28 @@ Collectable::Collectable()
 		};
 
 	this->hitbox.setSize({ 0, 0 });
+
+	this->textureCoords = { 0, 0 };
+	this->type = COIN;
 }
 
-Collectable::Collectable(sf::Vector2f position_, void(*effect_)())
+Collectable::Collectable(sf::Vector2f position_, sf::Vector2f textureCoords_, CollectableType type_)
 {
 	this->position = position_;
 	this->sprite = nullptr;
 	this->target = nullptr;
 
-	this->effect = effect_;
+	this->effect = [&]()
+		{
+			std::cout << "Collected!\n";
+		};;
 
 	this->hitbox.setSize({ 25, 25 });
 	this->hitbox.setOrigin({ 25 / 2, 25 / 2 });
 	this->hitbox.setPosition(this->position);
+
+	this->textureCoords = textureCoords_;
+	this->type = type_;
 }
 
 Collectable::~Collectable()
@@ -33,7 +42,7 @@ Collectable::~Collectable()
 	this->setSprite(nullptr);
 }
 
-bool Collectable::collided(Entity* entity)
+bool Collectable::collided(Player* entity)
 {
 	if (!entity->isPlayer()) { return false; } //ignore if not player
 
@@ -44,6 +53,15 @@ bool Collectable::collided(Entity* entity)
 
 void Collectable::collected()
 {
+	switch (this->type)
+	{
+	case COIN: 
+		this->setEffect([&]() { if (this->getTarget()) { std::cout << "Coin collected!\n";  this->getTarget()->updateScore(5); }});
+		break;
+	case HEART:
+		this->setEffect([&]() {if (this->getTarget()) { std::cout << "Heart collected!\n"; if (this->getTarget()) this->getTarget()->updateHealth(20); }});
+		break;
+	}
 	this->effect();
 }
 
@@ -61,8 +79,8 @@ Collectable* CollectableManager::spawnCollectable(sf::Vector2f position, Collect
 
 	switch (type)
 	{
-	case COIN: newCollect = new Collectable(position, []() { std::cout << "Coin collected!\n"; }); break;
-	case HEART: newCollect = new Collectable(position, []() { std::cout << "+20 HP!\n"; }); break;
+	case COIN: newCollect = new Collectable(position, {0, 0}, CollectableType::COIN); break;
+	case HEART: newCollect = new Collectable(position, { 1, 2 }, CollectableType::HEART); break;
 	}
 
 	if (newCollect == nullptr) return spawnCollectable(position, CollectableType::COIN);
@@ -103,8 +121,6 @@ void CollectableManager::setSprites()
 			});
 		//adress->getSprite()->setOrigin({ 30 / 2.f }, { 30 / 2.f });
 
-		std::cout << adress->getTextureCoords().x << ", " << adress->getTextureCoords().y << std::endl;
-
 		sprite->setTextureRect(sf::IntRect(
 			adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 4,
 			adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 4,
@@ -129,7 +145,7 @@ void CollectableManager::drawCollectables(sf::RenderWindow& window)
 	}
 }
 
-void CollectableManager::checkCollisions(Entity* entity)
+void CollectableManager::checkCollisions(Player* entity)
 {
 	unsigned index = 0;
 	for (Collectable* adress : this->collectables)
@@ -138,6 +154,7 @@ void CollectableManager::checkCollisions(Entity* entity)
 
 		if (adress->collided(entity))
 		{
+			adress->setTarget(entity);
 			adress->collected();
 
 			//delete
