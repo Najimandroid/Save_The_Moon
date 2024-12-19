@@ -17,7 +17,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 
-int main()
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -32,6 +31,7 @@ HealthBarManager* HealthBarManager::instance = nullptr;
 WindowConfig* WindowConfig::instance = nullptr;
 PlayerManager* PlayerManager::instance = nullptr;
 CollectableManager* CollectableManager::instance = nullptr;
+Music* Music::instance = nullptr;
 
 BulletManager* bulletManager = BulletManager::getInstance();
 EnemyManager* enemyManager = EnemyManager::getInstance();
@@ -43,27 +43,28 @@ CollectableManager* collectableManager = CollectableManager::getInstance();
 
 int main()
 {
+
+    Game game;
+
     srand(std::chrono::system_clock::now().time_since_epoch().count());
+
     //creation d'une fenetre
-    sf::RenderWindow window(sf::VideoMode(windowConfigs->SIZE_X, windowConfigs->SIZE_Y), "Save The Moon", sf::Style::Fullscreen); //sf::Style::Fullscreen
-    window.setFramerateLimit(144);
-	sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon", sf::Style::Fullscreen);
-    //test
+    sf::RenderWindow window(sf::VideoMode(windowConfigs->SIZE_X, windowConfigs->SIZE_Y), "Save The Moon"); //sf::Style::Fullscreen
+    window.setFramerateLimit(120);
+
     //creation d'un objet joueur
     Player* player = new Player({ 100, windowConfigs->SIZE_Y / 2.f }, { WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f }, 150, 20, 3.f, true, .1f);
-    sf::RectangleShape player(sf::Vector2f(200, 200));
-    float spawnCooldown = 0.f;
-    levelManager->loadLevel(2);
-    player.setFillColor(sf::Color::Red);
+   // levelManager->loadLevel(1);
+
     //creation d'une horloge
     sf::Clock clock;
     float deltaTime;
-    player.setOrigin(sf::Vector2f{ player.getSize().x, player.getSize().y } / 2.f);
+
     bool isPaused = false;
 
     Music* change = Music::getInstance();
     MenuManager* menu = game.createMenu(window);
-    struct LvlAvailable Dispo;
+
     change->SetSound("TitleScreen.wav");
     sf::Event event;
 
