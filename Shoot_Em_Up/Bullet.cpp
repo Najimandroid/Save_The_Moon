@@ -1,5 +1,4 @@
 #include "Bullet.h"
-<<<<<<< HEAD
 #include "CustomBullets.h"
 
 //--------------------//* BULLET *\\--------------------\\
@@ -121,7 +120,7 @@ Bullet* BulletManager::spawnBullet(Entity* owner, sf::Vector2f position, sf::Vec
 
 Bullet* BulletManager::spawnBullet(Entity* owner, sf::Vector2f position, sf::Vector2f direction, float speed, sf::Vector2f textureCoords)
 {
-
+		
 	Bullet* newBullet = new Bullet(20, speed * WindowConfig::getInstance()->SIZE_X / 192, position, direction, textureCoords);
 	this->bullets.push_back(newBullet);
 	newBullet->setOwner(owner);
@@ -161,7 +160,7 @@ bool BulletManager::loadTexture()
 void BulletManager::setSprites()
 {
 	for (Bullet* adress : this->bullets)
-	{
+{
 		if (adress->getSprite() != nullptr) continue;
 
 		sf::Sprite* sprite = new sf::Sprite;
@@ -198,15 +197,15 @@ void BulletManager::drawBullets(sf::RenderWindow& window)
 //* UPDATING *\\
 
 void BulletManager::updatePositions(float deltaTime)
-{
+		{
 	for (Bullet* adress : this->bullets)
-	{
+			{
 		adress->updatetLifeTime(deltaTime);
 		if (adress == nullptr) { continue; }
 
 		adress->updatePosition(deltaTime);
 	}
-}
+			}
 
 void BulletManager::updateOwners(Entity* owner) //Updates null owners
 {
@@ -217,47 +216,6 @@ void BulletManager::updateOwners(Entity* owner) //Updates null owners
 		if (adress->getOwner() == owner)
 		{
 			adress->setNullOwner();
-=======
-#include "Player.h"
-#include  <SFML/Graphics.hpp>
-#include <iostream>
-
-
-Bullet* BulletManager::spawnbullet(sf::Vector2f position)
-{
-		
-	Bullet* newBullet = new Bullet(1, 50, { 0,0 }, position + sf::Vector2f{ 50, 0 });
-	/*std::cout << "Balle créé";*/ 
-	this->balles.push_back(newBullet);
-	return newBullet;
-
-
-}
-
-void BulletManager::movebullet(float deltaTime, Bullet*bullet)
-{
-	bullet->setVelocity(sf::Vector2f{ 20 * deltaTime * bullet->getSpeed() , 0 });
-	bullet->setPosition(bullet->getPosition() + bullet->getVelocity());
-}
-
-void BulletManager::colisionbullet()
-{
-
-}
-
-void BulletManager::despawnbullet()
-{
-	for (Bullet* bullett : balles)
-	{
-		if (bullett->getPosition().x > 1900)
-		{
-			auto it = std::find(balles.begin(), balles.end(), bullett);
-			if (it != balles.end())
-			{
-				balles.erase(it);
-				delete bullett;
-			}
->>>>>>> Bullet
 		}
 	}
 }
