@@ -16,7 +16,7 @@ int main()
 {
 
     // Creation of the window
-    sf::RenderWindow window(sf::VideoMode(WindowConfig::getInstance()->SIZE_X, WindowConfig::getInstance()->SIZE_Y), "Save The Moon"); //sf::Style::Fullscreen
+    sf::RenderWindow window(sf::VideoMode(WindowConfig::getInstance()->SIZE_X, WindowConfig::getInstance()->SIZE_Y), "Save The Moon", sf::Style::Fullscreen); //sf::Style::Fullscreen
     window.setFramerateLimit(120);
 
     Game game;

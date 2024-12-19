@@ -27,6 +27,9 @@ private:
 	bool gameStarted;
 	int currentLevel;
 
+	sf::Font* font;
+	sf::Text* scoreText;
+
 	bool isPaused;
 
 	float deltaTime;

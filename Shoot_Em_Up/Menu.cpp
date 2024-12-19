@@ -32,7 +32,7 @@ Button::~Button() {};
 
 MenuManager::MenuManager()
 {
-	smallButtons = { BACK, MUTE, DEMUTE, VOLUMEUP, VOLUMEDOWN };
+	smallButtons = { BACK, MUTE, DEMUTE, VOLUMEUP, VOLUMEDOWN, LVL1,LVL2,LVL3,LVL4,LVL5,LVL6 };
 	readyForLevel = 0;
 	background = new sf::Sprite;
 	//background->setPosition({ WindowConfig::getInstance()->SIZE_X / 2.f, WindowConfig::getInstance()->SIZE_Y / 2.f });
@@ -49,9 +49,9 @@ void MenuManager::openMenu()
 
 	addBackground(menuTexture);
 
-	this->buttons.push_back(new Button(sf::Vector2f{ 1920 / 2,375 }, PLAY, sf::Color::Blue, sf::RectangleShape(sf::Vector2f(250, 75))));
-	this->buttons.push_back(new Button(sf::Vector2f{ 1920 / 2,475 }, SETTINGS, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(250, 75))));
-	this->buttons.push_back(new Button(sf::Vector2f{ 1920 / 2,575 }, QUIT, sf::Color::Yellow, sf::RectangleShape(sf::Vector2f(250, 75))));
+	this->buttons.push_back(new Button(sf::Vector2f{ 1920 / 2,410 }, PLAY, sf::Color::Blue, sf::RectangleShape(sf::Vector2f(250, 75)), {0, 2}));
+	this->buttons.push_back(new Button(sf::Vector2f{ 1920 / 2,515 }, SETTINGS, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(250, 75)), { 0, 0 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 1920 / 2,620 }, QUIT, sf::Color::Yellow, sf::RectangleShape(sf::Vector2f(250, 75)), { 0, 1 }));
 
 	setSprites();
 }
@@ -83,13 +83,13 @@ void MenuManager::openLvlSelect()
 
 	addBackground(levelsSelectTexture);
 
-	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::White, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 2 }));
-	this->buttons.push_back(new Button(sf::Vector2f{ 300,400 }, LVL1, sf::Color::White, sf::RectangleShape(sf::Vector2f(80, 80))));
-	this->buttons.push_back(new Button(sf::Vector2f{ 600,100 }, LVL2, sf::Color::Red, sf::RectangleShape(sf::Vector2f(80, 80))));
-	this->buttons.push_back(new Button(sf::Vector2f{ 750,600 }, LVL3, sf::Color::Blue, sf::RectangleShape(sf::Vector2f(80, 80))));
-	this->buttons.push_back(new Button(sf::Vector2f{ 1050,350 }, LVL4, sf::Color::Green, sf::RectangleShape(sf::Vector2f(80, 80))));
-	this->buttons.push_back(new Button(sf::Vector2f{ 1300,800 }, LVL5, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(80, 80))));
-	this->buttons.push_back(new Button(sf::Vector2f{ 1700,500 }, LVL6, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(80, 80))));
+	this->buttons.push_back(new Button(sf::Vector2f{ 330, 654 }, LVL1, sf::Color::White, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 669, 376 }, LVL2, sf::Color::White, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 962, 646 }, LVL3, sf::Color::Red, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 1242, 107 }, LVL4, sf::Color::Blue, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 1530, 413 }, LVL5, sf::Color::Green, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 1802, 847 }, LVL6, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 2 }));
 
 	setSprites();
 }
@@ -149,6 +149,7 @@ void MenuManager::activateButton(ButtonId id)
 	case VOLUMEDOWN: Music::getInstance()->DOWNVolume(); break;
 
 	case LVL1: readyForLevel = 1; break;
+	case LVL2: readyForLevel = 1; break;
 	}
 }
 
@@ -168,6 +169,8 @@ ButtonId MenuManager::isMouseOnButton(sf::Vector2i mousePosition)
 bool MenuManager::loadTexture()
 {
 	if (!this->smallButtonsTexture.loadFromFile("assets/textures/SmallButtons.png")) return false;
+	if(!this->bigButtonsTexture.loadFromFile("assets/textures/Buttons.png")) return false;
+
 	if (!this->menuTexture.loadFromFile("assets/textures/MenuBackground.png")) return false;
 	if (!this->optionsTexture.loadFromFile("assets/textures/OptionsBackground.png")) return false;
 	if (!this->levelsSelectTexture.loadFromFile("assets/textures/SpaceBackground.png")) return false;
@@ -182,28 +185,48 @@ void MenuManager::setSprites()
 		if (adress->getSprite() != nullptr) continue;
 
 		sf::Sprite* sprite = nullptr;
+		bool isSmall = false;
 
 		for (ButtonId id : this->smallButtons)
 		{
 			if (adress->getId() == id)
 			{
+				isSmall = true;
 				sprite = new sf::Sprite;
 				sprite->setTexture(this->smallButtonsTexture);
+
+				sprite->setScale({ smallButtonsTexture.getSize().x / adress->getHitbox().getSize().x / 2.5f, smallButtonsTexture.getSize().y / adress->getHitbox().getSize().y / 2.5f });
+				sprite->setOrigin({
+					adress->getHitbox().getOrigin().x / sprite->getScale().x,
+					adress->getHitbox().getOrigin().y / sprite->getScale().y
+					});
+
+				sprite->setTextureRect(sf::IntRect(
+					adress->getTextureCoords().x * 25,
+					adress->getTextureCoords().y * 30,
+					25,
+					30));
+
+				adress->setSprite(sprite);
 			}
 		}
-		if (sprite == nullptr) continue;
 
-		sprite->setScale({ smallButtonsTexture.getSize().x / adress->getHitbox().getSize().x / 2.5f, smallButtonsTexture.getSize().y / adress->getHitbox().getSize().y / 2.5f });
+		if (isSmall) continue;
+
+		sprite = new sf::Sprite;
+		sprite->setTexture(this->bigButtonsTexture);
+
+		sprite->setScale({ bigButtonsTexture.getSize().x / .2f / adress->getHitbox().getSize().x, bigButtonsTexture.getSize().y / .42f / adress->getHitbox().getSize().y });
 		sprite->setOrigin({
-			adress->getHitbox().getOrigin().y / sprite->getScale().y,
+			adress->getHitbox().getOrigin().x / sprite->getScale().x,
 			adress->getHitbox().getOrigin().y / sprite->getScale().y
 			});
 
 		sprite->setTextureRect(sf::IntRect(
-			adress->getTextureCoords().x * 25,
-			adress->getTextureCoords().y * 30,
-			25,
-			30));
+			adress->getTextureCoords().x * 98,
+			adress->getTextureCoords().y * 32,
+			98,
+			32));
 
 		adress->setSprite(sprite);
 	}

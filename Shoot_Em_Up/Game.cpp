@@ -15,6 +15,22 @@ Game::Game()
     deltaTime = 0.f;
     isPaused = false;
     currentLevel = 0;
+
+    font = new sf::Font;
+    if (!font->loadFromFile("assets/fonts/upheavtt.ttf"))
+    {
+        std::cout << "Font not found!\n";
+    }
+   
+    scoreText = new sf::Text;
+    scoreText->setFont(*font);
+    scoreText->setCharacterSize(60);
+    scoreText->setFillColor(sf::Color(172, 247, 235));
+    scoreText->setOutlineThickness(2.f);
+    scoreText->setOutlineColor(sf::Color::Black);
+
+    sf::FloatRect bounds = scoreText->getLocalBounds();
+    scoreText->setOrigin(bounds.left + bounds.width / 2, bounds.top + bounds.height / 2);
 }
 
 void Game::initSeed()
@@ -57,6 +73,9 @@ void Game::checkGameCollisions()
 
 void Game::updateGameObjects(float deltaTime_)
 {
+    scoreText->setPosition({ windowConfigs->SIZE_X - scoreText->getLocalBounds().width /2.f - 200, windowConfigs->SIZE_Y - scoreText->getLocalBounds().height / 2 - 60 });
+    scoreText->setString("[SCORE]: " + std::to_string(static_cast<int>(PlayerManager::getInstance()->getPlayers()[0]->getScore())));
+
     wallManager->updatePositions(deltaTime_);
     collectableManager->updatePositions(deltaTime_);
     enemyManager->update(deltaTime_);
@@ -84,6 +103,8 @@ void Game::drawGameObjects(sf::RenderWindow& window)
     enemyManager->drawEnemies(window);
     bulletManager->drawBullets(window);
     healthBarManager->drawBars(window);
+
+    window.draw(*scoreText);
 }
 
 void Game::Gameloop(sf::RenderWindow& window, MenuManager* menuManager)
@@ -94,6 +115,7 @@ void Game::Gameloop(sf::RenderWindow& window, MenuManager* menuManager)
        
         window.clear();
         sf::Vector2i mouse = sf::Mouse::getPosition(window);
+        //std::cout << mouse.x << ", " << mouse.y << std::endl;
 
         while (window.pollEvent(this->event))
         {
@@ -125,6 +147,7 @@ void Game::Gameloop(sf::RenderWindow& window, MenuManager* menuManager)
 
         if (!gameStarted)
         {
+            scoreText->setString(' ');
             menuManager->drawButtons(window);
             if (menuManager->readyForLevel != 0)
             {
