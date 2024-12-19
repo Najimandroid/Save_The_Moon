@@ -2,14 +2,22 @@
 #include "Bullet.h"
 #include "CustomBullets.h"
 #include "Player.h"
+#include "Bullet.h"
+#include "Music.h"
+#include "Menu.h"
+#include "Game.h"
+#include <iostream>
 #include "HealthBar.h"
 #include "Player.h"
 #include "Level.h"
 #include "Enemy.h"
 #include "Collectable.h"
 
+#include <vector>   
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 
+int main()
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -39,28 +47,34 @@ int main()
     //creation d'une fenetre
     sf::RenderWindow window(sf::VideoMode(windowConfigs->SIZE_X, windowConfigs->SIZE_Y), "Save The Moon", sf::Style::Fullscreen); //sf::Style::Fullscreen
     window.setFramerateLimit(144);
-
+	sf::RenderWindow window(sf::VideoMode(1900, 1080), "Save The Moon", sf::Style::Fullscreen);
     //test
     //creation d'un objet joueur
     Player* player = new Player({ 100, windowConfigs->SIZE_Y / 2.f }, { WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f }, 150, 20, 3.f, true, .1f);
-
+    sf::RectangleShape player(sf::Vector2f(200, 200));
     float spawnCooldown = 0.f;
     levelManager->loadLevel(2);
-
+    player.setFillColor(sf::Color::Red);
     //creation d'une horloge
     sf::Clock clock;
     float deltaTime;
-
+    player.setOrigin(sf::Vector2f{ player.getSize().x, player.getSize().y } / 2.f);
     bool isPaused = false;
+
+    Music* change = Music::getInstance();
+    MenuManager* menu = game.createMenu(window);
+    struct LvlAvailable Dispo;
+    change->SetSound("TitleScreen.wav");
+    sf::Event event;
 
     while (window.isOpen())
     {
         window.clear();
-
-        sf::Event event;
+        sf::Vector2i mouse = sf::Mouse::getPosition(window);
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
+            {
                 window.close();
 
             if (event.type == sf::Event::KeyPressed)
@@ -109,6 +123,15 @@ int main()
         bulletManager->drawBullets(window);
         healthBarManager->drawBars(window);
 
+            //Bouton Menu Selection Niveau
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                menu->activateButton(menu->isMouseOnButton(sf::Mouse::getPosition(window)));
+            }
+     
+        }
+        menu->drawButtons(window);
+        window.display();
         window.display();
 
         bulletManager->despawnBullets();

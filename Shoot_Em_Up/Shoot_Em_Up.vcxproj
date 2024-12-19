@@ -151,6 +151,10 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="HealthBar.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Music.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Wall.cpp" />
@@ -167,6 +171,10 @@
     <ClInclude Include="HealthBar.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MiniBoss.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Music.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Window.h" />
