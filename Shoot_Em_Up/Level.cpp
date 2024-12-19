@@ -4,6 +4,8 @@
 #include "Level.h"
 #include "Music.h"
 #include "Background.h"
+#include "HealthBar.h"
+#include "Collectable.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
@@ -19,6 +21,8 @@ bool LevelManager::unloadLevel()
 	EnemyManager::getInstance()->getEnemies().clear();
 	WallManager::getInstance()->getWalls().clear();
 	BulletManager::getInstance()->getBullets().clear();
+	HealthBarManager::getInstance()->getBars().clear();
+	CollectableManager::getInstance()->getCollectables().clear();
 
 	currentBackground->getLayers().clear();
 

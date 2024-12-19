@@ -65,6 +65,8 @@ public:
 		return instance;
 	}
 
+	std::vector<Collectable*>& getCollectables() { return collectables; }
+
 	bool loadTexture();
 	void setSprites();
 

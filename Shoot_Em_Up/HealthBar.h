@@ -45,6 +45,8 @@ public:
 		return instance;
 	}
 
+	std::vector<HealthBar*>& getBars() { return bars; }
+
 	HealthBar* createHealthBar(float health);
 
 	void updateBars();
