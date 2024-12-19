@@ -14,9 +14,14 @@ void Music::SetSound(const std::string& fichierMusique)
 	music.setLoop(true);
 }
 
-void Music::Stop()
+void Music::mute()
 {
 	music.stop();
+}
+
+void Music::demute()
+{
+	music.play();
 }
 
 void Music::UPVolume()
