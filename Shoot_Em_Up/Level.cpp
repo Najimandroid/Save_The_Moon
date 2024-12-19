@@ -24,6 +24,8 @@ bool LevelManager::unloadLevel()
 
 	PlayerManager::getInstance()->getPlayers().clear();
 
+	levelCompleted = false;
+
 	return true;
 }
 
@@ -36,6 +38,7 @@ bool LevelManager::loadLevel(int levelIndex)
 		return false;
 	}
 
+	levelCompleted = false;
 	Music::getInstance()->SetSound("assets/musics/Level_" + std::to_string(levelIndex) + ".wav");
 
 	sf::Texture layer1, layer2, layer3;

@@ -99,6 +99,27 @@ void MenuManager::openCredits()
 	this->buttons.clear();
 
 	addBackground(menuTexture);
+	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 2 }));
+
+	setSprites();
+}
+
+void MenuManager::openVictory()
+{
+	this->buttons.clear();
+
+	addBackground(victoryTexture);
+	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 2 }));
+
+	setSprites();
+}
+
+void MenuManager::openLose()
+{
+	this->buttons.clear();
+
+	addBackground(losingTexture);
+	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 2 }));
 
 	setSprites();
 }
@@ -149,7 +170,8 @@ void MenuManager::activateButton(ButtonId id)
 	case VOLUMEDOWN: Music::getInstance()->DOWNVolume(); break;
 
 	case LVL1: readyForLevel = 1; break;
-	case LVL2: readyForLevel = 1; break;
+	case LVL2: if (bool(LevelManager::getInstance()->getCompletion()[0])) { readyForLevel = 2; } break;
+
 	}
 }
 
@@ -172,6 +194,10 @@ bool MenuManager::loadTexture()
 	if(!this->bigButtonsTexture.loadFromFile("assets/textures/Buttons.png")) return false;
 
 	if (!this->menuTexture.loadFromFile("assets/textures/MenuBackground.png")) return false;
+
+	if (!this->victoryTexture.loadFromFile("assets/textures/VictoryBackground.png")) return false;
+	if (!this->losingTexture.loadFromFile("assets/textures/LosingBackground.png")) return false;
+
 	if (!this->optionsTexture.loadFromFile("assets/textures/OptionsBackground.png")) return false;
 	if (!this->levelsSelectTexture.loadFromFile("assets/textures/SpaceBackground.png")) return false;
 	this->setSprites();

@@ -28,6 +28,8 @@ public:
 	float TILE_SIZE = WindowConfig::getInstance()->SIZE_Y / 18.f;
 	float SCROLLING_SPEED = WindowConfig::getInstance()->SIZE_X/ 11.f;
 
+	bool levelCompleted = false;
+
 	static LevelManager* getInstance()
 	{
 		if (instance == nullptr) {
@@ -38,7 +40,7 @@ public:
 
 	Background* getBackground() { return currentBackground; }
 
-	std::vector<int> getCompletion() { return completion; }
+	std::vector<int> &getCompletion() { return completion; }
 	void completed(int levelIndex) { completion[levelIndex] = 1; }
 
 	bool loadLevel(int levelIndex);

@@ -51,6 +51,9 @@ private:
 	sf::Texture menuTexture;
 	sf::Texture optionsTexture;
 	sf::Texture levelsSelectTexture;
+	sf::Texture victoryTexture;
+	sf::Texture losingTexture;
+
 
 	std::vector<ButtonId> smallButtons;
 
@@ -64,6 +67,8 @@ public:
 	void addBackground(sf::Texture &texture);
 	void openMenu();
 	void openOption();
+	void openVictory();
+	void openLose();
 	void openLvlSelect();
 	void openCredits();
 	void drawButtons(sf::RenderWindow& window);

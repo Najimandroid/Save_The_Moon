@@ -138,6 +138,10 @@ void Game::Gameloop(sf::RenderWindow& window, MenuManager* menuManager)
 
             if (event.type == sf::Event::MouseButtonPressed && !gameStarted)
             {
+                if (menuManager->isMouseOnButton(sf::Mouse::getPosition(window)) == QUIT)
+                {
+                    window.close();
+                }
                 menuManager->activateButton(menuManager->isMouseOnButton(sf::Mouse::getPosition(window)));
             }
         }
@@ -179,7 +183,17 @@ void Game::Gameloop(sf::RenderWindow& window, MenuManager* menuManager)
                 gameStarted = false; 
                 areAllPlayersDead = false; 
                 menuManager->readyForLevel = 0; 
-                menuManager->openMenu(); 
+                menuManager->openLose(); 
+            }
+
+            if (levelManager->levelCompleted)
+            {
+                levelManager->getCompletion()[currentLevel - 1] = 1;
+
+                levelManager->unloadLevel();
+                gameStarted = false;
+                menuManager->readyForLevel = 0;
+                menuManager->openVictory();
             }
         }
 

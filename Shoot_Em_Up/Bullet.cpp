@@ -1,5 +1,6 @@
 #include "Bullet.h"
 #include "CustomBullets.h"
+#include "Boss.h"
 
 //--------------------//* BULLET *\\--------------------\\
 
@@ -77,6 +78,8 @@ void BulletManager::checkCollisions(Entity* entity)
 			{
 				Player* player_ = dynamic_cast<Player*>(bullet->getOwner());
 				player_->updateScore(entityPoints);
+
+				if (dynamic_cast<Boss*>(entity)) { LevelManager::getInstance()->levelCompleted = true; }
 			}
 
 			//delete
