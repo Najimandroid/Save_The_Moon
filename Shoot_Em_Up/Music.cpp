@@ -16,24 +16,32 @@ void Music::SetSound(const std::string& fichierMusique)
 
 void Music::mute()
 {
-	music.stop();
+	if (isMuted) return;
+	isMuted = true;
+	stockedVolume = volume;
+	music.setVolume(0.f);
 }
 
 void Music::demute()
 {
-	music.play();
+	if (!isMuted) return;
+
+	music.setVolume(stockedVolume);
+	isMuted = false;
 }
 
 void Music::UPVolume()
 {
-	volume += 10.f;  
-	if (volume > 100.f) volume = 100.f;  
+	if (isMuted) return;
+	volume += 1.f;  
+	if (volume > 20.f) volume = 20.f;  
 	music.setVolume(volume); 
 }
 
 void Music::DOWNVolume()
 {
-	volume -= 10.f;  
+	if (isMuted) return;
+	volume -= 1.f;  
 	if (volume < 0.f) volume = 0.f;  
 	music.setVolume(volume); 
 }

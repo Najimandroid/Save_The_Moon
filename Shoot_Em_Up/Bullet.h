@@ -86,10 +86,10 @@ public:
 	sf::Vector2f getTextureCoords() const { return textureCoords; }
 
 	sf::RectangleShape& getHitbox() { return hitbox; }
-	sf::Color getColor() { return color; }
+	sf::Color getColor() const { return color; }
 
-	sf::Sprite* getSprite() { if (sprite) { return sprite; } return nullptr; }
-	Entity* getOwner() { return owner; }
+	sf::Sprite* getSprite() const { if (sprite) { return sprite; } return nullptr; }
+	Entity* getOwner() const { return owner; }
 
 	//* SET *\\
 

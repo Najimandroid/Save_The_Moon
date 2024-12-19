@@ -9,8 +9,13 @@ class Music
 {
 private:
 	static Music* instance;
-	Music() {}
+	
 	sf::Music music;
+	float stockedVolume;
+
+	bool isMuted;
+
+	Music() { stockedVolume = 0.f; isMuted = false; }
 public:
 	static Music* getInstance()
 	{
@@ -21,7 +26,7 @@ public:
 		return instance;
 	}
 
-	float volume = 100.f;
+	float volume = 10.f;
 	void SetSound(const std::string& fichierMusique);
 
 	void mute();

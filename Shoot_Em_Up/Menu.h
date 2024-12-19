@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Level.h"
 #include <vector>
 #include "Music.h"
 
@@ -13,39 +14,52 @@ enum ButtonId
 class Button
 {
 private:
-	sf::Sprite sprite;
 	sf::Vector2f position;
 	ButtonId id;
 	sf::Color color;
 	sf::RectangleShape hitbox;
 
+	sf::Vector2f textureCoords;
+	sf::Sprite* sprite;
+
+
 public:
-	Button(sf::Vector2f position_, ButtonId id_, sf::Color color_, sf::RectangleShape hitbox_, sf::Sprite sprite_);
+	Button(sf::Vector2f position_, ButtonId id_, sf::Color color_, sf::RectangleShape hitbox_, sf::Vector2f textureCoords_);
 	Button(sf::Vector2f position_, ButtonId id_, sf::Color color_, sf::RectangleShape hitbox_);
 
-	ButtonId getId()
-	{
-		return id;
-	}
+	virtual ~Button();
 
-	sf::Vector2f getPosition()
-	{
-		return position;
-	}
+	sf::Sprite* getSprite() const { if (sprite) { return sprite; } return nullptr; }
+	ButtonId getId() const { return id; }
+	sf::Vector2f getPosition() const { return position; }
+	sf::RectangleShape& getHitbox() { return hitbox; }
+	sf::Vector2f getTextureCoords() const { return textureCoords; }
 
-	sf::RectangleShape& getHitbox()
-	{
-		return hitbox;
-	}
+	void setSprite(sf::Sprite* newSprite) { sprite = newSprite; }
+	void setTextureCoords(sf::Vector2f newCoords) { sprite = nullptr; textureCoords = newCoords; }
 };
 
 class MenuManager
 {
 private:
 	std::vector <Button*> buttons;
+	sf::Sprite* background;
+
+	sf::Texture smallButtonsTexture;
+	sf::Texture bigButtonsTexture;
+
+	sf::Texture menuTexture;
+	sf::Texture optionsTexture;
+	sf::Texture levelsSelectTexture;
+
+	std::vector<ButtonId> smallButtons;
 public:
 	MenuManager();
 
+	bool loadTexture();
+	void setSprites();
+	
+	void addBackground(sf::Texture &texture);
 	void openMenu();
 	void openOption();
 	void openLvlSelect();
