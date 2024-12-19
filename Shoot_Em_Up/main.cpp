@@ -14,7 +14,6 @@ Music* Music::instance = nullptr;
 int Long = 1900;
 int Larg = 1080;
 
-
 struct LvlAvailable
 {
     bool Lvl2 = false;
@@ -24,8 +23,6 @@ struct LvlAvailable
     bool Lvl6 = false;
 };
 
-
-
 int main()
 {
 
@@ -34,39 +31,29 @@ int main()
     Game game;
     Music* change = Music::getInstance();
     MenuManager* menu = game.createMenu(window);
-
     struct LvlAvailable Dispo;
-
     change->SetSound("TitleScreen.wav");
-
-
-
     sf::Event event;
-
 
     while (window.isOpen())
     {
         window.clear();
-
         sf::Vector2i mouse = sf::Mouse::getPosition(window);
-
         while (window.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
             {
                 window.close();
             }
-
             //Bouton Menu Selection Niveau
             if (event.type == sf::Event::MouseButtonPressed)
             {
                 menu->activateButton(menu->isMouseOnButton(sf::Mouse::getPosition(window)));
             }
-      
+     
         }
         menu->drawButtons(window);
         window.display();
-
     }
 return 0;
 }
