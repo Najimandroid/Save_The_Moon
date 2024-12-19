@@ -53,6 +53,8 @@ private:
 	sf::Texture levelsSelectTexture;
 
 	std::vector<ButtonId> smallButtons;
+
+	
 public:
 	MenuManager();
 
@@ -67,5 +69,7 @@ public:
 	void drawButtons(sf::RenderWindow& window);
 	void activateButton(ButtonId id);
 	ButtonId isMouseOnButton(sf::Vector2i mousePosition);
+
+	int readyForLevel;
 };
 

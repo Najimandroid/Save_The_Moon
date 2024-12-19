@@ -40,7 +40,7 @@ public:
 
 	MenuManager* createMenu(sf::RenderWindow& window);
 
-	void setCurrentLevel(int levelIndex_);
+	void startLevel(int levelIndex_);
 
 	void Gameloop(sf::RenderWindow& window, MenuManager* menuManager);
 

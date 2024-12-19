@@ -2,6 +2,7 @@
 #include "Enemy.h"
 #include "Collectable.h"
 #include "Level.h"
+#include "Music.h"
 #include "Background.h"
 
 #include  <SFML/Graphics.hpp>
@@ -13,6 +14,19 @@ unsigned int LevelManager::colorToInt(const sf::Color& color)
 	return (color.r << 24) | (color.g << 16) | (color.b << 8) | color.a;
 }
 
+bool LevelManager::unloadLevel()
+{
+	EnemyManager::getInstance()->getEnemies().clear();
+	WallManager::getInstance()->getWalls().clear();
+	BulletManager::getInstance()->getBullets().clear();
+
+	currentBackground->getLayers().clear();
+
+	PlayerManager::getInstance()->getPlayers().clear();
+
+	return true;
+}
+
 bool LevelManager::loadLevel(int levelIndex)
 {
 	
@@ -21,6 +35,8 @@ bool LevelManager::loadLevel(int levelIndex)
 		std::cout << "FAILED LOADING LEVEL: " << levelIndex << '\n';
 		return false;
 	}
+
+	Music::getInstance()->SetSound("assets/musics/Level_" + std::to_string(levelIndex) + ".wav");
 
 	sf::Texture layer1, layer2, layer3;
 	layer1.loadFromFile("assets/backgrounds/Level_" + std::to_string(levelIndex) + "/Layer1.png"); layer2.loadFromFile("assets/backgrounds/Level_" + std::to_string(levelIndex) + "/Layer2.png"); layer3.loadFromFile("assets/backgrounds/Level_" + std::to_string(levelIndex) + "/Layer3.png");

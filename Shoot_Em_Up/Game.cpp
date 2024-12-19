@@ -28,14 +28,16 @@ MenuManager* Game::createMenu(sf::RenderWindow& window)
 	return new MenuManager;
 }
 
-void Game::setCurrentLevel(int levelIndex_)
+void Game::startLevel(int levelIndex_)
 {
     currentLevel = levelIndex_;
     if (levelIndex_ > 0)
     {
-        levelManager->loadLevel(levelIndex_);
+        gameStarted = true;
         Player* player = new Player({ 100, windowConfigs->SIZE_Y / 2.f }, { WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f }, 150, 20, 3.f, true, .1f);
+        levelManager->loadLevel(levelIndex_);
     }
+    isPaused = false;
 }
 
 void Game::checkGameCollisions()
@@ -53,17 +55,17 @@ void Game::checkGameCollisions()
     }
 }
 
-void Game::updateGameObjects(float deltaTime)
+void Game::updateGameObjects(float deltaTime_)
 {
-    wallManager->updatePositions(deltaTime);
-    collectableManager->updatePositions(deltaTime);
-    enemyManager->update(deltaTime);
-    bulletManager->updatePositions(deltaTime);
+    wallManager->updatePositions(deltaTime_);
+    collectableManager->updatePositions(deltaTime_);
+    enemyManager->update(deltaTime_);
+    bulletManager->updatePositions(deltaTime_);
     healthBarManager->updateBars();
 
     for (Player* player : PlayerManager::getInstance()->getPlayers())
     {
-        player->update(deltaTime);
+        player->update(deltaTime_);
     }
 }
 
@@ -86,7 +88,6 @@ void Game::drawGameObjects(sf::RenderWindow& window)
 
 void Game::Gameloop(sf::RenderWindow& window, MenuManager* menuManager)
 {
-    music->SetSound("TitleScreen.wav");
 
     while (window.isOpen())
     {
@@ -109,11 +110,11 @@ void Game::Gameloop(sf::RenderWindow& window, MenuManager* menuManager)
 
             if (event.type == sf::Event::KeyPressed)
             {
-                if (event.key.code == sf::Keyboard::P || this->gameStarted)
+                if (event.key.code == sf::Keyboard::P && this->gameStarted)
                     isPaused = !isPaused;
             }
 
-            if (event.type == sf::Event::MouseButtonPressed)
+            if (event.type == sf::Event::MouseButtonPressed && !gameStarted)
             {
                 menuManager->activateButton(menuManager->isMouseOnButton(sf::Mouse::getPosition(window)));
             }
@@ -125,6 +126,10 @@ void Game::Gameloop(sf::RenderWindow& window, MenuManager* menuManager)
         if (!gameStarted)
         {
             menuManager->drawButtons(window);
+            if (menuManager->readyForLevel != 0)
+            {
+                startLevel(menuManager->readyForLevel);
+            }
         }
         else
         {
@@ -138,16 +143,22 @@ void Game::Gameloop(sf::RenderWindow& window, MenuManager* menuManager)
 
             drawGameObjects(window);
 
-        }
+            bulletManager->despawnBullets();
 
-        bulletManager->despawnBullets();
-
-        bool areAllPlayersDead = true;
-        for (Player* player : PlayerManager::getInstance()->getPlayers())
-        {
-            if (player->getHealth() > 0) areAllPlayersDead = false;
+            bool areAllPlayersDead = true;
+            for (Player* player : PlayerManager::getInstance()->getPlayers())
+            {
+                if (player->getHealth() > 0) areAllPlayersDead = false;
+            }
+            if (areAllPlayersDead) 
+            { 
+                levelManager->unloadLevel(); 
+                gameStarted = false; 
+                areAllPlayersDead = false; 
+                menuManager->readyForLevel = 0; 
+                menuManager->openMenu(); 
+            }
         }
-        if (areAllPlayersDead) isPaused = true;
 
         window.display();
         

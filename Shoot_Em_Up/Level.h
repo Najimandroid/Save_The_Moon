@@ -19,7 +19,11 @@ private:
 
 	Background* currentBackground;
 
-	LevelManager() { currentBackground = nullptr; };
+	std::vector<int> completion;
+
+	LevelManager() { currentBackground = nullptr;
+	completion = { 0, 0, 0, 0, 0, 0 };
+	};
 public:
 	float TILE_SIZE = WindowConfig::getInstance()->SIZE_Y / 18.f;
 	float SCROLLING_SPEED = WindowConfig::getInstance()->SIZE_X/ 11.f;
@@ -34,6 +38,11 @@ public:
 
 	Background* getBackground() { return currentBackground; }
 
+	std::vector<int> getCompletion() { return completion; }
+	void completed(int levelIndex) { completion[levelIndex] = 1; }
+
 	bool loadLevel(int levelIndex);
+	bool unloadLevel();
+
 	unsigned int colorToInt(const sf::Color& color);
 };

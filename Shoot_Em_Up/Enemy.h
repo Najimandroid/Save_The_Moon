@@ -58,7 +58,7 @@ public:
 		return instance;
 	}
 
-	std::vector <Enemy*> getEnemies()
+	std::vector <Enemy*>& getEnemies()
 	{
 		return enemies;
 	}

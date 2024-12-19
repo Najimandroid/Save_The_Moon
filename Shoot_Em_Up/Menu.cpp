@@ -33,7 +33,7 @@ Button::~Button() {};
 MenuManager::MenuManager()
 {
 	smallButtons = { BACK, MUTE, DEMUTE, VOLUMEUP, VOLUMEDOWN };
-
+	readyForLevel = 0;
 	background = new sf::Sprite;
 	//background->setPosition({ WindowConfig::getInstance()->SIZE_X / 2.f, WindowConfig::getInstance()->SIZE_Y / 2.f });
 
@@ -44,6 +44,8 @@ MenuManager::MenuManager()
 void MenuManager::openMenu()
 {
 	this->buttons.clear();
+
+	Music::getInstance()->SetSound("assets/musics/TitleScreen.wav");
 
 	addBackground(menuTexture);
 
@@ -57,6 +59,8 @@ void MenuManager::openMenu()
 void MenuManager::openOption()
 {
 	this->buttons.clear();
+
+	Music::getInstance()->SetSound("assets/musics/Options.wav");
 
 	addBackground(optionsTexture);
 	
@@ -74,6 +78,8 @@ void MenuManager::openOption()
 void MenuManager::openLvlSelect()
 {
 	this->buttons.clear();
+
+	Music::getInstance()->SetSound("assets/musics/SelectLvl.wav");
 
 	addBackground(levelsSelectTexture);
 
@@ -140,8 +146,9 @@ void MenuManager::activateButton(ButtonId id)
 	case MUTE: Music::getInstance()->mute(); break;
 	case DEMUTE: Music::getInstance()->demute(); break;
 	case VOLUMEUP: Music::getInstance()->UPVolume(); break;
-	case VOLUMEDOWN:Music::getInstance()->DOWNVolume(); break;
+	case VOLUMEDOWN: Music::getInstance()->DOWNVolume(); break;
 
+	case LVL1: readyForLevel = 1; break;
 	}
 }
 

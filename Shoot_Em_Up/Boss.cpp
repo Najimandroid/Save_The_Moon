@@ -24,7 +24,8 @@ void Boss::updatePosition(float deltaTime)
 	{
 		if (this->getPosition().x < WindowConfig::getInstance()->SIZE_X - this->hitbox.getSize().x / 2) //stay on the side
 		{
-			if (!healthBarSpawned) { HealthBarManager::getInstance()->createHealthBar(this->health)->linkEntity(this); healthBarSpawned = true; }
+			if (!healthBarSpawned) { HealthBarManager::getInstance()->createHealthBar(this->health)->linkEntity(this); healthBarSpawned = true; Music::getInstance()->SetSound("assets/musics/Boss_1.wav");
+			}
 
 			velocity = { 0, (cos(x / 100) * (WindowConfig::getInstance()->SIZE_Y / 432*1.5f))}; // (WindowConfig::getInstance()->SIZE_Y / 54)
 			x += 1.f;

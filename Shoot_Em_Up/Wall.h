@@ -101,7 +101,7 @@ public:
 
 	sf::Vector2f getWallsVelocity();
 
-	std::vector<Wall*> getWalls()
+	std::vector<Wall*>& getWalls()
 	{
 		return walls;
 	}

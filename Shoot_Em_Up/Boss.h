@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include "CustomBullets.h"
 #include "Player.h"
+#include "Music.h"
 #include "HealthBar.h"
 
 #include "SFML/Graphics.hpp"

@@ -28,6 +28,8 @@ private:
 public:
 	Background(std::vector<sf::Texture> textures_);
 
+	std::vector<std::vector<Layer*>>& getLayers() { return layers; }
+
 	void drawBackground(sf::RenderWindow& window);
 	void moveBackground(float deltaTime);
 };
