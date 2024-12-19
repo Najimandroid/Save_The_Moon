@@ -209,23 +209,54 @@ void Player::updateState(float deltaTime)
     }*/
 }
 
-void Player::draw(sf::RenderWindow& window, sf::Color color)
+//* GRAPHICS *\\
+
+bool PlayerManager::loadTextures()
 {
-    sf::RectangleShape body_(this->getHitbox().getSize());
-    body_.setOrigin(this->getHitbox().getSize() / 2.f);
-    body_.setFillColor(color);
-    body_.setPosition(this->getPosition());
+    if (!this->texture.loadFromFile("assets/textures/Players.png")) return false;
+    setSprites();
+    return true;
+}
+
+void PlayerManager::setSprites()
+{
+    for (Player* adress : this->players)
+    {
+        if (adress->getSprite() != nullptr) continue;
+
+        sf::Sprite* sprite = new sf::Sprite;
+
+        sprite->setScale({ adress->getHitbox().getSize().x * 2.5f / 60, adress->getHitbox().getSize().y * 2.5f / 60 });
+        sprite->setOrigin({
+            adress->getHitbox().getOrigin().y / sprite->getScale().y,
+            adress->getHitbox().getOrigin().y / sprite->getScale().y
+            });
+        sprite->setTexture(this->texture);
+
+        sprite->setTextureRect(sf::IntRect(
+            adress->getTextureCoords().x * LevelManager::getInstance()->TILE_SIZE / 2,
+            adress->getTextureCoords().y * LevelManager::getInstance()->TILE_SIZE / 2,
+            LevelManager::getInstance()->TILE_SIZE / 2,
+            LevelManager::getInstance()->TILE_SIZE / 2));
+
+        adress->setSprite(sprite);
+    }
+}
+
+void Player::draw(sf::RenderWindow& window)
+{
+    if (!this->getSprite()) return;
 
     //FLASHING EFFECT
     if (this->hit) 
     { 
         if (this->count < .125f) //this->hitCooldownMax/4 
         {
-            body_.setFillColor(sf::Color::Transparent);
+            this->getSprite()->setColor(sf::Color::Transparent);
         }
         else if (this->count < .25f)
         {
-            body_.setFillColor(sf::Color::Green);
+            this->getSprite()->setColor(sf::Color::White);
         }
         else if (this->count > .25f)
         {
@@ -233,12 +264,17 @@ void Player::draw(sf::RenderWindow& window, sf::Color color)
         }
     }
 
-    window.draw(body_);
+    if (this->getPosition().x >= WindowConfig::getInstance()->SIZE_X + WindowConfig::getInstance()->SIZE_X / 10) { return; }
+
+    this->sprite->setPosition(this->getPosition());
+    this->sprite->setRotation(this->hitbox.getRotation());
+
+    window.draw(*this->getSprite());
 }
 
 //* CONSTRUCTOR *\\
 
-Player::Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_)
+Player::Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_,sf::Vector2f textureCoords_)
 {
     this->initPosition(position_);
     this->initHitbox(hitboxSize_);
@@ -246,10 +282,14 @@ Player::Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, 
     this->initHit(1.5f);
     this->score = 0;
 
+    this->textureCoords = textureCoords_;
+
     HealthBarManager* healthBarManager = HealthBarManager::getInstance();
     HealthBar* bar = healthBarManager->createHealthBar(health_);
 
     bar->linkEntity(this);
 
     PlayerManager::getInstance()->getPlayers().push_back(this);
+
+    PlayerManager::getInstance()->setSprites();
 }

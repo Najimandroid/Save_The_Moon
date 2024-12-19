@@ -34,7 +34,7 @@ void Game::startLevel(int levelIndex_)
     if (levelIndex_ > 0)
     {
         gameStarted = true;
-        Player* player = new Player({ 100, windowConfigs->SIZE_Y / 2.f }, { WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f }, 150, 20, 3.f, true, .1f);
+        Player* player = new Player({ 100, windowConfigs->SIZE_Y / 2.f }, { WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f }, 150, 20, 3.f, true, .1f, {1, 0});
         levelManager->loadLevel(levelIndex_);
     }
     isPaused = false;
@@ -78,7 +78,7 @@ void Game::drawGameObjects(sf::RenderWindow& window)
 
     for (Player* player : PlayerManager::getInstance()->getPlayers())
     {
-        player->draw(window, sf::Color::Green);
+        player->draw(window);
     }
 
     enemyManager->drawEnemies(window);

@@ -31,7 +31,7 @@ private:
 	bool usingPrimary = true;
 
 public:
-	Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_);
+	Player(sf::Vector2f position_, sf::Vector2f hitboxSize_, float health_, float damage_, float speed_, bool canShoot_, float cooldownSeconds_, sf::Vector2f textureCoords_);
 
 	float getScore() { return score; }
 	void updateScore(float addedScore) { score += addedScore; }
@@ -45,7 +45,7 @@ public:
 	void updateState(float deltaTime) override;
 	void updateHealth(float value) override;
 
-	void draw(sf::RenderWindow& window, sf::Color color);
+	void draw(sf::RenderWindow& window);
 };
 
 class PlayerManager
@@ -53,9 +53,13 @@ class PlayerManager
 private:
 	static PlayerManager* instance;
 
+	sf::Texture texture;
+
 	std::vector <Player*> players;
 
-	PlayerManager() {}
+	PlayerManager() {
+		if (!loadTextures()) { std::cout << "Players texture not loaded!"; }
+	}
 public:
 	static PlayerManager* getInstance()
 	{
@@ -64,6 +68,9 @@ public:
 		}
 		return instance;
 	}
+
+	bool loadTextures();
+	void setSprites();
 
 	std::vector<Player*>& getPlayers()
 	{

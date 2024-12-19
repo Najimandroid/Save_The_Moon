@@ -83,7 +83,7 @@ void MenuManager::openLvlSelect()
 
 	addBackground(levelsSelectTexture);
 
-	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::White, sf::RectangleShape(sf::Vector2f(30, 30))));
+	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::White, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 2 }));
 	this->buttons.push_back(new Button(sf::Vector2f{ 300,400 }, LVL1, sf::Color::White, sf::RectangleShape(sf::Vector2f(80, 80))));
 	this->buttons.push_back(new Button(sf::Vector2f{ 600,100 }, LVL2, sf::Color::Red, sf::RectangleShape(sf::Vector2f(80, 80))));
 	this->buttons.push_back(new Button(sf::Vector2f{ 750,600 }, LVL3, sf::Color::Blue, sf::RectangleShape(sf::Vector2f(80, 80))));
@@ -168,7 +168,7 @@ ButtonId MenuManager::isMouseOnButton(sf::Vector2i mousePosition)
 bool MenuManager::loadTexture()
 {
 	if (!this->smallButtonsTexture.loadFromFile("assets/textures/SmallButtons.png")) return false;
-	if (!this->menuTexture.loadFromFile("assets/textures/OptionsBackground.png")) return false;
+	if (!this->menuTexture.loadFromFile("assets/textures/MenuBackground.png")) return false;
 	if (!this->optionsTexture.loadFromFile("assets/textures/OptionsBackground.png")) return false;
 	if (!this->levelsSelectTexture.loadFromFile("assets/textures/SpaceBackground.png")) return false;
 	this->setSprites();
