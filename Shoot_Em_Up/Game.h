@@ -10,6 +10,7 @@
 #include "Window.h"
 #include "Bullet.h"
 #include "CustomBullets.h"
+#include "SFX.h"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>

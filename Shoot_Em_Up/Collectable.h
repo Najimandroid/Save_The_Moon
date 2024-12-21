@@ -4,6 +4,8 @@
 #include "Window.h"
 #include <SFML/Graphics.hpp>
 
+#include "SFX.h"
+
 #include <functional>
 #include <iostream>
 

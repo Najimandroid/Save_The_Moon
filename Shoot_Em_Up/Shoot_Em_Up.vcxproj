@@ -156,6 +156,7 @@
     <ClCompile Include="Music.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SFX.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -174,6 +175,7 @@
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Music.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="SFX.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

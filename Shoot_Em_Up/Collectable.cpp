@@ -56,7 +56,7 @@ void Collectable::collected()
 	switch (this->type)
 	{
 	case COIN: 
-		this->setEffect([&]() { if (this->getTarget()) { std::cout << "Coin collected!\n";  this->getTarget()->updateScore(5); }});
+		this->setEffect([&]() { if (this->getTarget()) { SFXManager::getInstance()->play("assets/sfx/Coin.mp3"); this->getTarget()->updateScore(5); }});
 		break;
 	case HEART:
 		this->setEffect([&]() {if (this->getTarget()) { std::cout << "Heart collected!\n"; if (this->getTarget()) this->getTarget()->updateHealth(20); }});

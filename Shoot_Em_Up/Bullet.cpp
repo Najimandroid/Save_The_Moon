@@ -143,7 +143,7 @@ void BulletManager::despawnBullets()
 	unsigned index = 0;
 	for (Bullet* bullet : this->bullets)
 	{
-		if (bullet == nullptr) { index++;  continue;; }
+		if (bullet == nullptr) { index++;  continue; }
 
 		if (bullet->getPosition().x > WindowConfig::getInstance()->SIZE_X || bullet->getPosition().x < 0 || bullet->getLifeTime() >= bullet->getLifeTimeMax())
 		{

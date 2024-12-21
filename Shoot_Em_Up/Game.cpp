@@ -50,7 +50,7 @@ void Game::startLevel(int levelIndex_)
     if (levelIndex_ > 0)
     {
         gameStarted = true;
-        Player* player = new Player({ 100, windowConfigs->SIZE_Y / 2.f }, { WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f }, 150, 20, 3.f, true, .1f, {1, 0});
+        Player* player = new Player({ 100, windowConfigs->SIZE_Y / 2.f }, { WindowConfig::getInstance()->SIZE_Y / 18.f, WindowConfig::getInstance()->SIZE_Y / 18.f }, 150, 30, 3.f, true, .1f, {1, 0});
         levelManager->loadLevel(levelIndex_);
     }
     isPaused = false;
@@ -73,6 +73,8 @@ void Game::checkGameCollisions()
 
 void Game::updateGameObjects(float deltaTime_)
 {
+    SFXManager::getInstance()->checkForDelete();
+
     scoreText->setPosition({ windowConfigs->SIZE_X - scoreText->getLocalBounds().width /2.f - 200, windowConfigs->SIZE_Y - scoreText->getLocalBounds().height / 2 - 60 });
     scoreText->setString("[SCORE]: " + std::to_string(static_cast<int>(PlayerManager::getInstance()->getPlayers()[0]->getScore())));
 

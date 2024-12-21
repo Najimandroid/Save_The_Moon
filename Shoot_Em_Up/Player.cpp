@@ -4,6 +4,7 @@
 #include "Level.h"
 #include "HealthBar.h"
 #include "Window.h"
+#include "SFX.h"
 
 #include  <SFML/Graphics.hpp>
 #include <iostream>
@@ -28,7 +29,7 @@ void Player::initHit(float hitCooldown_)
 
 void Player::updatePosition(float deltaTime)
 {
-    std::cout << this->score << '\n';
+    //std::cout << this->score << '\n';
 
     LevelManager* levelManager = LevelManager::getInstance();
     WallManager* wallManager = WallManager::getInstance();
@@ -121,6 +122,7 @@ void Player::updateShoot(float deltaTime)
     this->usingPrimary = false;
     if (!this->isOnCooldown())
     {
+
         //reset cooldown
         this->shootCooldown = 0.f;
 
@@ -129,6 +131,8 @@ void Player::updateShoot(float deltaTime)
         {
             if (sf::Keyboard::isKeyPressed(key))
             {
+                SFXManager::getInstance()->play("assets/sfx/Shoot.mp3")->setPitch(.75f);
+
                 this->usingPrimary = true;
                 LevelManager* levelManager = LevelManager::getInstance();
                 BulletManager* bulletManager = BulletManager::getInstance();
@@ -142,6 +146,8 @@ void Player::updateShoot(float deltaTime)
         {
             if (sf::Keyboard::isKeyPressed(key) && !this->usingPrimary)
             {
+                SFXManager::getInstance()->play("assets/sfx/Shoot.mp3")->setPitch(.75f);
+
                 this->usingPrimary = false;
                 LevelManager* levelManager = LevelManager::getInstance();
                 BulletManager* bulletManager = BulletManager::getInstance();
@@ -165,6 +171,7 @@ void Player::updateHealth(float value)
     {
         if (this->hit) return;
         this->hit = true;
+        SFXManager::getInstance()->play("assets/sfx/Hurt.mp3");
     }
 
     if (this->health + value >= this->maxHealth)

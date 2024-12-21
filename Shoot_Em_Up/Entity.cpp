@@ -32,6 +32,11 @@ void Entity::updateHealth(float value)
 {
 	if (!this->active) return; // doesn't update health if the entity is inactive
 
+	if (value < 0)
+	{
+		SFXManager::getInstance()->play("assets/sfx/Hurt.mp3")->setPitch(2.5f);
+	}
+
 	if (this->health + value >= this->maxHealth)
 	{
 		this->health += this->maxHealth - this->health;
@@ -73,6 +78,7 @@ void Entity::updateShoot(float deltaTime)
 
 		//reset cooldown
 		this->shootCooldown = 0.f;
+		SFXManager::getInstance()->play("assets/sfx/Shoot.mp3")->setPitch(1.25f);
 
 		LevelManager* levelManager = LevelManager::getInstance();
 		BulletManager* bulletManager = BulletManager::getInstance();

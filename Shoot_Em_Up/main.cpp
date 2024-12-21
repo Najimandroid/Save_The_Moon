@@ -11,6 +11,7 @@ WindowConfig* WindowConfig::instance = nullptr;
 PlayerManager* PlayerManager::instance = nullptr;
 CollectableManager* CollectableManager::instance = nullptr;
 Music* Music::instance = nullptr;
+SFXManager* SFXManager::instance = nullptr;
 
 int main()
 {

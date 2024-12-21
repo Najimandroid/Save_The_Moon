@@ -2,6 +2,8 @@
 #include "CustomEnemies.h"
 #include "Boss.h"
 
+
+
 #include "Bullet.h"
 #include "Window.h"
 #include "Level.h"
@@ -177,7 +179,9 @@ void EnemyManager::updateStates()
 		Enemy* enemy = *it;
 		//std::cout << enemy->getHealth() << ", ";
 
-		if (enemy->isDead()) {
+		if (enemy->isDead() || enemy->getPosition().x < -100) {
+			if (enemy->isDead()) SFXManager::getInstance()->play("assets/sfx/Explode.mp3");
+
 			// delete enemy if dead
 			BulletManager* bulletManager = BulletManager::getInstance();
 			bulletManager->updateOwners(enemy);

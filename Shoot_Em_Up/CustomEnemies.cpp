@@ -78,9 +78,10 @@ void Sniper::updateShoot(float deltaTime)
 	if (!this->isOnCooldown() && this->canShoot)
 	{
 		if (!this->active) return; //returns if not active
-
+		
 		//reset cooldown
 		this->shootCooldown = 0.f;
+		SFXManager::getInstance()->play("assets/sfx/Shoot.mp3")->setPitch(1.25f);
 
 		if (PlayerManager::getInstance()->getPlayers().empty()) { std::cout << "players empty\n"; return; }
 		if (PlayerManager::getInstance()->getPlayers()[0] == nullptr) { std::cout << "sniper error\n"; return; }
@@ -125,9 +126,10 @@ void Homing::updateShoot(float deltaTime)
 	if (!this->isOnCooldown() && this->canShoot)
 	{
 		if (!this->active) return; //returns if not active
-
+		
 		//reset cooldown
 		this->shootCooldown = 0.f;
+		SFXManager::getInstance()->play("assets/sfx/Shoot.mp3")->setPitch(1.25f);
 
 		if (PlayerManager::getInstance()->getPlayers().empty()) { std::cout << "players empty\n"; return; }
 		if (this->target == nullptr) { std::cout << "huming error\n"; return; }
@@ -162,9 +164,10 @@ void TurretUp::updateShoot(float deltaTime)
 	if (!this->isOnCooldown() && this->canShoot)
 	{
 		if (!this->active) return; //returns if not active
-
+		
 		//reset cooldown
 		this->shootCooldown = 0.f;
+		SFXManager::getInstance()->play("assets/sfx/Shoot.mp3")->setPitch(1.25f);
 
 		BulletManager* bulletManager = BulletManager::getInstance();
 		bulletManager->spawnBullet(this, { this->position }, normalize({ 0, -1 }), 2 * this->speed, { 1, 1 });
@@ -193,9 +196,10 @@ void TurretDown::updateShoot(float deltaTime)
 	if (!this->isOnCooldown() && this->canShoot)
 	{
 		if (!this->active) return; //returns if not active
-
+		
 		//reset cooldown
 		this->shootCooldown = 0.f;
+		SFXManager::getInstance()->play("assets/sfx/Shoot.mp3")->setPitch(1.25f);
 
 		BulletManager* bulletManager = BulletManager::getInstance();
 		bulletManager->spawnBullet(this, { this->position }, normalize({ 0, 1 }), 2 * this->speed, { 1, 1 });
@@ -224,9 +228,10 @@ void TurretRight::updateShoot(float deltaTime)
 	if (!this->isOnCooldown() && this->canShoot)
 	{
 		if (!this->active) return; //returns if not active
-
+		
 		//reset cooldown
 		this->shootCooldown = 0.f;
+		SFXManager::getInstance()->play("assets/sfx/Shoot.mp3")->setPitch(1.25f);
 
 		BulletManager* bulletManager = BulletManager::getInstance();
 		bulletManager->spawnBullet(this, { this->position }, normalize({ 1, 0 }), 2 * this->speed, { 1, 1 });
@@ -255,9 +260,10 @@ void TurretLeft::updateShoot(float deltaTime)
 	if (!this->isOnCooldown() && this->canShoot)
 	{
 		if (!this->active) return; //returns if not active
-
+		
 		//reset cooldown
 		this->shootCooldown = 0.f;
+		SFXManager::getInstance()->play("assets/sfx/Shoot.mp3")->setPitch(1.25f);
 
 		BulletManager* bulletManager = BulletManager::getInstance();
 		bulletManager->spawnBullet(this, { this->position }, normalize({ -1, 0 }), 2 * this->speed, { 1, 1 });
@@ -302,9 +308,10 @@ void Wave::updateShoot(float deltaTime)
 	if (!this->isOnCooldown() && this->canShoot)
 	{
 		if (!this->active) return; //returns if not active
-
+		
 		//reset cooldown
 		this->shootCooldown = 0.f;
+		SFXManager::getInstance()->play("assets/sfx/Shoot.mp3")->setPitch(1.25f);
 
 		BulletManager* bulletManager = BulletManager::getInstance();
 		bulletManager->spawnBullet(this, { this->position }, { -1, 0 }, 2 * this->speed * 1920 / WindowConfig::getInstance()->SIZE_X, { 1, 2 });
@@ -335,9 +342,9 @@ void Wheel::updateShoot(float deltaTime)
 	if (!this->isOnCooldown() && this->canShoot)
 	{
 		if (!this->active) return; //returns if not active
-
 		//reset cooldown
 		this->shootCooldown = 0.f;
+		SFXManager::getInstance()->play("assets/sfx/Shoot.mp3")->setPitch(1.25f);
 
 		BulletManager* bulletManager = BulletManager::getInstance();
 
