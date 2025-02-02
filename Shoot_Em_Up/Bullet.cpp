@@ -113,6 +113,8 @@ Bullet* BulletManager::spawnBullet(Entity* owner, sf::Vector2f position, sf::Vec
 	case DEFAULT_b: newBullet = new Bullet(20, speed * WindowConfig::getInstance()->SIZE_X / 192, position, direction);  break;
 	case HOMING_b: newBullet = new HomingBullet(position, owner->getTarget(), {0, 0});  break;
 	case DEFAULT_boss: newBullet = new DefaultBoss(position, direction);  break;
+	case SHRIMP_boss: newBullet = new Shrimp(position, direction);  break;
+	case PUFFER_boss: newBullet = new Puffer(position, direction, owner, owner->getTarget());  break;
 	case HOMING_boss: newBullet = new HomingBulletBoss(position, owner->getTarget(), {0, 0});  break;
 	}
 
@@ -214,7 +216,7 @@ void BulletManager::updatePositions(float deltaTime)
 
 		adress->updatePosition(deltaTime);
 	}
-			}
+}
 
 void BulletManager::updateOwners(Entity* owner) //Updates null owners
 {
