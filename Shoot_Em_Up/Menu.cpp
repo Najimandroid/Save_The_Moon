@@ -64,11 +64,11 @@ void MenuManager::openOption()
 
 	addBackground(optionsTexture);
 	
-	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::White, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 2 }));
-	this->buttons.push_back(new Button(sf::Vector2f{ 150,150 }, MUTE, sf::Color::Red, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 1 }));
-	this->buttons.push_back(new Button(sf::Vector2f{ 300,150 }, DEMUTE, sf::Color::Blue, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 0 }));
-	this->buttons.push_back(new Button(sf::Vector2f{ 450,150 }, VOLUMEDOWN, sf::Color::Green, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 1 }));
-	this->buttons.push_back(new Button(sf::Vector2f{ 600,150 }, VOLUMEUP, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 0 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::White, sf::RectangleShape(sf::Vector2f(40, 40)), { 0, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 150,150 }, MUTE, sf::Color::Red, sf::RectangleShape(sf::Vector2f(40, 40)), { 2, 1 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 300,150 }, DEMUTE, sf::Color::Blue, sf::RectangleShape(sf::Vector2f(40, 40)), { 2, 0 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 450,150 }, VOLUMEDOWN, sf::Color::Green, sf::RectangleShape(sf::Vector2f(40, 40)), { 0, 1 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 600,150 }, VOLUMEUP, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(40, 40)), { 0, 0 }));
 
 	setSprites();
 }
@@ -83,13 +83,13 @@ void MenuManager::openLvlSelect()
 
 	addBackground(levelsSelectTexture);
 
-	this->buttons.push_back(new Button(sf::Vector2f{ 330, 654 }, LVL1, sf::Color::White, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
-	this->buttons.push_back(new Button(sf::Vector2f{ 669, 376 }, LVL2, sf::Color::White, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
-	this->buttons.push_back(new Button(sf::Vector2f{ 962, 646 }, LVL3, sf::Color::Red, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
-	this->buttons.push_back(new Button(sf::Vector2f{ 1242, 107 }, LVL4, sf::Color::Blue, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
-	this->buttons.push_back(new Button(sf::Vector2f{ 1530, 413 }, LVL5, sf::Color::Green, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
-	this->buttons.push_back(new Button(sf::Vector2f{ 1802, 847 }, LVL6, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(30, 30)), { 2, 2 }));
-	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 330, 654 }, LVL1, sf::Color::White, sf::RectangleShape(sf::Vector2f(40, 40)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 669, 376 }, LVL2, sf::Color::White, sf::RectangleShape(sf::Vector2f(40, 40)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 962, 646 }, LVL3, sf::Color::Red, sf::RectangleShape(sf::Vector2f(40, 40)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 1242, 107 }, LVL4, sf::Color::Blue, sf::RectangleShape(sf::Vector2f(40, 40)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 1530, 413 }, LVL5, sf::Color::Green, sf::RectangleShape(sf::Vector2f(40, 40)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 1802, 847 }, LVL6, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(40, 40)), { 2, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(40, 40)), { 0, 2 }));
 
 	setSprites();
 }
@@ -99,7 +99,7 @@ void MenuManager::openCredits()
 	this->buttons.clear();
 
 	addBackground(menuTexture);
-	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(40, 40)), { 0, 2 }));
 
 	setSprites();
 }
@@ -109,7 +109,7 @@ void MenuManager::openVictory()
 	this->buttons.clear();
 
 	addBackground(victoryTexture);
-	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(40, 40)), { 0, 2 }));
 
 	setSprites();
 }
@@ -119,7 +119,7 @@ void MenuManager::openLose()
 	this->buttons.clear();
 
 	addBackground(losingTexture);
-	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(30, 30)), { 0, 2 }));
+	this->buttons.push_back(new Button(sf::Vector2f{ 25,30 }, BACK, sf::Color::Magenta, sf::RectangleShape(sf::Vector2f(40, 40)), { 0, 2 }));
 
 	setSprites();
 }
@@ -221,7 +221,7 @@ void MenuManager::setSprites()
 				sprite = new sf::Sprite;
 				sprite->setTexture(this->smallButtonsTexture);
 
-				sprite->setScale({ smallButtonsTexture.getSize().x / adress->getHitbox().getSize().x / 2.5f, smallButtonsTexture.getSize().y / adress->getHitbox().getSize().y / 2.5f });
+				sprite->setScale({ smallButtonsTexture.getSize().x / adress->getHitbox().getSize().x / 1.5f, smallButtonsTexture.getSize().y / adress->getHitbox().getSize().y / 1.5f });
 				sprite->setOrigin({
 					adress->getHitbox().getOrigin().x / sprite->getScale().x,
 					adress->getHitbox().getOrigin().y / sprite->getScale().y
@@ -229,9 +229,9 @@ void MenuManager::setSprites()
 
 				sprite->setTextureRect(sf::IntRect(
 					adress->getTextureCoords().x * 25,
-					adress->getTextureCoords().y * 30,
+					adress->getTextureCoords().y * 31,
 					25,
-					30));
+					31));
 
 				adress->setSprite(sprite);
 			}
