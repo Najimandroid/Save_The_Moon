@@ -15,6 +15,24 @@ Boss::Boss(sf::Vector2f position_)
 	textureCoords = { 0, 0 };
 }
 
+Boss::Boss(sf::Vector2f position_, int levelIndex_)
+{
+	target = PlayerManager::getInstance()->getPlayers()[0];
+	position = { position_.x, WindowConfig::getInstance()->SIZE_Y / 2.f };
+
+	initHitbox({ WindowConfig::getInstance()->SIZE_Y / 2.5f, WindowConfig::getInstance()->SIZE_Y / 2.5f });
+	initProperties(7500, 15, 1.5f, true, 4.f);
+
+	points = 1000;
+
+	switch (levelIndex_)
+	{
+	case 1: textureCoords = { 0, 0 }; attacks = { Attack_1 , Attack_2, Attack_3 }; break;
+	case 2: textureCoords = { 1, 0 }; attacks = { ShrimpAttack_1, ShrimpAttack_2 }; shootCooldownMax /= 2;  break;
+	}
+	
+}
+
 //* UPDATING *\\
 
 void Boss::updatePosition(float deltaTime)
@@ -78,7 +96,7 @@ void Attack_1(Enemy* entity)
 		offsetY += .33f;
 	}
 
-	std::cout << "attack 1\n";
+	//std::cout << "attack 1\n";
 	return;
 }
 
@@ -98,7 +116,7 @@ void Attack_2(Enemy* entity)
 			4 * entity->getSpeed());
 	}
 
-	std::cout << "attack 2\n";
+	//std::cout << "attack 2\n";
 	return;
 }
 
@@ -111,6 +129,20 @@ void Attack_3(Entity* entity)
 	}
 
 
-	std::cout << "attack 3\n";
+	//std::cout << "attack 3\n";
 	return;
+}
+
+void ShrimpAttack_1(Entity* entity)
+{
+
+	BulletManager::getInstance()->spawnBullet(entity, entity->getPosition(), { -1, 0 }, SHRIMP_boss, entity->getSpeed());
+
+}
+
+void ShrimpAttack_2(Entity* entity)
+{
+
+	BulletManager::getInstance()->spawnBullet(entity, entity->getPosition(), { -1, 0 }, PUFFER_boss, entity->getSpeed());
+
 }
