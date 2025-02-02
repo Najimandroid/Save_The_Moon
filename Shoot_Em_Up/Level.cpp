@@ -88,14 +88,23 @@ bool LevelManager::loadLevel(int levelIndex)
 			case 0xfb6a6aFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::WAVE); break; //wave
 			case 0xfbbb1eFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::HOMING); break; //homing
 
-			case 0xff905fFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::BOSS_1); break; //giga mouth
-
 			case 0xb93729FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::SPIKE); break; //spike
 
 			case 0x1000e2FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::TURRET_UP); break; //turret up
 			case 0xc8c4fbFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::TURRET_DOWN); break; //turret down
 			case 0x08006fFF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::TURRET_LEFT); break; //turret left
 			case 0x867fe2FF: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::TURRET_RIGHT); break; //turret right
+
+
+			case 0xff905fFF: 
+				switch (levelIndex)
+				{
+				case 1: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::BOSS_1); break;
+				case 2: enemyManager->spawnEnemy(SPAWN_POSITION, EnemyType::BOSS_2); break;
+				}
+				
+				
+				break; //BOSS
 			}
 		}
 	}
