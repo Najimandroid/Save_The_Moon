@@ -17,7 +17,7 @@ enum BulletType
 {
 	DEFAULT_b, HOMING_b,
 
-	DEFAULT_boss, HOMING_boss
+	DEFAULT_boss, HOMING_boss, SHRIMP_boss, PUFFER_boss
 };
 
 class Bullet
