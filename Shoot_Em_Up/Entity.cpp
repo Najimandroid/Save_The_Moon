@@ -39,7 +39,7 @@ void Entity::updateHealth(float value)
 
 	if (this->health + value >= this->maxHealth)
 	{
-		this->health += this->maxHealth - this->health;
+		this->health = this->maxHealth;
 	}
 	else
 	{
