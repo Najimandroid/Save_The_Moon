@@ -66,6 +66,7 @@ public:
 	void setActive(bool newState) { active = newState; }
 	void setSprite(sf::Sprite* newSprite) { sprite = newSprite; }
 	void setPoints(float newPoints) { points = newPoints; }
+	void setTextureCoords(sf::Vector2f newCoords) { textureCoords = newCoords; sprite = nullptr; }
 
 	//* INIT *\\
 
