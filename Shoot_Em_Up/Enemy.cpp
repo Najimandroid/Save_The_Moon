@@ -11,6 +11,7 @@
 
 #include <vector> 
 #include <iostream>
+#include <optional>
 
 //--------------------//* ENEMY *\\--------------------\\
 
@@ -85,7 +86,8 @@ Enemy* EnemyManager::spawnEnemy(sf::Vector2f position_, EnemyType enemyType)
 		case HOMING: newEnemy = new Homing(position_, PlayerManager::getInstance()->getPlayers()[0]); break;
 
 
-		case BOSS_1: newEnemy = new Boss(position_); break;
+		case BOSS_1: newEnemy = new Boss(position_, 1); break;
+		case BOSS_2: newEnemy = new Boss(position_, 2); break;
 	}
 
 	if (newEnemy == nullptr) 
